@@ -1,0 +1,5 @@
+// Authentic WhatsApp Dark Mode Doodle Pattern SVG Data URI
+export const WHATSAPP_DARK_BG_STYLE = {
+  backgroundColor: '#0b141a',
+  backgroundImage: `url("data:image/svg+xml,%3Csvg width='360' height='360' viewBox='0 0 360 360' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.045'%3E%3Cpath d='M45 45h20v10H45zm40 10h15v15H85zm-60 40h20v10H25zm80 20h20v10h-20zm50-60h25v15h-25zm60 30h15v20h-15zm30-40h20v20h-20zm40 50h20v15h-20zm-80 60h20v10h-20zm-60 20h15v15h-15zm100 40h25v15h-25zm40-20h20v20h-20zm-180 50h20v10h-20zm70 30h15v15h-15zm100 20h20v10h-20zm-220 30h25v15h-25zm90-10h20v20h-20zm80 40h15v20h-15zm-150 40h20v10h-20zm120-10h20v15h-20z'/%3E%3Ccircle cx='60' cy='180' r='8'/%3E%3Ccircle cx='180' cy='60' r='6'/%3E%3Ccircle cx='300' cy='180' r='7'/%3E%3Ccircle cx='180' cy='300' r='8'/%3E%3Ccircle cx='120' cy='240' r='5'/%3E%3Ccircle cx='240' cy='120' r='6'/%3E%3Cpath d='M140 130a15 15 0 0 1 20 0l5 5-5 5a15 15 0 0 1-20 0z'/%3E%3Cpath d='M260 250a15 15 0 0 1 20 0l5 5-5 5a15 15 0 0 1-20 0z'/%3E%3Cpath d='M30 290h25v6H30z'/%3E%3Cpath d='M210 200h20v5h-20z'/%3E%3C/g%3E%3C/svg%3E")`,
+};

@@ -1,0 +1,692 @@
+{
+  "users": [
+    {
+      "uid": "user_consumer_1",
+      "email": "customer@convocart.com",
+      "displayName": "Alex Johnson",
+      "role": "consumer",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+1-555-0199",
+      "addresses": [
+        {
+          "id": "addr_1",
+          "fullName": "Alex Johnson",
+          "phone": "+1-555-0199",
+          "street": "742 Evergreen Terrace",
+          "city": "San Francisco",
+          "state": "CA",
+          "postalCode": "94103",
+          "country": "United States",
+          "isDefault": true
+        }
+      ],
+      "createdAt": "2026-10-14T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "uid": "user_vendor_1",
+      "email": "vendor@convocart.com",
+      "displayName": "Elena Rostova",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "vendorId": "vendor_nexconn_audio",
+      "photoURL": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+1-555-0182",
+      "createdAt": "2026-10-04T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "uid": "user_vendor_2",
+      "email": "global@convocart.com",
+      "displayName": "Marcus Vance",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "vendorId": "vendor_ubuy_express",
+      "photoURL": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+1-555-0144",
+      "createdAt": "2026-10-09T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "uid": "user_support_1",
+      "email": "support@convocart.com",
+      "displayName": "Sarah Connor",
+      "role": "support_agent",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+1-555-0111",
+      "createdAt": "2026-09-24T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "uid": "user_admin_1",
+      "email": "admin@convocart.com",
+      "displayName": "Chief Administrator",
+      "role": "admin",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+1-555-0100",
+      "createdAt": "2026-09-14T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    }
+  ],
+  "passwords": {
+    "user_consumer_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
+    "user_vendor_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
+    "user_vendor_2": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
+    "user_support_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
+    "user_admin_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK"
+  },
+  "vendors": [
+    {
+      "vendorId": "vendor_nexconn_audio",
+      "ownerUid": "user_vendor_1",
+      "businessName": "Nexconn Audio & Smart Tech",
+      "description": "Official flagship store for premium studio acoustics, wireless noise-canceling headsets, and AI-enhanced wearable audio gear.",
+      "logo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 342,
+      "businessPolicies": {
+        "shipping": "Free express shipping on all domestic orders over $150. Shipped within 24 hours.",
+        "returns": "30-day hassle-free money back guarantee. Free return shipping labels provided.",
+        "warranty": "2-year comprehensive international manufacturer warranty covering all internal drivers and electronics."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "support@nexconnaudio.com",
+      "contactPhone": "+1-800-555-NEXC",
+      "createdAt": "2026-10-04T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "vendorId": "vendor_ubuy_express",
+      "ownerUid": "user_vendor_2",
+      "businessName": "Ubuy Global Express Marketplace",
+      "description": "Direct global importer delivering rare high-end artisan electronics, Tokyo gaming keyboards, and Swiss designer accessories directly to your doorstep.",
+      "logo": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80",
+      "category": "Ubuy Global Express",
+      "verificationStatus": "approved",
+      "rating": 4.8,
+      "reviewCount": 219,
+      "businessPolicies": {
+        "shipping": "DHL Express international worldwide delivery with pre-cleared customs and real-time flight tracking.",
+        "returns": "14-day international returns with regional return hub drop-offs.",
+        "warranty": "1-year global authentic warranty with localized inspection support."
+      },
+      "availability": "away",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.07,
+      "contactEmail": "concierge@ubuyglobal.com",
+      "contactPhone": "+1-888-UBUY-EXP",
+      "createdAt": "2026-10-09T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    }
+  ],
+  "products": [
+    {
+      "productId": "prod_nexconn_pro_anc",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Nexconn SonicPro ANC Studio Wireless Headphones",
+      "description": "Engineered for audiophiles and producers. Features hybrid 45dB Active Noise Cancellation, custom 40mm titanium diaphragm drivers, 65-hour playback time, ultra-low latency gaming mode, and Bluetooth 5.4 multi-point connectivity.",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "Nexconn Audio",
+      "sku": "NEX-SPRO-01",
+      "price": 299,
+      "discount": 15,
+      "stock": 45,
+      "images": [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80"
+      ],
+      "variants": [
+        {
+          "id": "var_color",
+          "name": "Color",
+          "options": [
+            "Obsidian Black",
+            "Lunar Silver",
+            "Midnight Navy"
+          ]
+        },
+        {
+          "id": "var_cable",
+          "name": "Accessories",
+          "options": [
+            "Standard Pack",
+            "Studio Pro Hard-Case Kit"
+          ],
+          "priceDiff": 25
+        }
+      ],
+      "specifications": {
+        "Driver Size": "40mm Titanium Dome",
+        "Frequency Response": "10Hz – 40,000Hz (Hi-Res Audio Certified)",
+        "Battery Life": "65 Hours (ANC Off) / 48 Hours (ANC On)",
+        "Charging": "USB-C Quick Charge (10 mins = 5 hours)",
+        "Noise Cancellation": "Dual-chip Adaptive ANC (-45dB)",
+        "Microphones": "6 AI Beamforming Mics with Wind Shield"
+      },
+      "shippingPolicy": "Ships next business day via insured air parcel.",
+      "returnPolicy": "30-day money back guarantee with zero restocking fee.",
+      "status": "active",
+      "rating": 4.9,
+      "reviewCount": 148,
+      "isFeatured": true,
+      "isTrending": true,
+      "createdAt": "2026-10-19T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "productId": "prod_tokyo_mech_keyboard",
+      "vendorId": "vendor_ubuy_express",
+      "vendorName": "Ubuy Global Express Marketplace",
+      "title": "Akiba Keebs Master Artisan 75% Mechanical Keyboard (Hot-Swap)",
+      "description": "Direct Tokyo Import. CNC carved aerospace aluminum chassis with gasket mount structure, pre-lubed Gateron Oil King linear switches, PBT dye-sublimated cherry keycaps, and south-facing RGB per-key illumination.",
+      "categoryId": "cat-global",
+      "categoryName": "Ubuy Global Express",
+      "brand": "Akiba Keebs",
+      "sku": "AKB-75-JP",
+      "price": 249,
+      "discount": 10,
+      "stock": 18,
+      "images": [
+        "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&auto=format&fit=crop&q=80"
+      ],
+      "variants": [
+        {
+          "id": "var_switch",
+          "name": "Switch Type",
+          "options": [
+            "Oil King Linear",
+            "Baby Kangaroo Tactile"
+          ]
+        }
+      ],
+      "specifications": {
+        "Layout": "75% Compact (82 Keys)",
+        "Structure": "Multi-layer Silicone Gasket Mounted",
+        "Connectivity": "Tri-mode (2.4GHz / Bluetooth 5.2 / USB-C)",
+        "Polling Rate": "1000Hz (Wired & 2.4G)",
+        "Weight": "1.75 kg (Solid Aluminum)"
+      },
+      "shippingPolicy": "Shipped from Haneda Hub via DHL Worldwide Express (3-5 days delivery).",
+      "returnPolicy": "14-day warranty with US/EU hub returns.",
+      "status": "active",
+      "rating": 4.8,
+      "reviewCount": 76,
+      "isFeatured": true,
+      "createdAt": "2026-10-24T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "productId": "prod_smartwatch_ultra",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Nexconn PulseTrack GPS Sapphire Rugged Smartwatch",
+      "description": "Ultra-tough titanium casing with sapphire crystal touch display. Dual-frequency precision GPS, continuous ECG and SpO2 health tracking, offline topological maps, 100m water resistance, and 14-day battery life.",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "Nexconn Tech",
+      "sku": "NEX-WATCH-U2",
+      "price": 399,
+      "discount": 20,
+      "stock": 32,
+      "images": [
+        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80"
+      ],
+      "specifications": {
+        "Display": "1.43-inch AMOLED Sapphire Display (1000 nits)",
+        "Battery": "500mAh (Up to 14 days normal usage)",
+        "Water Rating": "10 ATM (100 meters dive proof)",
+        "Sensors": "Optical Heart Rate, SpO2, Skin Temp, Barometric Altimeter, Compass"
+      },
+      "shippingPolicy": "Free express shipping worldwide.",
+      "returnPolicy": "30-day return policy.",
+      "status": "active",
+      "rating": 4.7,
+      "reviewCount": 89,
+      "isFeatured": false,
+      "isTrending": true,
+      "createdAt": "2026-10-29T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "productId": "prod_espresso_machine_pro",
+      "vendorId": "vendor_ubuy_express",
+      "vendorName": "Ubuy Global Express Marketplace",
+      "title": "Milano Barista Craft Dual-Boiler Espresso Machine",
+      "description": "Direct Italian Import. Commercial grade 58mm portafilter, PID dual temperature control, commercial rotary vane pump, and cool-touch micro-foam steam wand for third-wave latte art at home.",
+      "categoryId": "cat-home",
+      "categoryName": "Home & Kitchen",
+      "brand": "Milano Craft",
+      "sku": "MIL-ESP-580",
+      "price": 899,
+      "discount": 12,
+      "stock": 12,
+      "images": [
+        "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
+      ],
+      "specifications": {
+        "Boiler Type": "Dual Stainless Steel Boilers (Brew: 0.8L, Steam: 1.5L)",
+        "Pressure": "15 Bar Commercial Italian Rotary Pump",
+        "Portafilter": "Commercial 58mm Solid Brass Chrome-plated",
+        "Power": "1800W Rapid Heat-Up"
+      },
+      "shippingPolicy": "Crated heavy cargo with white-glove curbside delivery.",
+      "returnPolicy": "30-day satisfaction guarantee.",
+      "status": "active",
+      "rating": 4.95,
+      "reviewCount": 54,
+      "isFeatured": true,
+      "isTrending": false,
+      "createdAt": "2026-10-26T05:34:05.753Z",
+      "updatedAt": "2026-11-13T05:34:05.753Z"
+    },
+    {
+      "productId": "prod_merino_wool_jacket",
+      "vendorId": "vendor_ubuy_express",
+      "vendorName": "Ubuy Global Express Marketplace",
+      "title": "Nordic Explorer Merino Insulated Technical Parka",
+      "description": "Tailored Scandinavian design combining 100% fine Merino wool thermal insulation with a breathable 20,000mm waterproof storm shell. Magnet-snap pockets and internal storm cuffs.",
+      "categoryId": "cat-fashion",
+      "categoryName": "Fashion & Apparel",
+      "brand": "Nordic Heritage",
+      "sku": "NOR-PARKA-09",
+      "price": 349,
+      "discount": 0,
+      "stock": 25,
+      "images": [
+        "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800&auto=format&fit=crop&q=80"
+      ],
+      "variants": [
+        {
+          "id": "var_size",
+          "name": "Size",
+          "options": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ]
+        },
+        {
+          "id": "var_color",
+          "name": "Color",
+          "options": [
+            "Deep Forest Green",
+            "Charcoal Heather"
+          ]
+        }
+      ],
+      "specifications": {
+        "Shell Material": "3-Layer Recycled Ripstop Nylon (20k Waterproof)",
+        "Insulation": "250gsm Virgin Merino Wool Blend",
+        "Zippers": "YKK Aquaguard Matte Waterproof Zippers"
+      },
+      "shippingPolicy": "Free standard shipping.",
+      "returnPolicy": "30-day exchange for sizing differences.",
+      "status": "active",
+      "rating": 4.6,
+      "reviewCount": 42,
+      "isFeatured": false,
+      "isTrending": true,
+      "createdAt": "2026-11-03T05:34:05.754Z",
+      "updatedAt": "2026-11-13T05:34:05.754Z"
+    },
+    {
+      "productId": "prod_skincare_elixir",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Lumiere Botanical Bio-Retinol Night Recovery Elixir",
+      "description": "Clinically proven 1% plant-derived bakuchiol infused with squalane, cold-pressed rosehip seed oil, and tri-peptide complex to deeply restore cellular elasticity overnight.",
+      "categoryId": "cat-beauty",
+      "categoryName": "Beauty & Personal Care",
+      "brand": "Lumiere Organics",
+      "sku": "LUM-BIO-30",
+      "price": 78,
+      "discount": 25,
+      "stock": 80,
+      "images": [
+        "https://images.unsplash.com/photo-1608248597359-2169b22a0d92?w=800&auto=format&fit=crop&q=80",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80"
+      ],
+      "specifications": {
+        "Volume": "30ml / 1.0 fl oz Dropper Bottle",
+        "Skin Type": "Sensitive, Dry, Mature, Combination",
+        "Key Ingredients": "1% Bakuchiol, Olive Squalane, Peptides, Blue Tansy"
+      },
+      "shippingPolicy": "Ships in temperature-controlled protective wrapping.",
+      "returnPolicy": "14-day unopened guarantee.",
+      "status": "active",
+      "rating": 4.88,
+      "reviewCount": 110,
+      "isFeatured": false,
+      "isTrending": true,
+      "createdAt": "2026-11-05T05:34:05.754Z",
+      "updatedAt": "2026-11-13T05:34:05.754Z"
+    }
+  ],
+  "carts": {
+    "user_consumer_1": {
+      "cartId": "cart_user_consumer_1",
+      "consumerId": "user_consumer_1",
+      "items": [],
+      "updatedAt": "2026-11-13T06:19:28.093Z"
+    }
+  },
+  "orders": [
+    {
+      "orderId": "ord_sample_9841",
+      "checkoutGroupId": "chk_group_101",
+      "consumerId": "user_consumer_1",
+      "consumerName": "Alex Johnson",
+      "consumerEmail": "customer@convocart.com",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "items": [
+        {
+          "productId": "prod_nexconn_pro_anc",
+          "vendorId": "vendor_nexconn_audio",
+          "title": "Nexconn SonicPro ANC Studio Wireless Headphones",
+          "price": 254.15,
+          "discount": 15,
+          "quantity": 1,
+          "selectedVariant": {
+            "Color": "Obsidian Black",
+            "Accessories": "Standard Pack"
+          },
+          "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+        }
+      ],
+      "subtotal": 254.15,
+      "shipping": 0,
+      "discount": 0,
+      "tax": 20.33,
+      "total": 274.48,
+      "paymentStatus": "captured",
+      "orderStatus": "shipped",
+      "shippingStatus": "In Transit — Estimated delivery tomorrow by 4 PM",
+      "trackingNumber": "TRK-NEX-889921",
+      "shippingCarrier": "FedEx Priority",
+      "addressSnapshot": {
+        "id": "addr_1",
+        "fullName": "Alex Johnson",
+        "phone": "+1-555-0199",
+        "street": "742 Evergreen Terrace",
+        "city": "San Francisco",
+        "state": "CA",
+        "postalCode": "94103",
+        "country": "United States",
+        "isDefault": true
+      },
+      "paymentMethod": "razorpay",
+      "createdAt": "2026-11-10T05:34:05.754Z",
+      "updatedAt": "2026-11-12T05:34:05.754Z"
+    }
+  ],
+  "conversations": [
+    {
+      "conversationId": "conv_consumer_vendor_audio",
+      "consumerId": "user_consumer_1",
+      "consumerName": "Alex Johnson",
+      "consumerAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorBusinessName": "Nexconn Audio & Smart Tech",
+      "productId": "prod_nexconn_pro_anc",
+      "productTitle": "Nexconn SonicPro ANC Studio Wireless Headphones",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+      "orderId": "ord_sample_9841",
+      "status": "escalated",
+      "aiHandlingEnabled": true,
+      "lastMessage": {
+        "text": "I understand your request regarding \"refund\". As an AI assistant, I cannot approve refunds or modify live transactions directly. I have marked this conversation as high priority and escalated it directly to Nexconn Audio & Smart Tech's store manager for immediate personal assistance.",
+        "senderId": "agent_vendor_nexconn_audio",
+        "timestamp": "2026-11-13T05:54:56.078Z",
+        "type": "text"
+      },
+      "unreadCount": {
+        "user_consumer_1": 0,
+        "user_vendor_1": 2
+      },
+      "createdAt": "2026-11-10T05:34:05.754Z",
+      "updatedAt": "2026-11-13T06:20:47.941Z",
+      "escalatedToSupport": true
+    }
+  ],
+  "messages": [
+    {
+      "id": "msg_1",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "vendor_nexconn_audio",
+      "text": "Hi! Does this pair support simultaneous connection to both an iPad and an iPhone?",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-11-10T05:34:05.754Z"
+    },
+    {
+      "id": "msg_2",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "agent_aria",
+      "senderName": "Aria (AI Assistant)",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "Hello Alex! Yes, absolutely! The Nexconn SonicPro ANC features Bluetooth 5.4 multi-point pairing, which lets you seamlessly switch between your iPad and iPhone without manually disconnecting.",
+      "type": "text",
+      "isAiGenerated": true,
+      "status": "read",
+      "createdAt": "2026-11-10T05:34:09.754Z"
+    },
+    {
+      "id": "msg_3",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "vendor_nexconn_audio",
+      "text": "Awesome, just placed my order!",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-11-11T05:34:05.754Z"
+    },
+    {
+      "id": "msg_4",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "user_vendor_1",
+      "senderName": "Elena Rostova",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "Your tracking number is TRK-NEX-889921. Let us know if you need anything else!",
+      "type": "text",
+      "status": "read",
+      "createdAt": "2026-11-12T05:34:05.754Z"
+    },
+    {
+      "id": "msg_1794549288157_42c8",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "user_vendor_1",
+      "text": "Does the Nexconn SonicPro support Bluetooth 5.4 multi-device pairing?",
+      "type": "text",
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-13T05:54:48.157Z"
+    },
+    {
+      "id": "msg_1794549288258",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "agent_vendor_nexconn_audio",
+      "senderName": "AI Vendor Assistant",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "[Aria (Nexconn Audio Assistant)]: Yes! The Nexconn SonicPro ANC supports Bluetooth 5.4 multi-point pairing, allowing you to connect seamlessly to your laptop and smartphone simultaneously.",
+      "type": "text",
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-13T05:54:48.258Z"
+    },
+    {
+      "id": "msg_1794549295978_z52m",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "user_vendor_1",
+      "text": "I demand an immediate refund for my damaged shipment",
+      "type": "text",
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-13T05:54:55.978Z"
+    },
+    {
+      "id": "msg_1794549296078",
+      "conversationId": "conv_consumer_vendor_audio",
+      "senderId": "agent_vendor_nexconn_audio",
+      "senderName": "AI Vendor Assistant",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "I understand your request regarding \"refund\". As an AI assistant, I cannot approve refunds or modify live transactions directly. I have marked this conversation as high priority and escalated it directly to Nexconn Audio & Smart Tech's store manager for immediate personal assistance.",
+      "type": "text",
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-13T05:54:56.078Z"
+    }
+  ],
+  "supportTickets": [
+    {
+      "ticketId": "tkt_1001",
+      "consumerId": "user_consumer_1",
+      "consumerName": "Alex Johnson",
+      "consumerEmail": "customer@convocart.com",
+      "conversationId": "conv_consumer_vendor_audio",
+      "orderId": "ord_sample_9841",
+      "vendorId": "vendor_nexconn_audio",
+      "assignedAgentId": "user_support_1",
+      "assignedAgentName": "Sarah Connor",
+      "priority": "medium",
+      "status": "in_progress",
+      "category": "Delivery Inquiry",
+      "subject": "FedEx delivery window verification",
+      "description": "Customer inquired whether delivery signature is required for parcel TRK-NEX-889921.",
+      "internalNotes": [
+        {
+          "id": "note_1",
+          "authorId": "user_support_1",
+          "authorName": "Sarah Connor",
+          "note": "FedEx confirmed no signature required; package will be safely delivered to front porch locker.",
+          "createdAt": "2026-11-12T17:34:05.754Z"
+        }
+      ],
+      "slaDueHours": 24,
+      "createdAt": "2026-11-12T13:34:05.754Z",
+      "updatedAt": "2026-11-12T17:34:05.754Z"
+    }
+  ],
+  "aiConfigs": {
+    "vendor_nexconn_audio": {
+      "vendorId": "vendor_nexconn_audio",
+      "enabled": true,
+      "agentName": "Aria (Nexconn Audio Assistant)",
+      "avatarUrl": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Hello! I am Aria, the AI assistant for Nexconn Audio. How can I help you choose headphones, check specifications, or track orders today?",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "hi"
+      ],
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "responseStyle": "friendly",
+      "faqs": [
+        {
+          "question": "Do the headphones support multi-device pairing?",
+          "answer": "Yes! The Nexconn SonicPro ANC supports Bluetooth 5.4 multi-point pairing, allowing you to connect seamlessly to your laptop and smartphone simultaneously."
+        },
+        {
+          "question": "What is the return policy if I don’t like the fit?",
+          "answer": "We offer a 30-day money-back guarantee with full refunds and free prepaid return shipping labels."
+        },
+        {
+          "question": "Are replacements ear cushions available?",
+          "answer": "Yes, magnetic memory-foam replacement ear cushions can be ordered directly through our store or by messaging our support."
+        }
+      ],
+      "shippingPolicy": "Free express domestic shipping on all orders over $150. Delivery takes 2-3 business days.",
+      "returnPolicy": "30-day hassle-free return window with zero restocking fees.",
+      "warrantyInfo": "2-year comprehensive international warranty covering hardware defects.",
+      "escalationRules": [
+        "refund request",
+        "damaged package",
+        "speak to human",
+        "urgent complaint"
+      ],
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-13T05:34:05.754Z"
+    },
+    "vendor_ubuy_express": {
+      "vendorId": "vendor_ubuy_express",
+      "enabled": true,
+      "agentName": "Kai (Ubuy Global Concierge)",
+      "avatarUrl": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Greetings! I am Kai from Ubuy Global Express. Looking for international artisan gear, shipping timeframes, or import assistance?",
+      "personality": "professional",
+      "supportedLanguages": [
+        "en",
+        "ja",
+        "de",
+        "fr"
+      ],
+      "businessHours": {
+        "enabled": true,
+        "start": "08:00",
+        "end": "20:00",
+        "timezone": "UTC"
+      },
+      "responseStyle": "detailed",
+      "faqs": [
+        {
+          "question": "Are customs and import taxes included?",
+          "answer": "All customs duties, tariffs, and taxes are pre-calculated and cleared through our DHL Express pipeline. You will never face surprise import fees upon delivery."
+        },
+        {
+          "question": "How long does shipping from Tokyo or Italy take?",
+          "answer": "International air express shipments arrive in 3 to 5 business days with full door-to-door tracking."
+        }
+      ],
+      "shippingPolicy": "Express door-to-door DHL delivery with pre-cleared customs.",
+      "returnPolicy": "14-day international returns processed through domestic partner return hubs.",
+      "warrantyInfo": "1-year global authentic item guarantee.",
+      "escalationRules": [
+        "customs delay",
+        "damaged in transit",
+        "talk to vendor"
+      ],
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-13T05:34:05.754Z"
+    }
+  },
+  "payments": []
+}
