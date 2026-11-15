@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useCartStore } from '../stores/useCartStore';
 import { useAuthStore } from '../stores/useAuthStore';
 import { apiRequest } from '../lib/api';
@@ -14,6 +14,7 @@ import {
   ArrowRight,
   Loader2,
   Lock,
+  LogIn,
 } from 'lucide-react';
 import {
   Address,
@@ -28,18 +29,34 @@ export const CheckoutPage: React.FC = () => {
   const { user } = useAuthStore();
   const { cart, subtotal, clearCart } = useCartStore();
 
+  const savedAddr = user?.addresses?.find((a) => a.isDefault) || user?.addresses?.[0];
   const [address, setAddress] = useState<Address>(
-    user?.addresses?.[0] || {
-      id: 'addr_new',
-      fullName: user?.displayName || 'Alex Johnson',
-      phone: user?.phoneNumber || '+1-555-0199',
-      street: '742 Evergreen Terrace',
-      city: 'San Francisco',
-      state: 'CA',
-      postalCode: '94103',
-      country: 'United States',
+    savedAddr || {
+      id: `addr_${Date.now()}`,
+      fullName: user?.displayName || '',
+      phone: user?.phoneNumber || '',
+      street: '',
+      city: user?.city || '',
+      state: '',
+      postalCode: '',
+      country: user?.country || 'India',
     }
   );
+
+  React.useEffect(() => {
+    if (!user) return;
+    const primary = user.addresses?.find((a) => a.isDefault) || user.addresses?.[0];
+    setAddress((prev) => ({
+      id: primary?.id || prev.id,
+      fullName: prev.fullName || primary?.fullName || user.displayName || '',
+      phone: prev.phone || primary?.phone || user.phoneNumber || '',
+      street: prev.street || primary?.street || '',
+      city: prev.city || primary?.city || user.city || '',
+      state: prev.state || primary?.state || '',
+      postalCode: prev.postalCode || primary?.postalCode || '',
+      country: prev.country || primary?.country || user.country || 'India',
+    }));
+  }, [user]);
 
   const [paymentMethod, setPaymentMethod] = useState<'razorpay' | 'cash_on_delivery' | 'card_test'>('razorpay');
   const [couponCode, setCouponCode] = useState('');
@@ -173,6 +190,37 @@ export const CheckoutPage: React.FC = () => {
           >
             Continue Shopping
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="mx-auto max-w-xl px-4 py-20 text-center">
+        <div className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-brand-600">
+            <LogIn className="h-8 w-8" />
+          </div>
+          <h1 className="text-2xl font-black text-slate-900">Sign In to Complete Checkout</h1>
+          <p className="mt-2 text-sm text-slate-500">
+            Orders, delivery addresses, and seller chat updates are securely linked to your customer account.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-3">
+            <Link
+              to="/auth?redirect=/shop/checkout"
+              className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-600/20 hover:bg-brand-700 transition-colors"
+            >
+              <LogIn className="h-4 w-4" />
+              Sign In or Create Account
+            </Link>
+            <Link
+              to="/shop"
+              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+            >
+              Continue Shopping
+            </Link>
+          </div>
         </div>
       </div>
     );

@@ -1,31 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiRequest } from '../lib/api';
+import { uploadChatFile } from '../lib/firebase';
 import { DEFAULT_CATEGORIES, Product } from '@convocart/shared';
-import { ArrowLeft, Save, Plus, Trash2, Image } from 'lucide-react';
+import { ArrowLeft, Save, Trash2, Upload, Loader2 } from 'lucide-react';
 
 export const VendorProductFormPage: React.FC = () => {
   const navigate = useNavigate();
   const { productId } = useParams<{ productId: string }>();
   const isEditing = Boolean(productId);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [categoryId, setCategoryId] = useState('cat-electronics');
-  const [brand, setBrand] = useState('Nexconn Audio');
-  const [sku, setSku] = useState(`NEX-${Math.floor(1000 + Math.random() * 9000)}`);
+  const [brand, setBrand] = useState('');
+  const [sku, setSku] = useState(`SKU-${Math.floor(1000 + Math.random() * 9000)}`);
   const [price, setPrice] = useState<number>(199);
-  const [discount, setDiscount] = useState<number>(10);
-  const [stock, setStock] = useState<number>(30);
-  const [imageUrl, setImageUrl] = useState(
-    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80'
-  );
+  const [discount, setDiscount] = useState<number>(0);
+  const [stock, setStock] = useState<number>(25);
+  const [imageUrl, setImageUrl] = useState('');
+  const [isFeatured, setIsFeatured] = useState(true);
+  const [isUploadingImage, setIsUploadingImage] = useState(false);
   const [specKey, setSpecKey] = useState('');
   const [specVal, setSpecVal] = useState('');
-  const [specifications, setSpecifications] = useState<Record<string, string>>({
-    Connectivity: 'Bluetooth 5.4 / USB-C',
-    Battery: '50 Hours Active Playback',
-  });
+  const [specifications, setSpecifications] = useState<Record<string, string>>({});
   const [shippingPolicy, setShippingPolicy] = useState('Ships within 24 hours via express courier.');
   const [returnPolicy, setReturnPolicy] = useState('30-day money-back guarantee with zero restocking fee.');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -41,6 +40,7 @@ export const VendorProductFormPage: React.FC = () => {
         setPrice(p.price);
         setDiscount(p.discount);
         setStock(p.stock);
+        setIsFeatured(p.isFeatured ?? true);
         if (p.images?.[0]) setImageUrl(p.images[0]);
         if (p.specifications) setSpecifications(p.specifications);
         if (p.shippingPolicy) setShippingPolicy(p.shippingPolicy);
@@ -48,6 +48,21 @@ export const VendorProductFormPage: React.FC = () => {
       });
     }
   }, [productId]);
+
+  const handleImageFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (e.target) e.target.value = '';
+    if (!file) return;
+    setIsUploadingImage(true);
+    try {
+      const { url } = await uploadChatFile(file, 'vendor_products');
+      setImageUrl(url);
+    } catch (err: any) {
+      alert(err?.message || 'Image upload failed');
+    } finally {
+      setIsUploadingImage(false);
+    }
+  };
 
   const handleAddSpec = () => {
     if (specKey.trim() && specVal.trim()) {
@@ -76,10 +91,11 @@ export const VendorProductFormPage: React.FC = () => {
       price: Number(price),
       discount: Number(discount),
       stock: Number(stock),
-      images: [imageUrl],
+      images: imageUrl.trim() ? [imageUrl.trim()] : [],
       specifications,
       shippingPolicy,
       returnPolicy,
+      isFeatured,
       status: 'active',
     };
 
@@ -136,8 +152,8 @@ export const VendorProductFormPage: React.FC = () => {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Nexconn SonicPro Studio Wireless Headphones"
-              className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+              placeholder="e.g. Wireless ANC Headphones or Custom Mechanical Keyboard"
+              className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -149,7 +165,7 @@ export const VendorProductFormPage: React.FC = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Detailed explanation of features, materials, and benefits..."
-              className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+              className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
             />
           </div>
 
@@ -159,7 +175,7 @@ export const VendorProductFormPage: React.FC = () => {
               <select
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium bg-white focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
               >
                 {DEFAULT_CATEGORIES.map((c) => (
                   <option key={c.id} value={c.id}>
@@ -176,7 +192,8 @@ export const VendorProductFormPage: React.FC = () => {
                 required
                 value={brand}
                 onChange={(e) => setBrand(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+                placeholder="Your Store or Brand Name"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
               />
             </div>
 
@@ -187,10 +204,22 @@ export const VendorProductFormPage: React.FC = () => {
                 required
                 value={sku}
                 onChange={(e) => setSku(e.target.value)}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-mono font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 p-2.5 text-xs font-mono font-medium focus:border-brand-500 focus:outline-none"
               />
             </div>
           </div>
+
+          <label className="inline-flex items-center gap-2 pt-1 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={isFeatured}
+              onChange={(e) => setIsFeatured(e.target.checked)}
+              className="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+            />
+            <span className="font-semibold text-slate-700">
+              Showcase in Storefront Featured Releases
+            </span>
+          </label>
         </div>
 
         {/* Pricing & Inventory */}
@@ -209,7 +238,7 @@ export const VendorProductFormPage: React.FC = () => {
                 required
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
               />
             </div>
 
@@ -221,7 +250,7 @@ export const VendorProductFormPage: React.FC = () => {
                 max="90"
                 value={discount}
                 onChange={(e) => setDiscount(Number(e.target.value))}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
               />
             </div>
 
@@ -233,7 +262,7 @@ export const VendorProductFormPage: React.FC = () => {
                 required
                 value={stock}
                 onChange={(e) => setStock(Number(e.target.value))}
-                className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
               />
             </div>
           </div>
@@ -241,9 +270,31 @@ export const VendorProductFormPage: React.FC = () => {
 
         {/* Media */}
         <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
-            Primary Imagery URL
-          </h3>
+          <div className="flex items-center justify-between gap-3 flex-wrap">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+              Product Image (Upload or URL)
+            </h3>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              onChange={(e) => void handleImageFileUpload(e)}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={isUploadingImage}
+              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-slate-50 px-3.5 py-2 text-xs font-bold text-slate-800 hover:bg-slate-100 disabled:opacity-60"
+            >
+              {isUploadingImage ? (
+                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              ) : (
+                <Upload className="h-3.5 w-3.5" />
+              )}
+              {isUploadingImage ? 'Uploading...' : 'Upload Image File'}
+            </button>
+          </div>
           <div>
             <label className="font-bold text-slate-700 block mb-1">Image URL</label>
             <input
@@ -251,7 +302,8 @@ export const VendorProductFormPage: React.FC = () => {
               required
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
+              placeholder="https://... or click Upload Image File above"
+              className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 p-2.5 text-xs font-medium focus:border-brand-500 focus:outline-none"
             />
           </div>
           {imageUrl && (
@@ -273,14 +325,14 @@ export const VendorProductFormPage: React.FC = () => {
               placeholder="Spec Name (e.g. Battery Life)"
               value={specKey}
               onChange={(e) => setSpecKey(e.target.value)}
-              className="flex-1 rounded-xl border border-slate-300 p-2 bg-white"
+              className="flex-1 rounded-xl border border-slate-300 p-2 bg-white text-slate-900 placeholder:text-slate-400"
             />
             <input
               type="text"
               placeholder="Value (e.g. 50 Hours)"
               value={specVal}
               onChange={(e) => setSpecVal(e.target.value)}
-              className="flex-1 rounded-xl border border-slate-300 p-2 bg-white"
+              className="flex-1 rounded-xl border border-slate-300 p-2 bg-white text-slate-900 placeholder:text-slate-400"
             />
             <button
               type="button"

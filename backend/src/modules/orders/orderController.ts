@@ -118,6 +118,38 @@ export class OrderController {
       createdOrders.push(order);
     }
 
+    // Keep dynamic customer address book & phone synced from checkout
+    const existingAddresses = req.user.addresses || [];
+    const hasSameAddress = existingAddresses.some(
+      (a) =>
+        a.street?.toLowerCase() === address.street?.toLowerCase() &&
+        a.postalCode?.toLowerCase() === address.postalCode?.toLowerCase()
+    );
+    if (!hasSameAddress || !req.user.phoneNumber) {
+      const nextAddresses = hasSameAddress
+        ? existingAddresses
+        : [
+            ...existingAddresses,
+            {
+              id: address.id || `addr_${Date.now()}`,
+              fullName: address.fullName || req.user.displayName,
+              phone: address.phone || req.user.phoneNumber || '',
+              street: address.street,
+              city: address.city,
+              state: address.state || '',
+              postalCode: address.postalCode,
+              country: address.country || 'United States',
+              isDefault: existingAddresses.length === 0,
+            },
+          ];
+      db.updateUser(req.user.uid, {
+        addresses: nextAddresses,
+        phoneNumber: req.user.phoneNumber || address.phone,
+        city: req.user.city || address.city,
+        country: req.user.country || address.country,
+      });
+    }
+
     // Clear consumer cart after successful checkout
     db.saveCart({
       cartId: `cart_${req.user.uid}`,
@@ -151,7 +183,17 @@ export class OrderController {
       orders = db.getOrders();
     }
 
-    res.json(orders);
+    const enriched = orders.map((o) => {
+      const customer = db.findUserById(o.consumerId);
+      return {
+        ...o,
+        consumerName: customer?.displayName || o.consumerName,
+        consumerEmail: customer?.email || o.consumerEmail,
+        consumerPhone: customer?.phoneNumber || o.addressSnapshot?.phone || o.consumerPhone,
+      };
+    });
+
+    res.json(enriched);
   }
 
   public getOrderById(req: AuthenticatedRequest, res: Response) {

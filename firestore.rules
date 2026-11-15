@@ -1,0 +1,36 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ConvoCart / Nexconn Hackathon collections on society-adc76
+    match /convocart_vendors/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_users/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_products/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_conversations/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_messages/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_orders/{docId} {
+      allow read, write: if true;
+    }
+    match /support-tickets/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_faqs/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_kb/{docId} {
+      allow read, write: if true;
+    }
+    match /convocart_health/{docId} {
+      allow read, write: if true;
+    }
+  }
+}

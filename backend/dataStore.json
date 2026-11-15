@@ -21,8 +21,9 @@
           "isDefault": true
         }
       ],
-      "createdAt": "2026-10-14T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-10-15T07:26:20.076Z",
+      "updatedAt": "2026-11-14T13:17:45.196Z",
+      "rsaKeyFingerprint": "2FF8:1112:8B1A:4E4C"
     },
     {
       "uid": "user_vendor_1",
@@ -33,8 +34,10 @@
       "vendorId": "vendor_nexconn_audio",
       "photoURL": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0182",
-      "createdAt": "2026-10-04T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-10-05T07:26:20.076Z",
+      "updatedAt": "2026-11-14T14:03:30.046Z",
+      "rsaKeyFingerprint": "23B0:9708:3AC1:758F",
+      "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9oNs7P1iQROQfS/kOJ2AaV+Oy3EOnXLO0hS4rv7073F2Tb7fVpKNAw6Z3clrxv/lGFUTCqfWCC26eUUx7z9iu7HuBMFG5wJMo8mgoaFD5WP1LevGLv0JvdNI7yWo14q208z99h+7m4lqEVNb1oiSmWpfPhRsjDbsAedm5XCi8ZcPOWa/nwa7F5h4CPfyc7/AoFt0OQvmQxjVlXS+F98A1syCQHP05oq+axqJc8Dxxb6yLGTPgHgQ7zFZIaUFMlctGq1bJqdUjN7+M5P5KrLx1o9wBpb4JmYHVZY1+3WxAT+ESCLDjGyqEg8BTXrolPhnrnZ85ZLkw7eOJlQRosmcQwIDAQAB"
     },
     {
       "uid": "user_vendor_2",
@@ -45,8 +48,8 @@
       "vendorId": "vendor_ubuy_express",
       "photoURL": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0144",
-      "createdAt": "2026-10-09T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-10-10T07:26:20.076Z",
+      "updatedAt": "2026-11-14T07:26:20.076Z"
     },
     {
       "uid": "user_support_1",
@@ -56,8 +59,8 @@
       "preferredLanguage": "en",
       "photoURL": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0111",
-      "createdAt": "2026-09-24T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-09-25T07:26:20.076Z",
+      "updatedAt": "2026-11-14T07:26:20.076Z"
     },
     {
       "uid": "user_admin_1",
@@ -67,16 +70,270 @@
       "preferredLanguage": "en",
       "photoURL": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0100",
-      "createdAt": "2026-09-14T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-09-15T07:26:20.076Z",
+      "updatedAt": "2026-11-14T07:26:20.076Z"
+    },
+    {
+      "uid": "user_support_2",
+      "email": "kenji@convocart.com",
+      "displayName": "Kenji Takahashi",
+      "role": "support_agent",
+      "preferredLanguage": "ja",
+      "photoURL": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+81-3-5555-0192",
+      "createdAt": "2026-09-30T07:26:20.079Z",
+      "updatedAt": "2026-11-14T07:26:20.079Z"
+    },
+    {
+      "uid": "user_vendor_3",
+      "email": "studio@convocart.com",
+      "displayName": "Aarav Mehta (NexaDigital Studio)",
+      "role": "vendor",
+      "preferredLanguage": "hi",
+      "vendorId": "vendor_nexa_studio",
+      "photoURL": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      "phoneNumber": "+91-98201-44510",
+      "createdAt": "2026-10-17T07:26:20.079Z",
+      "updatedAt": "2026-11-14T07:26:20.079Z"
+    },
+    {
+      "uid": "fb_verify_1794655450599",
+      "firebaseUid": "fb_verify_1794655450599",
+      "authProvider": "firebase",
+      "emailVerified": true,
+      "email": "verify_1794655450599@example.com",
+      "displayName": "Aarav Mehta",
+      "phoneNumber": "+91 99887 11223",
+      "role": "consumer",
+      "preferredLanguage": "en",
+      "city": "Mumbai",
+      "country": "India",
+      "addresses": [
+        {
+          "postalCode": "400020",
+          "city": "Mumbai",
+          "id": "addr_verify_1",
+          "isDefault": true,
+          "fullName": "Aarav Mehta",
+          "state": "MH",
+          "street": "402 Marine Drive",
+          "country": "India",
+          "phone": "+91 99887 11223"
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Aarav%20Mehta",
+      "createdAt": "2026-11-14T11:24:10.790Z",
+      "updatedAt": "2026-11-14T11:24:10.878Z"
+    },
+    {
+      "uid": "3NCPoP5CgUV2DwVZ3LESedHqnEF3",
+      "firebaseUid": "3NCPoP5CgUV2DwVZ3LESedHqnEF3",
+      "authProvider": "google",
+      "emailVerified": true,
+      "email": "yugjpatel24@gmail.com",
+      "displayName": "Yug Patel",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "vendorId": "vendor_1794655955763_75a",
+      "addresses": [],
+      "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocJxKSaQRYW8HB2D76RRpv2KBe1QgKLYsklv3WPsIatTVKOaGNvU=s96-c",
+      "createdAt": "2026-11-14T11:32:35.866Z",
+      "updatedAt": "2026-11-14T11:32:35.866Z"
+    },
+    {
+      "uid": "user_1794657939849_uqsp",
+      "authProvider": "password",
+      "emailVerified": false,
+      "email": "verify_seller_1794657939632@example.com",
+      "displayName": "Verify Seller",
+      "phoneNumber": "+91-9999990001",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "city": "Vadodara",
+      "country": "India",
+      "vendorId": "vendor_1794657939849_05g",
+      "addresses": [
+        {
+          "id": "addr_1794657939851",
+          "fullName": "Verify Seller",
+          "phone": "+91-9999990001",
+          "street": "MG Road",
+          "city": "Vadodara",
+          "state": "",
+          "postalCode": "",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Seller",
+      "createdAt": "2026-11-14T12:05:39.851Z",
+      "updatedAt": "2026-11-14T12:05:39.851Z"
+    },
+    {
+      "uid": "user_1794657939927_1dz0",
+      "authProvider": "password",
+      "emailVerified": false,
+      "email": "verify_buyer_1794657939632@example.com",
+      "displayName": "Verify Buyer",
+      "phoneNumber": "+91-9999990002",
+      "role": "consumer",
+      "preferredLanguage": "hi",
+      "city": "Vadodara",
+      "country": "India",
+      "addresses": [
+        {
+          "id": "addr_1794657939927",
+          "fullName": "Verify Buyer",
+          "phone": "+91-9999990002",
+          "street": "Alkapuri",
+          "city": "Vadodara",
+          "state": "",
+          "postalCode": "",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Buyer",
+      "createdAt": "2026-11-14T12:05:39.927Z",
+      "updatedAt": "2026-11-14T12:05:39.927Z"
+    },
+    {
+      "uid": "user_1794658045932_ilgj",
+      "authProvider": "password",
+      "emailVerified": false,
+      "email": "verify_seller_1794658045829@example.com",
+      "displayName": "Verify Seller",
+      "phoneNumber": "+91-9999990001",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "city": "Vadodara",
+      "country": "India",
+      "vendorId": "vendor_1794658045932_r4f",
+      "addresses": [
+        {
+          "id": "addr_1794658045934",
+          "fullName": "Verify Seller",
+          "phone": "+91-9999990001",
+          "street": "MG Road",
+          "city": "Vadodara",
+          "state": "",
+          "postalCode": "",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Seller",
+      "createdAt": "2026-11-14T12:07:25.934Z",
+      "updatedAt": "2026-11-14T12:07:25.934Z"
+    },
+    {
+      "uid": "user_1794658046012_lx56",
+      "authProvider": "password",
+      "emailVerified": false,
+      "email": "verify_buyer_1794658045829@example.com",
+      "displayName": "Verify Buyer",
+      "phoneNumber": "+91-9999990002",
+      "role": "consumer",
+      "preferredLanguage": "hi",
+      "city": "Vadodara",
+      "country": "India",
+      "addresses": [
+        {
+          "id": "addr_1794658046012",
+          "fullName": "Verify Buyer",
+          "phone": "+91-9999990002",
+          "street": "Alkapuri",
+          "city": "Vadodara",
+          "state": "",
+          "postalCode": "",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Buyer",
+      "createdAt": "2026-11-14T12:07:26.012Z",
+      "updatedAt": "2026-11-14T12:07:26.012Z"
+    },
+    {
+      "uid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "firebaseUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "authProvider": "firebase",
+      "emailVerified": false,
+      "email": "seller.aura.live@convocart.com",
+      "displayName": "Rohan Verma",
+      "phoneNumber": "+91-9876543210",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "city": "Vadodara",
+      "country": "India",
+      "vendorId": "vendor_1794660712280_26v",
+      "addresses": [
+        {
+          "id": "addr_1794660712281",
+          "fullName": "Rohan Verma",
+          "phone": "+91-9876543210",
+          "street": "42 Residency Road",
+          "city": "Vadodara",
+          "state": "Gujarat",
+          "postalCode": "390001",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Rohan%20Verma",
+      "createdAt": "2026-11-14T12:51:52.344Z",
+      "updatedAt": "2026-11-14T14:09:52.061Z",
+      "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx1WW47jBa1xi/egN4SsadSqZifB63J2GM+e125TUJb8nz69cUcEBboJpP7Z5oz+W4eVqzxrEiJtxYq3PnOahOIK6W/O+dV6bqql386IHQuAXZfhojkrOA6qfuzB0PkXUcbH89gUAGsEoqC5cWK5ElgyJTM5pI8sa/t4oAHBbIA8X6UzzpChVwzlWt4hTqMfpPgWWDYiNbbWrnsIKPHyCWMsRWuH6yJuACgXddoYqZbBRWbV/Y4ExMsNpYEF7UnG0/0Mtm6YcaNcsNPFCBwdkejhpjodjUaUPLgF3aITnMj4gQSrC3Aty+goBGBpcEMCgaK02DhB7xx3Qkq0VRyPd3wIDAQAB",
+      "rsaKeyFingerprint": "AED7:C1B9:AF00:9868"
+    },
+    {
+      "uid": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "firebaseUid": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "authProvider": "firebase",
+      "emailVerified": false,
+      "email": "buyer.priya.live@convocart.com",
+      "displayName": "Priya Sharma",
+      "phoneNumber": "+91-9811122233",
+      "role": "consumer",
+      "preferredLanguage": "en",
+      "city": "Vadodara",
+      "country": "India",
+      "addresses": [
+        {
+          "id": "addr_1794660817229",
+          "fullName": "Priya Sharma",
+          "phone": "+91-9811122233",
+          "street": "18 Alkapuri Society",
+          "city": "Vadodara",
+          "state": "Gujarat",
+          "postalCode": "390007",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Sharma",
+      "createdAt": "2026-11-14T12:53:37.296Z",
+      "updatedAt": "2026-11-14T14:11:14.512Z",
+      "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv94Gdl9e4sJa/gXLtSjF9Uzr8cNlMiLdulHivu7o+Hhwr8uDFb0ZDUC3S4nedsqYAPswYOEJFEtzFZOTzKvkkAOu7cmiuZyih6H4v6OrgeKmXwk1YC5Xm1sRaW7eIOK+nUzzenvxZPga84n1CSiz0QiobjSuKn+Yy+Lr3lGJRFCb6kaeKy9JCEGOqvusDgRJppQZfD89fyQpSL9qbpmLvDuJ00ETRHAuSvPpSIb0jcBKYqoylBRyUFQ3bIDEZt4YltNVg21Hdi9QUhqiBvT3kUTKNbsIhHZ+N3h2sXVtwngHrO5yZEBex/n2HWidcmURitsYkPmlfWA1chlko+LAtQIDAQAB",
+      "rsaKeyFingerprint": "1AD0:6D75:7532:2B03"
     }
   ],
   "passwords": {
-    "user_consumer_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
-    "user_vendor_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
-    "user_vendor_2": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
-    "user_support_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK",
-    "user_admin_1": "$2a$10$fhiegPuPLbS51b1PpZIRq.G9opLQWAzCKSoN0KMAOMCvct3KAOfjK"
+    "user_consumer_1": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_1": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_2": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_support_1": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_admin_1": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_support_2": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_3": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "fb_verify_1794655450599": "$2a$10$XpLGK3A47CZjT3PrDCPOCOvNa6bh2I2FS89qo8y.DEIzLM/KUYu0K",
+    "3NCPoP5CgUV2DwVZ3LESedHqnEF3": "$2a$10$fvC2tEobKs0YVfnXyALIG.Ax7gDdaRvpqgbFEfFPgmQ/.BNUlr28K",
+    "user_1794657939849_uqsp": "$2a$10$YXr.iTuxTPdm/qDE38eX9.yrSij8.rOaruNpZfWA3byGqDLUToz5C",
+    "user_1794657939927_1dz0": "$2a$10$Ktas.xscvRuXd7oi0vAiXuAQOxLkE0JB.8Xbn0.x8TNcyeNEcQ77S",
+    "user_1794658045932_ilgj": "$2a$10$.ixwRgMIF9xJ8nyBSa9BJe/PcMtENedcOko3tGNUzTHI5/xzDMUzy",
+    "user_1794658046012_lx56": "$2a$10$KHh/GH9gWwVmenOK407EV.vQOr7a8ijEhdAMkPPHSzCvpzh1dWRBy",
+    "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": "$2a$10$e3Y7LLTfZmFToLB3XEX8KuRxLyq9/K9ROfZoxwbybK8NetqWVoKE2",
+    "3maoBhU7jJW37ppzT1Eb8LuwWji1": "$2a$10$z8gAsW1bgrKG7BtgSFKrmenOi6QXrmg6liX3RdMXVHbCQv6pDiltq"
   },
   "vendors": [
     {
@@ -100,8 +357,8 @@
       "commissionRate": 0.05,
       "contactEmail": "support@nexconnaudio.com",
       "contactPhone": "+1-800-555-NEXC",
-      "createdAt": "2026-10-04T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-10-05T07:26:20.076Z",
+      "updatedAt": "2026-11-14T07:26:20.076Z"
     },
     {
       "vendorId": "vendor_ubuy_express",
@@ -124,259 +381,354 @@
       "commissionRate": 0.07,
       "contactEmail": "concierge@ubuyglobal.com",
       "contactPhone": "+1-888-UBUY-EXP",
-      "createdAt": "2026-10-09T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
+      "createdAt": "2026-10-10T07:26:20.076Z",
+      "updatedAt": "2026-11-14T07:26:20.076Z"
+    },
+    {
+      "vendorId": "vendor_nexa_studio",
+      "ownerUid": "user_vendor_3",
+      "businessName": "NexaDigital Commerce & AI Studio",
+      "description": "Flagship Nexconn marketplace studio offering omnichannel SaaS UI kits, smart creator hardware bundles, encrypted live-support tools, and luxury interactive storefronts powered by Firebase & Nexconn SDK.",
+      "logo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 4.95,
+      "reviewCount": 412,
+      "businessPolicies": {
+        "shipping": "Instant digital delivery for UI/SaaS kits; 48h express courier for creator hardware bundles.",
+        "returns": "14-day hassle-free satisfaction guarantee with dedicated human specialist onboarding.",
+        "warranty": "Lifetime cloud updates via Firebase sync & 2-year hardware studio coverage."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "studio@convocart.com",
+      "contactPhone": "+91-98201-44510",
+      "createdAt": "2026-10-17T07:26:20.079Z",
+      "updatedAt": "2026-11-14T07:26:20.079Z"
+    },
+    {
+      "vendorId": "vendor_1794655955763_75a",
+      "ownerUid": "3NCPoP5CgUV2DwVZ3LESedHqnEF3",
+      "businessName": "Yug Patel's Store",
+      "description": "Verified seller storefront powered by ConvoCart & Nexconn SDK.",
+      "logo": "https://lh3.googleusercontent.com/a/ACg8ocJxKSaQRYW8HB2D76RRpv2KBe1QgKLYsklv3WPsIatTVKOaGNvU=s96-c",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 5,
+      "reviewCount": 0,
+      "businessPolicies": {
+        "shipping": "Standard delivery in 3-5 business days.",
+        "returns": "7-day replacement guarantee.",
+        "warranty": "1-year standard warranty."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "yugjpatel24@gmail.com",
+      "contactPhone": "+1-555-0100",
+      "createdAt": "2026-11-14T11:32:35.763Z",
+      "updatedAt": "2026-11-14T11:32:35.763Z"
+    },
+    {
+      "vendorId": "vendor_1794657939849_05g",
+      "ownerUid": "user_1794657939849_uqsp",
+      "businessName": "Verify Craft Store",
+      "description": "Verified seller storefront powered by ConvoCart & Nexconn SDK.",
+      "logo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 5,
+      "reviewCount": 0,
+      "businessPolicies": {
+        "shipping": "Standard delivery in 3-5 business days.",
+        "returns": "7-day replacement guarantee.",
+        "warranty": "1-year standard warranty."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "verify_seller_1794657939632@example.com",
+      "contactPhone": "+91-9999990001",
+      "createdAt": "2026-11-14T12:05:39.849Z",
+      "updatedAt": "2026-11-14T12:05:39.849Z"
+    },
+    {
+      "vendorId": "vendor_1794658045932_r4f",
+      "ownerUid": "user_1794658045932_ilgj",
+      "businessName": "Verify Craft Store",
+      "description": "Verified seller storefront powered by ConvoCart & Nexconn SDK.",
+      "logo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 5,
+      "reviewCount": 0,
+      "businessPolicies": {
+        "shipping": "Standard delivery in 3-5 business days.",
+        "returns": "7-day replacement guarantee.",
+        "warranty": "1-year standard warranty."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "verify_seller_1794658045829@example.com",
+      "contactPhone": "+91-9999990001",
+      "createdAt": "2026-11-14T12:07:25.932Z",
+      "updatedAt": "2026-11-14T12:07:25.932Z"
+    },
+    {
+      "vendorId": "vendor_1794660712280_26v",
+      "ownerUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "businessName": "Aura Sound Studio",
+      "description": "Verified seller storefront powered by ConvoCart & Nexconn SDK.",
+      "logo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 5,
+      "reviewCount": 0,
+      "businessPolicies": {
+        "shipping": "Standard delivery in 3-5 business days.",
+        "returns": "7-day replacement guarantee.",
+        "warranty": "1-year standard warranty."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "seller.aura.live@convocart.com",
+      "contactPhone": "+91-9876543210",
+      "createdAt": "2026-11-14T12:51:52.280Z",
+      "updatedAt": "2026-11-14T12:51:52.280Z"
     }
   ],
   "products": [
     {
-      "productId": "prod_nexconn_pro_anc",
-      "vendorId": "vendor_nexconn_audio",
-      "vendorName": "Nexconn Audio & Smart Tech",
-      "title": "Nexconn SonicPro ANC Studio Wireless Headphones",
-      "description": "Engineered for audiophiles and producers. Features hybrid 45dB Active Noise Cancellation, custom 40mm titanium diaphragm drivers, 65-hour playback time, ultra-low latency gaming mode, and Bluetooth 5.4 multi-point connectivity.",
+      "productId": "prod_1794657939860_6myp",
+      "vendorId": "vendor_1794657939849_05g",
+      "vendorName": "Verify Craft Store",
+      "title": "Live Seller Product Acoustic Desk",
+      "description": "Verified live uploaded item",
       "categoryId": "cat-electronics",
       "categoryName": "Electronics & Gadgets",
-      "brand": "Nexconn Audio",
-      "sku": "NEX-SPRO-01",
-      "price": 299,
-      "discount": 15,
-      "stock": 45,
-      "images": [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80"
-      ],
-      "variants": [
-        {
-          "id": "var_color",
-          "name": "Color",
-          "options": [
-            "Obsidian Black",
-            "Lunar Silver",
-            "Midnight Navy"
-          ]
-        },
-        {
-          "id": "var_cable",
-          "name": "Accessories",
-          "options": [
-            "Standard Pack",
-            "Studio Pro Hard-Case Kit"
-          ],
-          "priceDiff": 25
-        }
-      ],
-      "specifications": {
-        "Driver Size": "40mm Titanium Dome",
-        "Frequency Response": "10Hz – 40,000Hz (Hi-Res Audio Certified)",
-        "Battery Life": "65 Hours (ANC Off) / 48 Hours (ANC On)",
-        "Charging": "USB-C Quick Charge (10 mins = 5 hours)",
-        "Noise Cancellation": "Dual-chip Adaptive ANC (-45dB)",
-        "Microphones": "6 AI Beamforming Mics with Wind Shield"
-      },
-      "shippingPolicy": "Ships next business day via insured air parcel.",
-      "returnPolicy": "30-day money back guarantee with zero restocking fee.",
-      "status": "active",
-      "rating": 4.9,
-      "reviewCount": 148,
-      "isFeatured": true,
-      "isTrending": true,
-      "createdAt": "2026-10-19T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
-    },
-    {
-      "productId": "prod_tokyo_mech_keyboard",
-      "vendorId": "vendor_ubuy_express",
-      "vendorName": "Ubuy Global Express Marketplace",
-      "title": "Akiba Keebs Master Artisan 75% Mechanical Keyboard (Hot-Swap)",
-      "description": "Direct Tokyo Import. CNC carved aerospace aluminum chassis with gasket mount structure, pre-lubed Gateron Oil King linear switches, PBT dye-sublimated cherry keycaps, and south-facing RGB per-key illumination.",
-      "categoryId": "cat-global",
-      "categoryName": "Ubuy Global Express",
-      "brand": "Akiba Keebs",
-      "sku": "AKB-75-JP",
-      "price": 249,
+      "brand": "VerifyBrand",
+      "sku": "VRF-1794657939632",
+      "price": 149,
       "discount": 10,
-      "stock": 18,
-      "images": [
-        "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&auto=format&fit=crop&q=80"
-      ],
-      "variants": [
-        {
-          "id": "var_switch",
-          "name": "Switch Type",
-          "options": [
-            "Oil King Linear",
-            "Baby Kangaroo Tactile"
-          ]
-        }
-      ],
-      "specifications": {
-        "Layout": "75% Compact (82 Keys)",
-        "Structure": "Multi-layer Silicone Gasket Mounted",
-        "Connectivity": "Tri-mode (2.4GHz / Bluetooth 5.2 / USB-C)",
-        "Polling Rate": "1000Hz (Wired & 2.4G)",
-        "Weight": "1.75 kg (Solid Aluminum)"
-      },
-      "shippingPolicy": "Shipped from Haneda Hub via DHL Worldwide Express (3-5 days delivery).",
-      "returnPolicy": "14-day warranty with US/EU hub returns.",
-      "status": "active",
-      "rating": 4.8,
-      "reviewCount": 76,
-      "isFeatured": true,
-      "createdAt": "2026-10-24T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
-    },
-    {
-      "productId": "prod_smartwatch_ultra",
-      "vendorId": "vendor_nexconn_audio",
-      "vendorName": "Nexconn Audio & Smart Tech",
-      "title": "Nexconn PulseTrack GPS Sapphire Rugged Smartwatch",
-      "description": "Ultra-tough titanium casing with sapphire crystal touch display. Dual-frequency precision GPS, continuous ECG and SpO2 health tracking, offline topological maps, 100m water resistance, and 14-day battery life.",
-      "categoryId": "cat-electronics",
-      "categoryName": "Electronics & Gadgets",
-      "brand": "Nexconn Tech",
-      "sku": "NEX-WATCH-U2",
-      "price": 399,
-      "discount": 20,
-      "stock": 32,
-      "images": [
-        "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80"
-      ],
-      "specifications": {
-        "Display": "1.43-inch AMOLED Sapphire Display (1000 nits)",
-        "Battery": "500mAh (Up to 14 days normal usage)",
-        "Water Rating": "10 ATM (100 meters dive proof)",
-        "Sensors": "Optical Heart Rate, SpO2, Skin Temp, Barometric Altimeter, Compass"
-      },
-      "shippingPolicy": "Free express shipping worldwide.",
-      "returnPolicy": "30-day return policy.",
-      "status": "active",
-      "rating": 4.7,
-      "reviewCount": 89,
-      "isFeatured": false,
-      "isTrending": true,
-      "createdAt": "2026-10-29T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
-    },
-    {
-      "productId": "prod_espresso_machine_pro",
-      "vendorId": "vendor_ubuy_express",
-      "vendorName": "Ubuy Global Express Marketplace",
-      "title": "Milano Barista Craft Dual-Boiler Espresso Machine",
-      "description": "Direct Italian Import. Commercial grade 58mm portafilter, PID dual temperature control, commercial rotary vane pump, and cool-touch micro-foam steam wand for third-wave latte art at home.",
-      "categoryId": "cat-home",
-      "categoryName": "Home & Kitchen",
-      "brand": "Milano Craft",
-      "sku": "MIL-ESP-580",
-      "price": 899,
-      "discount": 12,
       "stock": 12,
       "images": [
-        "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
       ],
-      "specifications": {
-        "Boiler Type": "Dual Stainless Steel Boilers (Brew: 0.8L, Steam: 1.5L)",
-        "Pressure": "15 Bar Commercial Italian Rotary Pump",
-        "Portafilter": "Commercial 58mm Solid Brass Chrome-plated",
-        "Power": "1800W Rapid Heat-Up"
-      },
-      "shippingPolicy": "Crated heavy cargo with white-glove curbside delivery.",
-      "returnPolicy": "30-day satisfaction guarantee.",
-      "status": "active",
-      "rating": 4.95,
-      "reviewCount": 54,
+      "variants": [],
+      "specifications": {},
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement or return window.",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
       "isFeatured": true,
-      "isTrending": false,
-      "createdAt": "2026-10-26T05:34:05.753Z",
-      "updatedAt": "2026-11-13T05:34:05.753Z"
-    },
-    {
-      "productId": "prod_merino_wool_jacket",
-      "vendorId": "vendor_ubuy_express",
-      "vendorName": "Ubuy Global Express Marketplace",
-      "title": "Nordic Explorer Merino Insulated Technical Parka",
-      "description": "Tailored Scandinavian design combining 100% fine Merino wool thermal insulation with a breathable 20,000mm waterproof storm shell. Magnet-snap pockets and internal storm cuffs.",
-      "categoryId": "cat-fashion",
-      "categoryName": "Fashion & Apparel",
-      "brand": "Nordic Heritage",
-      "sku": "NOR-PARKA-09",
-      "price": 349,
-      "discount": 0,
-      "stock": 25,
-      "images": [
-        "https://images.unsplash.com/photo-1544923246-77307dd654cb?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800&auto=format&fit=crop&q=80"
-      ],
-      "variants": [
-        {
-          "id": "var_size",
-          "name": "Size",
-          "options": [
-            "S",
-            "M",
-            "L",
-            "XL"
-          ]
-        },
-        {
-          "id": "var_color",
-          "name": "Color",
-          "options": [
-            "Deep Forest Green",
-            "Charcoal Heather"
-          ]
-        }
-      ],
-      "specifications": {
-        "Shell Material": "3-Layer Recycled Ripstop Nylon (20k Waterproof)",
-        "Insulation": "250gsm Virgin Merino Wool Blend",
-        "Zippers": "YKK Aquaguard Matte Waterproof Zippers"
-      },
-      "shippingPolicy": "Free standard shipping.",
-      "returnPolicy": "30-day exchange for sizing differences.",
-      "status": "active",
-      "rating": 4.6,
-      "reviewCount": 42,
-      "isFeatured": false,
       "isTrending": true,
-      "createdAt": "2026-11-03T05:34:05.754Z",
-      "updatedAt": "2026-11-13T05:34:05.754Z"
+      "createdAt": "2026-11-14T12:05:39.860Z",
+      "updatedAt": "2026-11-14T12:05:40.961Z"
     },
     {
-      "productId": "prod_skincare_elixir",
+      "productId": "prod_1794658045944_hklz",
+      "vendorId": "vendor_1794658045932_r4f",
+      "vendorName": "Verify Craft Store",
+      "title": "Live Seller Product Acoustic Desk",
+      "description": "Verified live uploaded item",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "VerifyBrand",
+      "sku": "VRF-1794658045829",
+      "price": 149,
+      "discount": 10,
+      "stock": 12,
+      "images": [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600"
+      ],
+      "variants": [],
+      "specifications": {},
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement or return window.",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "isFeatured": true,
+      "isTrending": true,
+      "createdAt": "2026-11-14T12:07:25.944Z",
+      "updatedAt": "2026-11-14T12:07:26.385Z"
+    },
+    {
+      "productId": "prod_1794660748965_iyud",
+      "vendorId": "vendor_1794660712280_26v",
+      "vendorName": "Aura Sound Studio",
+      "title": "Aura Studio Pro Wireless Headphones",
+      "description": "Studio-grade active noise cancelling headphones with 50h battery, lossless USB-C audio, and 40mm titanium drivers.",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "Aura Sound",
+      "sku": "AURA-PRO-01",
+      "price": 249,
+      "discount": 10,
+      "stock": 19,
+      "images": [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+      ],
+      "variants": [],
+      "specifications": {},
+      "shippingPolicy": "Ships within 24 hours via express courier.",
+      "returnPolicy": "30-day money-back guarantee with zero restocking fee.",
+      "status": "active",
+      "rating": 5,
+      "reviewCount": 0,
+      "isFeatured": true,
+      "isTrending": true,
+      "createdAt": "2026-11-14T12:52:28.965Z",
+      "updatedAt": "2026-11-14T12:56:23.478Z"
+    },
+    {
+      "productId": "prod_test_ground_1794661339775",
       "vendorId": "vendor_nexconn_audio",
       "vendorName": "Nexconn Audio & Smart Tech",
-      "title": "Lumiere Botanical Bio-Retinol Night Recovery Elixir",
-      "description": "Clinically proven 1% plant-derived bakuchiol infused with squalane, cold-pressed rosehip seed oil, and tri-peptide complex to deeply restore cellular elasticity overnight.",
-      "categoryId": "cat-beauty",
-      "categoryName": "Beauty & Personal Care",
-      "brand": "Lumiere Organics",
-      "sku": "LUM-BIO-30",
-      "price": 78,
-      "discount": 25,
-      "stock": 80,
-      "images": [
-        "https://images.unsplash.com/photo-1608248597359-2169b22a0d92?w=800&auto=format&fit=crop&q=80",
-        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80"
-      ],
+      "title": "Test Seller SonicPro Reference Headset",
+      "description": "Seller-uploaded test studio headset",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "SonicTest",
+      "sku": "TST-1794661339775",
+      "price": 299,
+      "discount": 0,
+      "stock": 15,
+      "images": [],
       "specifications": {
-        "Volume": "30ml / 1.0 fl oz Dropper Bottle",
-        "Skin Type": "Sensitive, Dry, Mature, Combination",
-        "Key Ingredients": "1% Bakuchiol, Olive Squalane, Peptides, Blue Tansy"
+        "Battery": "40 Hours"
       },
-      "shippingPolicy": "Ships in temperature-controlled protective wrapping.",
-      "returnPolicy": "14-day unopened guarantee.",
-      "status": "active",
-      "rating": 4.88,
-      "reviewCount": 110,
-      "isFeatured": false,
-      "isTrending": true,
-      "createdAt": "2026-11-05T05:34:05.754Z",
-      "updatedAt": "2026-11-13T05:34:05.754Z"
+      "shippingPolicy": "Express shipping",
+      "returnPolicy": "30-day return",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:02:19.775Z",
+      "updatedAt": "2026-11-14T13:02:19.779Z"
+    },
+    {
+      "productId": "prod_tkt_test_1794661340067",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Seller Uploaded Acoustic Dac Amp",
+      "description": "Hi-Fi desktop headphone amp uploaded by seller",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "AudioLab",
+      "sku": "AUD-1794661340067",
+      "price": 179,
+      "discount": 0,
+      "stock": 10,
+      "images": [],
+      "specifications": {},
+      "shippingPolicy": "Next day air",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:02:20.067Z",
+      "updatedAt": "2026-11-14T13:02:20.072Z"
+    },
+    {
+      "productId": "prod_test_ground_1794662240783",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Test Seller SonicPro Reference Headset",
+      "description": "Seller-uploaded test studio headset",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "SonicTest",
+      "sku": "TST-1794662240783",
+      "price": 299,
+      "discount": 0,
+      "stock": 15,
+      "images": [],
+      "specifications": {
+        "Battery": "40 Hours"
+      },
+      "shippingPolicy": "Express shipping",
+      "returnPolicy": "30-day return",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:17:20.783Z",
+      "updatedAt": "2026-11-14T13:17:20.787Z"
+    },
+    {
+      "productId": "prod_tkt_test_1794662241044",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Seller Uploaded Acoustic Dac Amp",
+      "description": "Hi-Fi desktop headphone amp uploaded by seller",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "AudioLab",
+      "sku": "AUD-1794662241044",
+      "price": 179,
+      "discount": 0,
+      "stock": 10,
+      "images": [],
+      "specifications": {},
+      "shippingPolicy": "Next day air",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:17:21.044Z",
+      "updatedAt": "2026-11-14T13:17:21.048Z"
+    },
+    {
+      "productId": "prod_test_ground_1794662264687",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Test Seller SonicPro Reference Headset",
+      "description": "Seller-uploaded test studio headset",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "SonicTest",
+      "sku": "TST-1794662264687",
+      "price": 299,
+      "discount": 0,
+      "stock": 15,
+      "images": [],
+      "specifications": {
+        "Battery": "40 Hours"
+      },
+      "shippingPolicy": "Express shipping",
+      "returnPolicy": "30-day return",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:17:44.687Z",
+      "updatedAt": "2026-11-14T13:17:44.690Z"
+    },
+    {
+      "productId": "prod_tkt_test_1794662264945",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Seller Uploaded Acoustic Dac Amp",
+      "description": "Hi-Fi desktop headphone amp uploaded by seller",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "AudioLab",
+      "sku": "AUD-1794662264945",
+      "price": 179,
+      "discount": 0,
+      "stock": 10,
+      "images": [],
+      "specifications": {},
+      "shippingPolicy": "Next day air",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-14T13:17:44.945Z",
+      "updatedAt": "2026-11-14T13:17:44.955Z"
     }
   ],
   "carts": {
@@ -384,43 +736,62 @@
       "cartId": "cart_user_consumer_1",
       "consumerId": "user_consumer_1",
       "items": [],
-      "updatedAt": "2026-11-13T06:19:28.093Z"
+      "updatedAt": "2026-11-14T10:48:25.363Z"
+    },
+    "user_vendor_1": {
+      "cartId": "cart_user_vendor_1",
+      "consumerId": "user_vendor_1",
+      "items": [],
+      "updatedAt": "2026-11-14T11:01:19.077Z"
+    },
+    "3NCPoP5CgUV2DwVZ3LESedHqnEF3": {
+      "cartId": "cart_3NCPoP5CgUV2DwVZ3LESedHqnEF3",
+      "consumerId": "3NCPoP5CgUV2DwVZ3LESedHqnEF3",
+      "items": [],
+      "updatedAt": "2026-11-14T11:32:35.885Z"
+    },
+    "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": {
+      "cartId": "cart_n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "consumerId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "items": [],
+      "updatedAt": "2026-11-14T12:51:52.663Z"
+    },
+    "3maoBhU7jJW37ppzT1Eb8LuwWji1": {
+      "cartId": "cart_3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "consumerId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "items": [],
+      "updatedAt": "2026-11-14T12:56:23.744Z"
     }
   },
   "orders": [
     {
-      "orderId": "ord_sample_9841",
-      "checkoutGroupId": "chk_group_101",
+      "orderId": "ord_1794653305179_48rt",
+      "checkoutGroupId": "chk_grp_1794653305178_74tn",
       "consumerId": "user_consumer_1",
       "consumerName": "Alex Johnson",
       "consumerEmail": "customer@convocart.com",
-      "vendorId": "vendor_nexconn_audio",
-      "vendorName": "Nexconn Audio & Smart Tech",
+      "vendorId": "vendor_nexa_studio",
+      "vendorName": "NexaDigital Commerce & AI Studio",
       "items": [
         {
-          "productId": "prod_nexconn_pro_anc",
-          "vendorId": "vendor_nexconn_audio",
-          "title": "Nexconn SonicPro ANC Studio Wireless Headphones",
-          "price": 254.15,
-          "discount": 15,
+          "productId": "prod_nexa_sonic_kit",
+          "vendorId": "vendor_nexa_studio",
+          "title": "NexaCreator Studio — Podcast & Live Commerce Audio Bundle",
+          "price": 175.12,
+          "discount": 12,
           "quantity": 1,
-          "selectedVariant": {
-            "Color": "Obsidian Black",
-            "Accessories": "Standard Pack"
-          },
-          "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+          "selectedVariant": {},
+          "image": "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&auto=format&fit=crop&q=80"
         }
       ],
-      "subtotal": 254.15,
-      "shipping": 0,
+      "subtotal": 175.12,
+      "shipping": 49,
       "discount": 0,
-      "tax": 20.33,
-      "total": 274.48,
-      "paymentStatus": "captured",
-      "orderStatus": "shipped",
-      "shippingStatus": "In Transit — Estimated delivery tomorrow by 4 PM",
-      "trackingNumber": "TRK-NEX-889921",
-      "shippingCarrier": "FedEx Priority",
+      "tax": 14.01,
+      "total": 238.13,
+      "paymentStatus": "refunded",
+      "orderStatus": "cancelled",
+      "shippingStatus": "Cancelled",
       "addressSnapshot": {
         "id": "addr_1",
         "fullName": "Alex Johnson",
@@ -433,170 +804,981 @@
         "isDefault": true
       },
       "paymentMethod": "razorpay",
-      "createdAt": "2026-11-10T05:34:05.754Z",
-      "updatedAt": "2026-11-12T05:34:05.754Z"
+      "createdAt": "2026-11-14T10:48:25.179Z",
+      "updatedAt": "2026-11-14T10:48:33.316Z",
+      "cancellationReason": "Buyer requested cancellation",
+      "consumerPhone": "+1-555-0199"
+    },
+    {
+      "orderId": "ord_1794660983479_z2x7",
+      "checkoutGroupId": "chk_grp_1794660983477_4yxw",
+      "consumerId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "consumerName": "Priya Sharma",
+      "consumerEmail": "buyer.priya.live@convocart.com",
+      "vendorId": "vendor_1794660712280_26v",
+      "vendorName": "Aura Sound Studio",
+      "items": [
+        {
+          "productId": "prod_1794660748965_iyud",
+          "vendorId": "vendor_1794660712280_26v",
+          "title": "Aura Studio Pro Wireless Headphones",
+          "price": 224.1,
+          "discount": 10,
+          "quantity": 1,
+          "selectedVariant": {},
+          "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
+        }
+      ],
+      "subtotal": 224.1,
+      "shipping": 49,
+      "discount": 0,
+      "tax": 17.93,
+      "total": 291.03,
+      "paymentStatus": "pending",
+      "orderStatus": "delivered",
+      "shippingStatus": "Delivered to customer address",
+      "addressSnapshot": {
+        "id": "addr_1794660817229",
+        "fullName": "Priya Sharma",
+        "phone": "+91-9811122233",
+        "street": "18 Alkapuri Society",
+        "city": "Vadodara",
+        "state": "Gujarat",
+        "postalCode": "390007",
+        "country": "India"
+      },
+      "paymentMethod": "cash_on_delivery",
+      "createdAt": "2026-11-14T12:56:23.479Z",
+      "updatedAt": "2026-11-14T12:59:47.677Z",
+      "trackingNumber": "TRK-EXP-446069",
+      "shippingCarrier": "FedEx Express",
+      "consumerPhone": "+91-9811122233"
     }
   ],
   "conversations": [
     {
-      "conversationId": "conv_consumer_vendor_audio",
+      "conversationId": "conv_1794653315639_73ir",
       "consumerId": "user_consumer_1",
       "consumerName": "Alex Johnson",
       "consumerAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
-      "vendorId": "vendor_nexconn_audio",
-      "vendorBusinessName": "Nexconn Audio & Smart Tech",
-      "productId": "prod_nexconn_pro_anc",
-      "productTitle": "Nexconn SonicPro ANC Studio Wireless Headphones",
-      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
-      "orderId": "ord_sample_9841",
+      "vendorId": "vendor_nexa_studio",
+      "vendorBusinessName": "NexaDigital Commerce & AI Studio",
+      "vendorLogo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "hi",
+      "orderId": "ord_1794653305179_48rt",
       "status": "escalated",
-      "aiHandlingEnabled": true,
+      "aiHandlingEnabled": false,
+      "unreadCount": {
+        "user_consumer_1": 1,
+        "user_vendor_3": 3,
+        "user_support_1": 1
+      },
+      "createdAt": "2026-11-14T10:48:35.640Z",
+      "updatedAt": "2026-11-14T13:17:45.196Z",
       "lastMessage": {
-        "text": "I understand your request regarding \"refund\". As an AI assistant, I cannot approve refunds or modify live transactions directly. I have marked this conversation as high priority and escalated it directly to Nexconn Audio & Smart Tech's store manager for immediate personal assistance.",
-        "senderId": "agent_vendor_nexconn_audio",
-        "timestamp": "2026-11-13T05:54:56.078Z",
+        "text": "Hi Alex! Sarah Connor here from Human Dispatch (Ticket #tkt_1794653372754_0dq). I see you mentioned earlier that you don't want / wish to return Order #ord_1794653305179_48rt. Would you like me to process a full cancellation & refund right away?",
+        "senderId": "user_support_1",
+        "timestamp": "2026-11-14T11:04:30.998Z",
         "type": "text"
       },
+      "autoTranslateEnabled": true,
+      "escalatedToSupport": true,
+      "escalationReason": "User requested live human support intervention",
+      "escalatedAt": "2026-11-14T10:49:32.753Z",
+      "assignedSupportAgentId": "user_support_1",
+      "assignedSupportAgentName": "Sarah Connor",
+      "supportAgentId": "user_support_1",
+      "dispatchedAt": "2026-11-14T10:59:10.366Z",
+      "consumerEmail": "customer@convocart.com",
+      "consumerPhone": "+1-555-0199"
+    },
+    {
+      "conversationId": "conv_1794655450892_duw6",
+      "consumerId": "fb_verify_1794655450599",
+      "consumerName": "Aarav Mehta",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Aarav%20Mehta",
+      "vendorId": "vendor_nexa_studio",
+      "vendorBusinessName": "NexaDigital Commerce & AI Studio",
+      "vendorLogo": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "hi",
+      "status": "active",
+      "aiHandlingEnabled": true,
       "unreadCount": {
-        "user_consumer_1": 0,
-        "user_vendor_1": 2
+        "fb_verify_1794655450599": 1,
+        "user_vendor_3": 0
       },
-      "createdAt": "2026-11-10T05:34:05.754Z",
-      "updatedAt": "2026-11-13T06:20:47.941Z",
-      "escalatedToSupport": true
+      "createdAt": "2026-11-14T11:24:10.892Z",
+      "updatedAt": "2026-11-14T11:24:10.893Z",
+      "lastMessage": {
+        "text": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough.",
+        "senderId": "agent_vendor_nexa_studio",
+        "timestamp": "2026-11-14T11:24:10.893Z",
+        "type": "text"
+      }
+    },
+    {
+      "conversationId": "conv_1794657939934_s5kk",
+      "consumerId": "user_1794657939927_1dz0",
+      "consumerName": "Verify Buyer",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Buyer",
+      "vendorId": "vendor_1794657939849_05g",
+      "vendorBusinessName": "Verify Craft Store",
+      "vendorLogo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "hi",
+      "vendorPreferredLanguage": "en",
+      "productId": "prod_1794657939860_6myp",
+      "productTitle": "Live Seller Product Acoustic Desk",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "user_1794657939927_1dz0": 3,
+        "user_1794657939849_uqsp": 1
+      },
+      "createdAt": "2026-11-14T12:05:39.934Z",
+      "updatedAt": "2026-11-14T12:05:40.951Z",
+      "lastMessage": {
+        "text": "Yes, we have 12 units ready to ship today!",
+        "senderId": "user_1794657939849_uqsp",
+        "timestamp": "2026-11-14T12:05:40.951Z",
+        "type": "text"
+      }
+    },
+    {
+      "conversationId": "conv_1794658046017_3i6z",
+      "consumerId": "user_1794658046012_lx56",
+      "consumerName": "Verify Buyer",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Verify%20Buyer",
+      "vendorId": "vendor_1794658045932_r4f",
+      "vendorBusinessName": "Verify Craft Store",
+      "vendorLogo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "hi",
+      "vendorPreferredLanguage": "en",
+      "productId": "prod_1794658045944_hklz",
+      "productTitle": "Live Seller Product Acoustic Desk",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "user_1794658046012_lx56": 3,
+        "user_1794658045932_ilgj": 1
+      },
+      "createdAt": "2026-11-14T12:07:26.017Z",
+      "updatedAt": "2026-11-14T12:07:26.375Z",
+      "lastMessage": {
+        "text": "Yes, we have 12 units ready to ship today!",
+        "senderId": "user_1794658045932_ilgj",
+        "timestamp": "2026-11-14T12:07:26.375Z",
+        "type": "text"
+      }
+    },
+    {
+      "conversationId": "conv_1794660880436_byyc",
+      "consumerId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "consumerName": "Priya Sharma",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Priya%20Sharma",
+      "vendorId": "vendor_1794660712280_26v",
+      "vendorBusinessName": "Aura Sound Studio",
+      "vendorLogo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "en",
+      "productId": "prod_1794660748965_iyud",
+      "productTitle": "Aura Studio Pro Wireless Headphones",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "3maoBhU7jJW37ppzT1Eb8LuwWji1": 0,
+        "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": 0,
+        "vendor_1794660712280_26v": 0
+      },
+      "createdAt": "2026-11-14T12:54:40.436Z",
+      "updatedAt": "2026-11-14T14:11:14.880Z",
+      "lastMessage": {
+        "text": "🔒 RSA-2048 Encrypted Message",
+        "senderId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+        "timestamp": "2026-11-14T14:10:13.059Z",
+        "type": "text"
+      },
+      "consumerEmail": "buyer.priya.live@convocart.com",
+      "consumerPhone": "+91-9811122233"
     }
   ],
   "messages": [
     {
-      "id": "msg_1",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "user_consumer_1",
-      "senderName": "Alex Johnson",
-      "senderRole": "consumer",
-      "recipientId": "vendor_nexconn_audio",
-      "text": "Hi! Does this pair support simultaneous connection to both an iPad and an iPhone?",
-      "type": "text",
-      "status": "read",
-      "createdAt": "2026-11-10T05:34:05.754Z"
-    },
-    {
-      "id": "msg_2",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "agent_aria",
-      "senderName": "Aria (AI Assistant)",
+      "id": "msg_1794653315641",
+      "conversationId": "conv_1794653315639_73ir",
+      "senderId": "agent_vendor_nexa_studio",
+      "senderName": "Nova (NexaDigital AI Concierge)",
       "senderRole": "vendor",
       "recipientId": "user_consumer_1",
-      "text": "Hello Alex! Yes, absolutely! The Nexconn SonicPro ANC features Bluetooth 5.4 multi-point pairing, which lets you seamlessly switch between your iPad and iPhone without manually disconnecting.",
+      "text": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough.",
       "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough.",
+          "de": "Namaste und willkommen bei NexaDigital Studio! Fragen Sie mich nach einem Creator-Paket, einer interaktiven Storefront-Lizenz oder fordern Sie eine Live-Sprach-/Video-Komplettlösung an."
+        }
+      },
       "isAiGenerated": true,
-      "status": "read",
-      "createdAt": "2026-11-10T05:34:09.754Z"
+      "status": "sent",
+      "createdAt": "2026-11-14T10:48:35.641Z",
+      "updatedAt": "2026-11-14T10:48:47.921Z"
     },
     {
-      "id": "msg_3",
-      "conversationId": "conv_consumer_vendor_audio",
+      "id": "msg_1794653345378_jiz6",
+      "conversationId": "conv_1794653315639_73ir",
       "senderId": "user_consumer_1",
       "senderName": "Alex Johnson",
       "senderRole": "consumer",
-      "recipientId": "vendor_nexconn_audio",
-      "text": "Awesome, just placed my order!",
+      "recipientId": "user_vendor_3",
+      "text": "I don't want my product",
       "type": "text",
-      "status": "read",
-      "createdAt": "2026-11-11T05:34:05.754Z"
-    },
-    {
-      "id": "msg_4",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "user_vendor_1",
-      "senderName": "Elena Rostova",
-      "senderRole": "vendor",
-      "recipientId": "user_consumer_1",
-      "text": "Your tracking number is TRK-NEX-889921. Let us know if you need anything else!",
-      "type": "text",
-      "status": "read",
-      "createdAt": "2026-11-12T05:34:05.754Z"
-    },
-    {
-      "id": "msg_1794549288157_42c8",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "user_consumer_1",
-      "senderName": "Alex Johnson",
-      "senderRole": "consumer",
-      "recipientId": "user_vendor_1",
-      "text": "Does the Nexconn SonicPro support Bluetooth 5.4 multi-device pairing?",
-      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I don't want my product",
+          "de": "Ich möchte mein Produkt nicht"
+        }
+      },
       "isAiGenerated": false,
       "status": "delivered",
-      "createdAt": "2026-11-13T05:54:48.157Z"
+      "createdAt": "2026-11-14T10:49:05.378Z"
     },
     {
-      "id": "msg_1794549288258",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "agent_vendor_nexconn_audio",
-      "senderName": "AI Vendor Assistant",
+      "id": "msg_1794653345482",
+      "conversationId": "conv_1794653315639_73ir",
+      "senderId": "agent_vendor_nexa_studio",
+      "senderName": "Nova (NexaDigital AI Concierge)",
       "senderRole": "vendor",
       "recipientId": "user_consumer_1",
-      "text": "[Aria (Nexconn Audio Assistant)]: Yes! The Nexconn SonicPro ANC supports Bluetooth 5.4 multi-point pairing, allowing you to connect seamlessly to your laptop and smartphone simultaneously.",
+      "text": "[Nova (NexaDigital AI Concierge)]: Hello! Thanks for reaching out to NexaDigital Commerce & AI Studio. Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough. If you have specific questions about product specifications, shipping, or returns, feel free to ask!",
       "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Nova (NexaDigital AI Concierge)]: Hello! Thanks for reaching out to NexaDigital Commerce & AI Studio. Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough. If you have specific questions about product specifications, shipping, or returns, feel free to ask!"
+        }
+      },
       "isAiGenerated": true,
       "status": "delivered",
-      "createdAt": "2026-11-13T05:54:48.258Z"
+      "createdAt": "2026-11-14T10:49:05.482Z"
     },
     {
-      "id": "msg_1794549295978_z52m",
-      "conversationId": "conv_consumer_vendor_audio",
+      "id": "msg_1794653372755_esc",
+      "conversationId": "conv_1794653315639_73ir",
+      "senderId": "system_dispatch",
+      "senderName": "ConvoCart Dispatch Center",
+      "senderRole": "support_agent",
+      "recipientId": "user_consumer_1",
+      "text": "🎧 Conversation escalated to the Human Agent Dispatch Center (Ticket #tkt_1794653372754_0dq). Reason: User requested live human support intervention",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "🎧 Conversation escalated to the Human Agent Dispatch Center (Ticket #tkt_1794653372754_0dq). Reason: User requested live human support intervention"
+        }
+      },
+      "status": "delivered",
+      "createdAt": "2026-11-14T10:49:32.755Z"
+    },
+    {
+      "id": "msg_1794653385672_v7v1",
+      "conversationId": "conv_1794653315639_73ir",
       "senderId": "user_consumer_1",
       "senderName": "Alex Johnson",
       "senderRole": "consumer",
-      "recipientId": "user_vendor_1",
-      "text": "I demand an immediate refund for my damaged shipment",
+      "recipientId": "user_vendor_3",
+      "text": "hi",
       "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hi"
+        }
+      },
       "isAiGenerated": false,
       "status": "delivered",
-      "createdAt": "2026-11-13T05:54:55.978Z"
+      "createdAt": "2026-11-14T10:49:45.672Z"
     },
     {
-      "id": "msg_1794549296078",
-      "conversationId": "conv_consumer_vendor_audio",
-      "senderId": "agent_vendor_nexconn_audio",
-      "senderName": "AI Vendor Assistant",
-      "senderRole": "vendor",
-      "recipientId": "user_consumer_1",
-      "text": "I understand your request regarding \"refund\". As an AI assistant, I cannot approve refunds or modify live transactions directly. I have marked this conversation as high priority and escalated it directly to Nexconn Audio & Smart Tech's store manager for immediate personal assistance.",
+      "id": "msg_1794654270876_2w2l",
+      "conversationId": "conv_1794653315639_73ir",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "user_vendor_3",
+      "text": "hi",
       "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hi",
+          "hi": "नमस्ते"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T11:04:30.876Z"
+    },
+    {
+      "id": "msg_1794654270998_9ne",
+      "conversationId": "conv_1794653315639_73ir",
+      "senderId": "user_support_1",
+      "senderName": "Sarah Connor",
+      "senderRole": "support_agent",
+      "recipientId": "user_consumer_1",
+      "text": "Hi Alex! Sarah Connor here from Human Dispatch (Ticket #tkt_1794653372754_0dq). I see you mentioned earlier that you don't want / wish to return Order #ord_1794653305179_48rt. Would you like me to process a full cancellation & refund right away?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hi Alex! Sarah Connor here from Human Dispatch (Ticket #tkt_1794653372754_0dq). I see you mentioned earlier that you don't want / wish to return Order #ord_1794653305179_48rt. Would you like me to process a full cancellation & refund right away?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T11:04:30.998Z"
+    },
+    {
+      "id": "msg_1794655450893",
+      "conversationId": "conv_1794655450892_duw6",
+      "senderId": "agent_vendor_nexa_studio",
+      "senderName": "Nova (NexaDigital AI Concierge)",
+      "senderRole": "vendor",
+      "recipientId": "fb_verify_1794655450599",
+      "text": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-14T11:24:10.893Z"
+    },
+    {
+      "id": "msg_1794657939935",
+      "conversationId": "conv_1794657939934_s5kk",
+      "senderId": "agent_vendor_1794657939849_05g",
+      "senderName": "Verify Craft Store AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "user_1794657939927_1dz0",
+      "text": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-14T12:05:39.935Z"
+    },
+    {
+      "id": "msg_1794657939939_oxw9",
+      "conversationId": "conv_1794657939934_s5kk",
+      "senderId": "user_1794657939927_1dz0",
+      "senderName": "Verify Buyer",
+      "senderRole": "consumer",
+      "recipientId": "user_1794657939849_uqsp",
+      "text": "Hello seller, is this product in stock?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hello seller, is this product in stock?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:05:39.939Z"
+    },
+    {
+      "id": "msg_1794657940310_126",
+      "conversationId": "conv_1794657939934_s5kk",
+      "senderId": "agent_vendor_1794657939849_05g",
+      "senderName": "Verify Craft Store AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "user_1794657939927_1dz0",
+      "text": "[Verify Craft Store AI Concierge]: We currently have 12 units of Live Seller Product Acoustic Desk in stock and ready to ship.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Verify Craft Store AI Concierge]: We currently have 12 units of Live Seller Product Acoustic Desk in stock and ready to ship.",
+          "hi": "[क्राफ्ट स्टोर एआई कंसीयज सत्यापित करें]: वर्तमान में हमारे पास स्टॉक में लाइव सेलर उत्पाद ध्वनिक डेस्क की 12 इकाइयां हैं और शिप करने के लिए तैयार हैं।"
+        }
+      },
       "isAiGenerated": true,
       "status": "delivered",
-      "createdAt": "2026-11-13T05:54:56.078Z"
+      "createdAt": "2026-11-14T12:05:40.310Z"
+    },
+    {
+      "id": "msg_1794657940951_5y26",
+      "conversationId": "conv_1794657939934_s5kk",
+      "senderId": "user_1794657939849_uqsp",
+      "senderName": "Verify Seller",
+      "senderRole": "vendor",
+      "recipientId": "user_1794657939927_1dz0",
+      "text": "Yes, we have 12 units ready to ship today!",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Yes, we have 12 units ready to ship today!",
+          "hi": "हाँ, आज हमारे पास शिप करने के लिए 12 इकाइयाँ तैयार हैं!"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:05:40.951Z"
+    },
+    {
+      "id": "msg_1794658046018",
+      "conversationId": "conv_1794658046017_3i6z",
+      "senderId": "agent_vendor_1794658045932_r4f",
+      "senderName": "Verify Craft Store AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "user_1794658046012_lx56",
+      "text": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-14T12:07:26.018Z"
+    },
+    {
+      "id": "msg_1794658046022_82b0",
+      "conversationId": "conv_1794658046017_3i6z",
+      "senderId": "user_1794658046012_lx56",
+      "senderName": "Verify Buyer",
+      "senderRole": "consumer",
+      "recipientId": "user_1794658045932_ilgj",
+      "text": "Hello seller, is this product in stock?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hello seller, is this product in stock?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:07:26.022Z"
+    },
+    {
+      "id": "msg_1794658046304_dbd",
+      "conversationId": "conv_1794658046017_3i6z",
+      "senderId": "agent_vendor_1794658045932_r4f",
+      "senderName": "Verify Craft Store AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "user_1794658046012_lx56",
+      "text": "[Verify Craft Store AI Concierge]: We currently have 12 units of Live Seller Product Acoustic Desk in stock and ready to ship.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Verify Craft Store AI Concierge]: We currently have 12 units of Live Seller Product Acoustic Desk in stock and ready to ship.",
+          "hi": "[क्राफ्ट स्टोर एआई कंसीयज सत्यापित करें]: वर्तमान में हमारे पास स्टॉक में लाइव सेलर उत्पाद ध्वनिक डेस्क की 12 इकाइयां हैं और शिप करने के लिए तैयार हैं।"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:07:26.304Z"
+    },
+    {
+      "id": "msg_1794658046375_qans",
+      "conversationId": "conv_1794658046017_3i6z",
+      "senderId": "user_1794658045932_ilgj",
+      "senderName": "Verify Seller",
+      "senderRole": "vendor",
+      "recipientId": "user_1794658046012_lx56",
+      "text": "Yes, we have 12 units ready to ship today!",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Yes, we have 12 units ready to ship today!",
+          "hi": "हाँ, आज हमारे पास शिप करने के लिए 12 इकाइयाँ तैयार हैं!"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:07:26.375Z"
+    },
+    {
+      "id": "msg_1794660880437",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "Welcome to Aura Sound Studio! Ask about products, shipping, or live quotes in any language.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Welcome to Aura Sound Studio! Ask about products, shipping, or live quotes in any language."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-14T12:54:40.437Z"
+    },
+    {
+      "id": "msg_1794660895880_lxqv",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "senderName": "Priya Sharma",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "Hi Rohan, does this Aura Studio Pro come with a 3.5mm braided cable?",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hi Rohan, does this Aura Studio Pro come with a 3.5mm braided cable?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:54:55.880Z"
+    },
+    {
+      "id": "msg_1794660895982_iaj",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "[Aura Sound Studio AI Concierge]: Hi there! I'm online and ready to help with anything at Aura Sound Studio — such as our featured Aura Studio Pro Wireless Headphones ($249.00). Ask about product specs, live order status, bulk quotes, or click \"Human Agent\" to connect directly with our dispatch team.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Aura Sound Studio AI Concierge]: Hi there! I'm online and ready to help with anything at Aura Sound Studio — such as our featured Aura Studio Pro Wireless Headphones ($249.00). Ask about product specs, live order status, bulk quotes, or click \"Human Agent\" to connect directly with our dispatch team."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:54:55.982Z"
+    },
+    {
+      "id": "msg_1794661092213_s1qe",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "senderName": "Rohan Verma",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "Yes Priya, the Aura Studio Pro includes a 1.2m oxygen-free copper 3.5mm braided cable, along with a 6.35mm studio adapter.",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Yes Priya, the Aura Studio Pro includes a 1.2m oxygen-free copper 3.5mm braided cable, along with a 6.35mm studio adapter."
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T12:58:12.213Z"
+    },
+    {
+      "id": "msg_1794663367996_m9o8",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "senderName": "Priya Sharma",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "Hi Rohan, confirming RSA encrypted order to Vadodara.",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hi Rohan, confirming RSA encrypted order to Vadodara."
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:36:07.996Z"
+    },
+    {
+      "id": "msg_1794663368099_6ah",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:36:08.099Z"
+    },
+    {
+      "id": "msg_1794663859322_fbzo",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "senderName": "Priya Sharma",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "Hi Rohan, confirming RSA encrypted order to Vadodara.",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hi Rohan, confirming RSA encrypted order to Vadodara."
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:44:19.322Z"
+    },
+    {
+      "id": "msg_1794663859424_0mi",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:44:19.424Z"
+    },
+    {
+      "id": "msg_1794664095896_brvk",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "senderName": "Priya Sharma",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "Hi Rohan, confirming RSA encrypted order to Vadodara.",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hi Rohan, confirming RSA encrypted order to Vadodara."
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:48:15.896Z"
+    },
+    {
+      "id": "msg_1794664095998_x23",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "[Aura Sound Studio AI Concierge]: Your order #ord_1794660983479_z2x7 is currently \"delivered\". Delivered to customer address (Tracking: TRK-EXP-446069 via FedEx Express). Let me know if you need to modify, cancel, or escalate this order to a live specialist!"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-14T13:48:15.998Z"
+    },
+    {
+      "id": "msg_1794665232927_5w58",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "senderName": "Priya Sharma",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoiVGxGQ29iZFFjbDlFQlFVUmtwcHl3b1FUWXcyYmxtV1lSSGpuN2xmUjUzZ0graXNxcnNYelFkOGNxaVUxZXpxSlNHNC9MMlBKRGJTUllDZjl4SHA2R0g1TWRrZjhNckh4blpyRTA5RTY2eEd2NFdyOVF3bzR0WVNLSVVGdlF6RUtDWlVZd3dQNkQ2UUJuZ05oeUcwWGRKT0dURTRMbEdhZ2hJdVBGQW5oWkozK0hCUlRFeXFGVWJ1QllSR202d2ZrR05KR3dmbWd5TlZEY2h6dGRKcnhMQlJCR3c5WVczNHo2UlBBSkZ4S3pIdjlXMldvZko2VDA4OTkxYTUxOFBLdFRmNnhOL3ZITDdaeWdaQ2RDcTlxQVhlcGJ3MXoyTVprMTkrNE9KcUc3T0JiWURzaW5uV3I5VUg4NE5NNHlWSS9FOXE5cDZ0R0xhZXMzM0Y2eW5vVGZBPT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoiVGxGQ29iZFFjbDlFQlFVUmtwcHl3b1FUWXcyYmxtV1lSSGpuN2xmUjUzZ0graXNxcnNYelFkOGNxaVUxZXpxSlNHNC9MMlBKRGJTUllDZjl4SHA2R0g1TWRrZjhNckh4blpyRTA5RTY2eEd2NFdyOVF3bzR0WVNLSVVGdlF6RUtDWlVZd3dQNkQ2UUJuZ05oeUcwWGRKT0dURTRMbEdhZ2hJdVBGQW5oWkozK0hCUlRFeXFGVWJ1QllSR202d2ZrR05KR3dmbWd5TlZEY2h6dGRKcnhMQlJCR3c5WVczNHo2UlBBSkZ4S3pIdjlXMldvZko2VDA4OTkxYTUxOFBLdFRmNnhOL3ZITDdaeWdaQ2RDcTlxQVhlcGJ3MXoyTVprMTkrNE9KcUc3T0JiWURzaW5uV3I5VUg4NE5NNHlWSS9FOXE5cDZ0R0xhZXMzM0Y2eW5vVGZBPT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjFBRDA6NkQ3NTo3NTMyOjJCMDMiLCJjIjoiYUZMV0NsNnRjR0J4VFJlbnNoUjRvcG5QRWdSVkFiejFnaDg2VTNpb0Y0bHk3L29hTE5qV0RkU2dDZVFXVUtpejgwN2FXVFFmV2VQTHh3TG5qSXdrd2xqelhkSVBJVTcyWlNxK1l3aW5mZTNhcVFBWGlSNXBwd29JUHBMS0wwZnFaa3pUZlBGaG0vZFRidlhiNGRzWTIvVTQ2RjE1TG0zMHE2RXMzK25zTGljUUQ2NC83VTA2TUFXT3ArNlltYW5lejREK1JBY0pzSHVLbmFFaFR3SllWbmNjQ3o1a1RDT04xSC9yRHB0RTdVRGE0TGU3cHdDRFJvZk5BSkx2Q3p0VWM0MW5lQk4zZHk0MSs5VTJTUEg3QWxSWnZ3a0dkWHBtN2FNSHJ3R2JsWGtaUzVHWGRtdklGK25iTU1mYW5mZUtKQkRXMnJUaXJ3UWcrMGhCRFRSdStBPT0ifQ==",
+        "rsaRecipientUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+        "rsaSenderUid": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+        "rsaKeyFingerprint": "AED7:C1B9:AF00:9868",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T14:07:12.927Z"
+    },
+    {
+      "id": "msg_1794665413059_5e5e",
+      "conversationId": "conv_1794660880436_byyc",
+      "senderId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "senderName": "Rohan Verma",
+      "senderRole": "vendor",
+      "recipientId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjFBRDA6NkQ3NTo3NTMyOjJCMDMiLCJjIjoiT0p1Y3Y0Tjh5b0locDFxKzlOeGQ1emp4UGM1Yy8wbHVxY1REbnk2a3ZuUzdnalk5VWpwSnlTZmY1QTAzbVlOdUdRdGNvSGsxOVpvKzZCMmQ4aHAyV1FTbnlQck9jOGF0aEZuZytiM2RlL205L0tPTTBER25FQ3NnRWszVGRuTG40SjlPNmhoR2J1a2p5d25scEJKWldrbTlmYTJnY1orZHNMY1VUQXdpRkpsMGp4OWdPS0ltZ2J6cnpUM2lvdUs5cDhYNFVRT0JhbUo0ZTdCTklaRFJnTEUxTVRTNUNiU1dkZ08rV2dUMHhDTk1jQ2MvNnlJcWxLcldURmduNkNicXVFWkFoejZnbTNCU3ZST2xTeFZkY1N1UlJQZjhHVTJpcnlzKy91V0c2VkRLRlRFeEg2cG5kRENFaG94N1pvOUk1MjdYT0g5aUZaK3VrTm5RdFZXR1lBPT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjFBRDA6NkQ3NTo3NTMyOjJCMDMiLCJjIjoiT0p1Y3Y0Tjh5b0locDFxKzlOeGQ1emp4UGM1Yy8wbHVxY1REbnk2a3ZuUzdnalk5VWpwSnlTZmY1QTAzbVlOdUdRdGNvSGsxOVpvKzZCMmQ4aHAyV1FTbnlQck9jOGF0aEZuZytiM2RlL205L0tPTTBER25FQ3NnRWszVGRuTG40SjlPNmhoR2J1a2p5d25scEJKWldrbTlmYTJnY1orZHNMY1VUQXdpRkpsMGp4OWdPS0ltZ2J6cnpUM2lvdUs5cDhYNFVRT0JhbUo0ZTdCTklaRFJnTEUxTVRTNUNiU1dkZ08rV2dUMHhDTk1jQ2MvNnlJcWxLcldURmduNkNicXVFWkFoejZnbTNCU3ZST2xTeFZkY1N1UlJQZjhHVTJpcnlzKy91V0c2VkRLRlRFeEg2cG5kRENFaG94N1pvOUk1MjdYT0g5aUZaK3VrTm5RdFZXR1lBPT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoiSnNhVXhvN2NycGlucE9STkdrY0RXUGtUUU9hdktuZzZpY2hnY3hjeEdmN0NzcXZpSm5COUdnUy9ZUUx3dkltUnpIOGxHRERzakFaT3BCMU1UZ1RDajFPVVFPck0xNmZFRGhwQUI3bjR4aVkraDRLYnA1dGxZaGkzdEtWZ2NlYTVwR0NqdmlaaTNlQXlZVjh1S3pqSDhyaUlxdnA1Y0ZmY05ZV1B3cUEwL3ZYOVVQTmE3d0kwYUEwZUh1Q1FhUEh0OXllUi9ucy9WMVBpVkRCbUd5SVBPQk5DYnBUWFFibXF4UzJreXV1OWxGWG5yd1ZPeWdHQ2dHaE9POFFQTnNpT1lWWkFlSXl3ZDlMR2VBSW1FY0Y4RmxtU2dGRnFpVFVIUml0b0xOR053VjNrTXhGK2c3a0c3MlQrc2F1MlZRMjJBMHJ4YkJUdjNvbEFVRHVMTEJLQ0JnPT0ifQ==",
+        "rsaRecipientUid": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+        "rsaSenderUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+        "rsaKeyFingerprint": "1AD0:6D75:7532:2B03",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-14T14:10:13.059Z"
     }
   ],
   "supportTickets": [
     {
-      "ticketId": "tkt_1001",
+      "ticketId": "tkt_1794653372754_0dq",
       "consumerId": "user_consumer_1",
       "consumerName": "Alex Johnson",
       "consumerEmail": "customer@convocart.com",
-      "conversationId": "conv_consumer_vendor_audio",
-      "orderId": "ord_sample_9841",
-      "vendorId": "vendor_nexconn_audio",
-      "assignedAgentId": "user_support_1",
-      "assignedAgentName": "Sarah Connor",
-      "priority": "medium",
+      "conversationId": "conv_1794653315639_73ir",
+      "orderId": "ord_1794653305179_48rt",
+      "vendorId": "vendor_nexa_studio",
+      "priority": "high",
       "status": "in_progress",
-      "category": "Delivery Inquiry",
-      "subject": "FedEx delivery window verification",
-      "description": "Customer inquired whether delivery signature is required for parcel TRK-NEX-889921.",
-      "internalNotes": [
+      "category": "Human Agent Escalation",
+      "subject": "Escalated Chat: NexaDigital Commerce & AI Studio",
+      "description": "User requested live human support intervention",
+      "internalNotes": [],
+      "slaDueHours": 12,
+      "createdAt": "2026-11-14T10:49:32.754Z",
+      "updatedAt": "2026-11-14T10:49:32.754Z",
+      "assignedAgentId": "user_support_1",
+      "assignedAgentName": "Sarah Connor"
+    },
+    {
+      "ticketId": "tkt_1794657940955_kf6j",
+      "consumerId": "user_1794657939927_1dz0",
+      "consumerName": "Verify Buyer",
+      "consumerEmail": "verify_buyer_1794657939632@example.com",
+      "priority": "high",
+      "status": "open",
+      "category": "Product Inquiry & Specs",
+      "subject": "Need warranty sheet",
+      "description": "Checking product warranty terms",
+      "internalNotes": [],
+      "slaDueHours": 12,
+      "firebaseSynced": true,
+      "createdAt": "2026-11-14T12:05:40.955Z",
+      "updatedAt": "2026-11-14T12:05:40.956Z"
+    },
+    {
+      "ticketId": "tkt_1794658046380_9uwp",
+      "consumerId": "user_1794658046012_lx56",
+      "consumerName": "Verify Buyer",
+      "consumerEmail": "verify_buyer_1794658045829@example.com",
+      "productId": "prod_1794658045944_hklz",
+      "productTitle": "Live Seller Product Acoustic Desk",
+      "vendorId": "vendor_1794658045932_r4f",
+      "priority": "high",
+      "status": "open",
+      "category": "Product Inquiry & Specs",
+      "subject": "Need warranty sheet",
+      "description": "Checking product warranty terms",
+      "internalNotes": [],
+      "slaDueHours": 12,
+      "firebaseSynced": true,
+      "createdAt": "2026-11-14T12:07:26.380Z",
+      "updatedAt": "2026-11-14T12:07:26.380Z"
+    },
+    {
+      "ticketId": "tkt_1794660919022_8eqs",
+      "consumerId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+      "consumerName": "Priya Sharma",
+      "consumerEmail": "buyer.priya.live@convocart.com",
+      "productId": "prod_1794660748965_iyud",
+      "productTitle": "Aura Studio Pro Wireless Headphones",
+      "vendorId": "vendor_1794660712280_26v",
+      "priority": "high",
+      "status": "open",
+      "category": "Order & Shipping",
+      "subject": "Carry Case Included?",
+      "description": "Does the Aura Studio Pro package include a hard travel case?",
+      "internalNotes": [],
+      "slaDueHours": 12,
+      "firebaseSynced": true,
+      "createdAt": "2026-11-14T12:55:19.022Z",
+      "updatedAt": "2026-11-14T13:56:54.918Z",
+      "replies": [
         {
-          "id": "note_1",
-          "authorId": "user_support_1",
-          "authorName": "Sarah Connor",
-          "note": "FedEx confirmed no signature required; package will be safely delivered to front porch locker.",
-          "createdAt": "2026-11-12T17:34:05.754Z"
+          "id": "rep_1794664614918_gzda",
+          "senderId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+          "senderName": "Priya Sharma",
+          "senderRole": "consumer",
+          "isAdminOrAgent": false,
+          "message": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoiVWJPWnA1Nkx4QXQ0ZTB2bnBUelpFQ2JQekJvcitVVGd6NWRKWmFJVi9FZW1jM09qeDNudEJXdXhiNysvUWU0aVVnRUFtL1E5SFVKSDRocFliZ3Q3Y2FVOWVpVTdCQmJPNWZsUjIxeVdaSkI3U1hiaTJESTB2My9CM0cwRGp5b1pjOU1HTXZycFNtbVlMM0VDZmpUWmhpR2dlNWE3ME1LNlFOWmFhVnJyR1pIQUlNekQzNWlZYm5mdit6eHpuc3U5Q0xCQjI4ZVhoY2lJdWhZd2hKYzdGRHBqUmhNbmdLR0dMSXJseEpxelhScUo0NDJpRjBxemRnUFJUdGRPRUtUNk1JNmR5andtQ1dKcFdpSVB5RHJaNzNzSlFuaEpadS9CQXhEcUM4UGNqMW0yV0VOTit1aUp6Wk9nRGc2S1dYNmRRMzgxdXoxbjc3RFk4aGFGKzg5ZXRRPT0ifQ==",
+          "encrypted": true,
+          "rsaEncrypted": true,
+          "encryptionAlgorithm": "RSA-OAEP-256",
+          "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoiVWJPWnA1Nkx4QXQ0ZTB2bnBUelpFQ2JQekJvcitVVGd6NWRKWmFJVi9FZW1jM09qeDNudEJXdXhiNysvUWU0aVVnRUFtL1E5SFVKSDRocFliZ3Q3Y2FVOWVpVTdCQmJPNWZsUjIxeVdaSkI3U1hiaTJESTB2My9CM0cwRGp5b1pjOU1HTXZycFNtbVlMM0VDZmpUWmhpR2dlNWE3ME1LNlFOWmFhVnJyR1pIQUlNekQzNWlZYm5mdit6eHpuc3U5Q0xCQjI4ZVhoY2lJdWhZd2hKYzdGRHBqUmhNbmdLR0dMSXJseEpxelhScUo0NDJpRjBxemRnUFJUdGRPRUtUNk1JNmR5andtQ1dKcFdpSVB5RHJaNzNzSlFuaEpadS9CQXhEcUM4UGNqMW0yV0VOTit1aUp6Wk9nRGc2S1dYNmRRMzgxdXoxbjc3RFk4aGFGKzg5ZXRRPT0ifQ==",
+          "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjFBRDA6NkQ3NTo3NTMyOjJCMDMiLCJjIjoicUlGYW5rNTVra1kzSTFtTDkyL094aytwMVZHbkplSnFtV1JieFhyVm14bnRJTzZoQXJIVjlldGtLNzhMSSt5OElqRTRDUFd4a2NVQjUwZ2Q1cWlaZkZ4RkltVmVMQ3gvMTlRMkZsdU95clRUS1lsUk1tRWFiUU0ybGIwL3p6R0ZPMi84cHhMRU5BUTlEYmlJVEpVY29qY0RRSG1RZHUxb3NBOUwwZlA5WlNGaGVWUUVQZGgwSWl3OEhzRU53bzdOZEd3Tkk0NzNLMVhkeHBFUGtKWVlXUkJBb3dvOVlDajczL0oxalFHUXhFck8zUEFhbE8yaEVhQm1HQVJmbGwrTE1pYmN1UHUxdnBvLzNScWY5bytyVFRnMWtNNmZ4bC9rNkF4bS9FbEJyRmJqUVdGS282bUlBR0RybUljdFloV2ZhYk92d2Fma1RSMHVtSFZ6NXBiZWFRPT0ifQ==",
+          "rsaRecipientUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+          "rsaSenderUid": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
+          "createdAt": "2026-11-14T13:56:54.918Z"
         }
+      ]
+    }
+  ],
+  "faqs": [
+    {
+      "id": "faq_1",
+      "question": "How does Multi-Language Translated Chat work between Buyers, Sellers, and Support Agents?",
+      "answer": "Every message sent in 1-on-1 or Support Dispatch chat is automatically detected and translated into each participant’s preferred language (English, Hindi, Japanese, Spanish, French, German, Chinese, Arabic) via Nexconn TranslateModule & our backend translation engine.",
+      "category": "Translated Chat",
+      "helpful": 155,
+      "notHelpful": 3
+    },
+    {
+      "id": "faq_2",
+      "question": "What are the SLA response times in the Human Agent Dispatch Center?",
+      "answer": "Urgent escalations target ~2–4 hours (with live instant dispatch), High priority ~8–12 hours, Medium ~24 hours, and Low ~48 hours. Live escalated chats appear immediately in the Support Dispatch Center.",
+      "category": "Dispatch & SLA",
+      "helpful": 121,
+      "notHelpful": 2
+    },
+    {
+      "id": "faq_3",
+      "question": "Are voice notes, webcam captures, and chat files persisted safely in the cloud?",
+      "answer": "Yes! Voice recordings, live webcam captures, and order inspection files are uploaded to ConvoCart Encrypted Cloud Storage and tickets/messages sync to ConvoCart Cloud Sync.",
+      "category": "Security",
+      "helpful": 96,
+      "notHelpful": 1
+    },
+    {
+      "id": "faq_4",
+      "question": "Can I make live Voice or Video Calls with verified sellers and support specialists?",
+      "answer": "Yes. Click the Phone or Video button inside any 1-on-1 conversation to launch a live Nexconn Call SDK (@nexconn/call v26.2.1) session with real WebRTC camera & microphone controls.",
+      "category": "Voice & Video Calls",
+      "helpful": 89,
+      "notHelpful": 4
+    },
+    {
+      "id": "faq_5",
+      "question": "Can I edit or recall a message after sending it in chat?",
+      "answer": "Yes! Hover over any message you sent to Edit the text (auto-retranslated) or Recall/Delete it immediately for everyone in the conversation.",
+      "category": "Chat Controls",
+      "helpful": 74,
+      "notHelpful": 2
+    },
+    {
+      "id": "faq_6",
+      "question": "How do international orders handle customs duties and returns?",
+      "answer": "Global vendors like Ubuy Global Express pre-clear customs via DHL Express so there are zero surprise import fees, backed by ConvoCart 14–30 day hub returns.",
+      "category": "Orders & Shipping",
+      "helpful": 112,
+      "notHelpful": 5
+    }
+  ],
+  "kbArticles": [
+    {
+      "id": "kb_1",
+      "title": "Getting Started: 1-on-1 Translated Buyer–Seller Chat & Live Dispatch",
+      "summary": "Learn how ConvoCart connects buyers, global vendors, and multilingual human support agents in real time using Nexconn Chat SDK & Cloud Sync.",
+      "content": "1. Open any product or order and click \"Chat with Seller\" to launch a 1-on-1 encrypted conversation.\n2. Choose your preferred language from the composer globe menu (EN, HI, JA, ES, FR, DE, ZH, AR).\n3. AI Concierge answers instant product & policy questions grounded in vendor catalog data.\n4. Need a human specialist? Click \"Escalate to Human\" — a ticket is synced to ConvoCart Cloud Sync and dispatched in the Human Agent Dispatch Center.",
+      "category": "Getting Started",
+      "tags": [
+        "Nexconn Chat SDK",
+        "Translation",
+        "Dispatch"
       ],
-      "slaDueHours": 24,
-      "createdAt": "2026-11-12T13:34:05.754Z",
-      "updatedAt": "2026-11-12T17:34:05.754Z"
+      "readTime": "3 min read",
+      "views": 1240,
+      "author": "ConvoCart Support Team",
+      "updatedAt": "2026-11-12T07:26:20.079Z"
+    },
+    {
+      "id": "kb_2",
+      "title": "Using Voice Notes, Live Webcam Proof & @nexconn/call Video Walkthroughs",
+      "summary": "Share crystal-clear voice notes, snap live webcam unboxing/defect photos, or start a live WebRTC video inspection call.",
+      "content": "• Click the Microphone icon in chat to record a real-time voice message with a live 20-bar frequency waveform uploaded to Encrypted Cloud Storage.\n• Click the Camera icon to capture a photo directly from your webcam for instant fit or serial-number verification.\n• Click Phone or Video Call in the chat header to initiate a @nexconn/call WebRTC session.",
+      "category": "Media & Calls",
+      "tags": [
+        "@nexconn/call",
+        "WebRTC",
+        "Cloud Media"
+      ],
+      "readTime": "4 min read",
+      "views": 892,
+      "author": "ConvoCart Engineering",
+      "updatedAt": "2026-11-10T07:26:20.079Z"
+    },
+    {
+      "id": "kb_3",
+      "title": "Understanding ConvoCart SLA Priorities & Refund Protection",
+      "summary": "Clear response guarantees (Urgent ~2–4h, High ~8–12h, Medium ~24h, Low ~48h) and buyer escrow policies.",
+      "content": "Every escalated ticket is stamped with an SLA deadline and mirrored to ConvoCart Cloud Sync. Refunds via Razorpay Test/Live Gateway are processed automatically once approved in the Support Dispatch Center.",
+      "category": "Policies & SLA",
+      "tags": [
+        "SLA",
+        "Refunds",
+        "Firestore"
+      ],
+      "readTime": "2 min read",
+      "views": 675,
+      "author": "Trust & Safety",
+      "updatedAt": "2026-11-08T07:26:20.079Z"
+    },
+    {
+      "id": "kb_4",
+      "title": "Multi-Vendor Seller Guide: Managing Global Chats in Japanese, Hindi & Spanish",
+      "summary": "How verified sellers configure their AI concierge, response availability, and bilingual dispatch handoffs.",
+      "content": "Vendors can set their store preferred language in Store Profile & AI Agent Studio, review live revenue telemetry charts, and claim or transfer chats seamlessly with ConvoCart Dispatch specialists.",
+      "category": "Seller Guide",
+      "tags": [
+        "Vendors",
+        "AI Concierge",
+        "Multi-Language"
+      ],
+      "readTime": "5 min read",
+      "views": 534,
+      "author": "Partner Success",
+      "updatedAt": "2026-11-07T07:26:20.079Z"
     }
   ],
   "aiConfigs": {
@@ -644,7 +1826,7 @@
         "urgent complaint"
       ],
       "humanTakeoverActive": false,
-      "updatedAt": "2026-11-13T05:34:05.754Z"
+      "updatedAt": "2026-11-14T07:26:20.076Z"
     },
     "vendor_ubuy_express": {
       "vendorId": "vendor_ubuy_express",
@@ -685,7 +1867,218 @@
         "talk to vendor"
       ],
       "humanTakeoverActive": false,
-      "updatedAt": "2026-11-13T05:34:05.754Z"
+      "updatedAt": "2026-11-14T07:26:20.076Z"
+    },
+    "vendor_nexa_studio": {
+      "vendorId": "vendor_nexa_studio",
+      "enabled": true,
+      "agentName": "Nova (NexaDigital AI Concierge)",
+      "avatarUrl": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Namaste & Welcome to NexaDigital Studio! Ask me about any creator bundle, interactive storefront license, or request a live voice/video walkthrough.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "es",
+        "ja",
+        "fr"
+      ],
+      "businessHours": {
+        "enabled": true,
+        "start": "08:00",
+        "end": "22:00",
+        "timezone": "UTC"
+      },
+      "responseStyle": "detailed",
+      "faqs": [
+        {
+          "question": "Does NexaDigital Studio include live Firebase & encrypted chat support?",
+          "answer": "Yes! Every NexaDigital suite integrates real-time Firestore ticket tracking, encrypted buyer-seller media attachments, and instant human dispatch."
+        },
+        {
+          "question": "Can I book a live voice or video call walkthrough with NexaDigital Studio?",
+          "answer": "Absolutely — click the Phone or Video button inside your 1-on-1 chat with NexaDigital Commerce & AI Studio powered by @nexconn/call SDK."
+        }
+      ],
+      "shippingPolicy": "Instant cloud provisioning for digital kits + express dispatch for creator bundles.",
+      "returnPolicy": "14-day ConvoCart Buyer Protection with 1-on-1 concierge assistance.",
+      "warrantyInfo": "Continuous firmware & template updates via society-adc76 Firebase cloud sync.",
+      "escalationRules": [
+        "custom build",
+        "enterprise license",
+        "human specialist",
+        "refund"
+      ],
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-14T07:26:20.079Z"
+    },
+    "vendor_1794655955763_75a": {
+      "vendorId": "vendor_1794655955763_75a",
+      "enabled": true,
+      "agentName": "Yug Patel's Store AI Concierge",
+      "avatarUrl": "https://lh3.googleusercontent.com/a/ACg8ocJxKSaQRYW8HB2D76RRpv2KBe1QgKLYsklv3WPsIatTVKOaGNvU=s96-c",
+      "greetingMessage": "Welcome to Yug Patel's Store! Ask about products, shipping, or live quotes in any language.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "hi",
+        "zh",
+        "ar"
+      ],
+      "responseStyle": "friendly",
+      "escalationRules": [
+        "refund",
+        "cancel",
+        "damaged",
+        "defective"
+      ],
+      "faqs": [
+        {
+          "question": "What is your shipping time?",
+          "answer": "Standard insured shipping arrives in 3-5 business days."
+        }
+      ],
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement guarantee.",
+      "warrantyInfo": "1-year standard warranty.",
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-14T11:32:35.763Z"
+    },
+    "vendor_1794657939849_05g": {
+      "vendorId": "vendor_1794657939849_05g",
+      "enabled": true,
+      "agentName": "Verify Craft Store AI Concierge",
+      "avatarUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "hi",
+        "zh",
+        "ar"
+      ],
+      "responseStyle": "friendly",
+      "escalationRules": [
+        "refund",
+        "cancel",
+        "damaged",
+        "defective"
+      ],
+      "faqs": [
+        {
+          "question": "What is your shipping time?",
+          "answer": "Standard insured shipping arrives in 3-5 business days."
+        }
+      ],
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement guarantee.",
+      "warrantyInfo": "1-year standard warranty.",
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-14T12:05:39.849Z"
+    },
+    "vendor_1794658045932_r4f": {
+      "vendorId": "vendor_1794658045932_r4f",
+      "enabled": true,
+      "agentName": "Verify Craft Store AI Concierge",
+      "avatarUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Welcome to Verify Craft Store! Ask about products, shipping, or live quotes in any language.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "hi",
+        "zh",
+        "ar"
+      ],
+      "responseStyle": "friendly",
+      "escalationRules": [
+        "refund",
+        "cancel",
+        "damaged",
+        "defective"
+      ],
+      "faqs": [
+        {
+          "question": "What is your shipping time?",
+          "answer": "Standard insured shipping arrives in 3-5 business days."
+        }
+      ],
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement guarantee.",
+      "warrantyInfo": "1-year standard warranty.",
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-14T12:07:25.932Z"
+    },
+    "vendor_1794660712280_26v": {
+      "vendorId": "vendor_1794660712280_26v",
+      "enabled": true,
+      "agentName": "Aura Sound Studio AI Concierge",
+      "avatarUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Welcome to Aura Sound Studio! Ask about products, shipping, or live quotes in any language.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "hi",
+        "zh",
+        "ar"
+      ],
+      "responseStyle": "friendly",
+      "escalationRules": [
+        "refund",
+        "cancel",
+        "damaged",
+        "defective"
+      ],
+      "faqs": [
+        {
+          "question": "What is your shipping time?",
+          "answer": "Standard insured shipping arrives in 3-5 business days."
+        }
+      ],
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement guarantee.",
+      "warrantyInfo": "1-year standard warranty.",
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-14T12:51:52.280Z"
     }
   },
   "payments": []

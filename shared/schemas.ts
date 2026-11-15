@@ -6,6 +6,23 @@ export const registerSchema = z.object({
   displayName: z.string().min(2, 'Name must be at least 2 characters'),
   role: z.enum(['consumer', 'vendor']).default('consumer'),
   businessName: z.string().optional(),
+  phoneNumber: z.string().optional(),
+  preferredLanguage: z.string().optional(),
+  photoURL: z.string().optional(),
+  firebaseUid: z.string().optional(),
+  authProvider: z.enum(['firebase', 'google', 'password']).optional(),
+  address: z
+    .object({
+      id: z.string().optional(),
+      fullName: z.string().optional(),
+      phone: z.string().optional(),
+      street: z.string().optional(),
+      city: z.string().optional(),
+      state: z.string().optional(),
+      postalCode: z.string().optional(),
+      country: z.string().optional(),
+    })
+    .optional(),
 });
 
 export const loginSchema = z.object({
@@ -35,11 +52,14 @@ export const productSchema = z.object({
   price: z.number().positive('Price must be greater than zero'),
   discount: z.number().min(0).max(100).default(0),
   stock: z.number().int().min(0, 'Stock cannot be negative'),
-  images: z.array(z.string().url()).min(1, 'At least one image is required'),
+  images: z.array(z.string().min(1)).min(1, 'At least one image is required'),
   specifications: z.record(z.string()).default({}),
   shippingPolicy: z.string().default('Standard delivery in 3-5 business days.'),
   returnPolicy: z.string().default('7-day replacement or return window.'),
   status: z.enum(['active', 'draft', 'archived']).default('active'),
+  isFeatured: z.boolean().optional(),
+  isTrending: z.boolean().optional(),
+  variants: z.array(z.any()).optional(),
 });
 
 export const orderStatusTransitionSchema = z.object({
@@ -107,5 +127,7 @@ export const supportTicketSchema = z.object({
   category: z.string().min(2, 'Category is required'),
   description: z.string().min(10, 'Description must be at least 10 characters'),
   orderId: z.string().optional(),
+  productId: z.string().optional(),
+  conversationId: z.string().optional(),
   priority: z.enum(['low', 'medium', 'high', 'urgent']).default('medium'),
 });

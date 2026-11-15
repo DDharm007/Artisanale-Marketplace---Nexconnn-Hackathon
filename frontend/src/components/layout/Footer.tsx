@@ -95,7 +95,7 @@ export const Footer: React.FC = () => {
             <li><span className="font-semibold text-slate-700">Nexconn:</span> Chat & Call SDK 26.2.1</li>
             <li><span className="font-semibold text-slate-700">Payments:</span> Razorpay HMAC Verified</li>
             <li><span className="font-semibold text-slate-700">AI Engine:</span> Grounded Multimodal LLM</li>
-            <li><span className="font-semibold text-slate-700">Database:</span> Firebase Firestore + Sync</li>
+            <li><span className="font-semibold text-slate-700">Infrastructure:</span> Real-Time Cloud Sync</li>
           </ul>
         </div>
       </div>

@@ -12,12 +12,13 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { Vendor, Product, UserProfile } from '@convocart/shared';
+import { AdminSupportCommandCenter } from '../features/support/AdminSupportCommandCenter';
 
 export const AdminDashboardPage: React.FC = () => {
   const [overview, setOverview] = useState<any>(null);
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [users, setUsers] = useState<UserProfile[]>([]);
-  const [activeTab, setActiveTab] = useState<'overview' | 'vendors' | 'users'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'vendors' | 'users' | 'support'>('overview');
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchAdminData = async () => {
@@ -91,6 +92,12 @@ export const AdminDashboardPage: React.FC = () => {
             className={`rounded-lg px-3 py-1 transition-colors ${activeTab === 'users' ? 'bg-white shadow text-slate-900' : 'text-slate-600'}`}
           >
             Users ({users.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('support')}
+            className={`rounded-lg px-3 py-1 transition-colors ${activeTab === 'support' ? 'bg-white shadow text-slate-900' : 'text-slate-600'}`}
+          >
+            Support, FAQs &amp; KB
           </button>
         </div>
       </div>
@@ -237,6 +244,10 @@ export const AdminDashboardPage: React.FC = () => {
             </table>
           </div>
         </div>
+      )}
+
+      {activeTab === 'support' && (
+        <AdminSupportCommandCenter onDataChanged={fetchAdminData} />
       )}
     </div>
   );

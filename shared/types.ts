@@ -14,14 +14,21 @@ export interface Address {
 
 export interface UserProfile {
   uid: string;
+  firebaseUid?: string;
+  authProvider?: 'firebase' | 'google' | 'password';
+  emailVerified?: boolean;
   email: string;
   displayName: string;
   photoURL?: string;
   phoneNumber?: string;
   role: UserRole;
   preferredLanguage: string;
+  city?: string;
+  country?: string;
   addresses?: Address[];
   vendorId?: string;
+  rsaPublicKey?: string;
+  rsaKeyFingerprint?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -158,6 +165,7 @@ export interface Order {
   consumerId: string;
   consumerName?: string;
   consumerEmail?: string;
+  consumerPhone?: string;
   vendorId: string;
   vendorName?: string;
   items: OrderItem[];
@@ -187,9 +195,27 @@ export interface Conversation {
   consumerId: string;
   consumerName: string;
   consumerAvatar?: string;
+  consumerEmail?: string;
+  consumerPhone?: string;
+  consumerAddressSummary?: string;
+  consumerTotalOrders?: number;
+  consumerTotalSpent?: number;
   vendorId: string;
+  vendorOwnerUid?: string;
   vendorBusinessName: string;
+  vendorLogo?: string;
+  vendorAvailability?: VendorAvailability;
+  consumerPublicKey?: string;
+  vendorPublicKey?: string;
+  consumerPreferredLanguage?: string;
+  vendorPreferredLanguage?: string;
   supportAgentId?: string;
+  assignedSupportAgentId?: string;
+  assignedSupportAgentName?: string;
+  dispatchedAt?: string;
+  escalationReason?: string;
+  escalatedAt?: string;
+  autoTranslateEnabled?: boolean;
   productId?: string;
   productTitle?: string;
   productImage?: string;
@@ -229,10 +255,29 @@ export interface MessageMetadata {
   productImage?: string;
   orderId?: string;
   orderStatus?: string;
+  orderTotal?: number;
+  orderItemsCount?: number;
+  trackingNumber?: string;
   paymentAmount?: number;
   paymentOrderId?: string;
   paymentStatus?: string;
+  detectedLanguage?: string;
   translatedText?: Record<string, string>;
+  audioUrl?: string;
+  voiceDuration?: number;
+  fileUrl?: string;
+  isEdited?: boolean;
+  editedAt?: string;
+  isDeleted?: boolean;
+  encrypted?: boolean;
+  rsaEncrypted?: boolean;
+  encryptionAlgorithm?: 'RSA-OAEP-256' | 'RSA-OAEP-256+AES-256-GCM' | 'AES-GCM';
+  rsaForRecipient?: string;
+  rsaForSender?: string;
+  rsaRecipientUid?: string;
+  rsaSenderUid?: string;
+  rsaKeyFingerprint?: string;
+  storageProvider?: 'firebase' | 'local';
 }
 
 export interface Message {
@@ -265,6 +310,28 @@ export interface InternalNote {
   createdAt: string;
 }
 
+export interface SupportTicketReply {
+  id: string;
+  senderId: string;
+  senderName: string;
+  senderRole: UserRole;
+  isAdminOrAgent: boolean;
+  message: string;
+  encrypted?: boolean;
+  rsaEncrypted?: boolean;
+  encryptionAlgorithm?: 'RSA-OAEP-256' | 'RSA-OAEP-256+AES-256-GCM' | 'AES-GCM';
+  rsaForRecipient?: string;
+  rsaForSender?: string;
+  rsaRecipientUid?: string;
+  rsaSenderUid?: string;
+  attachmentUrl?: string;
+  attachmentName?: string;
+  audioUrl?: string;
+  editedAt?: string;
+  deletedForEveryone?: boolean;
+  createdAt: string;
+}
+
 export interface SupportTicket {
   ticketId: string;
   consumerId: string;
@@ -272,7 +339,10 @@ export interface SupportTicket {
   consumerEmail: string;
   conversationId?: string;
   orderId?: string;
+  productId?: string;
+  productTitle?: string;
   vendorId?: string;
+  vendorOwnerUid?: string;
   assignedAgentId?: string;
   assignedAgentName?: string;
   priority: TicketPriority;
@@ -280,10 +350,51 @@ export interface SupportTicket {
   category: string;
   subject: string;
   description: string;
+  rsaEncrypted?: boolean;
+  encryptionAlgorithm?: 'RSA-OAEP-256' | 'RSA-OAEP-256+AES-256-GCM' | 'AES-GCM';
+  rsaForRecipient?: string;
+  rsaForSender?: string;
+  rsaRecipientUid?: string;
+  rsaSenderUid?: string;
   internalNotes: InternalNote[];
+  replies?: SupportTicketReply[];
+  attachedFileUrl?: string;
+  attachedFileName?: string;
   slaDueHours: number;
+  firebaseSynced?: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface SupportFAQ {
+  id: string;
+  question: string;
+  answer: string;
+  category: string;
+  helpful: number;
+  notHelpful: number;
+}
+
+export interface KnowledgeBaseArticle {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  category: string;
+  tags: string[];
+  readTime: string;
+  views: number;
+  author?: string;
+  updatedAt: string;
+}
+
+export interface FirebaseSyncStatus {
+  connected: boolean;
+  projectId: string;
+  storageBucket: string;
+  lastSyncedAt: string | null;
+  syncedCounts: Record<string, number>;
+  error?: string;
 }
 
 export interface AIAgentConfig {
@@ -337,4 +448,33 @@ export interface VendorOverviewStats {
   unreadConversations: number;
   averageOrderValue: number;
   salesGrowthPercentage: number;
+  avgResponseTimeSeconds?: number;
+  chatToSaleConversionRate?: number;
+  customerRetentionRate?: number;
+  aiResolutionRate?: number;
+  escalatedConversations?: number;
+  translatedMessagesCount?: number;
+}
+
+export interface DispatchAgentInfo {
+  uid: string;
+  displayName: string;
+  email: string;
+  role: UserRole;
+  photoURL?: string;
+  preferredLanguage: string;
+  supportedLanguages: string[];
+  availability: 'online' | 'busy' | 'away' | 'offline';
+  activeChats: number;
+  assignedTickets: number;
+}
+
+export interface DispatchOverviewStats {
+  escalatedChatsCount: number;
+  waitingInQueueCount: number;
+  activeDispatchedCount: number;
+  resolvedTodayCount: number;
+  avgSlaHours: number;
+  onlineAgentsCount: number;
+  multiLanguageChatsCount: number;
 }

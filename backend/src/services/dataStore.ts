@@ -10,10 +10,14 @@ import {
   Conversation,
   Message,
   SupportTicket,
+  SupportTicketReply,
+  SupportFAQ,
+  KnowledgeBaseArticle,
   AIAgentConfig,
   PaymentTransaction,
   DEFAULT_CATEGORIES,
 } from '../../../shared';
+import { firebaseService } from './firebaseService';
 
 const DATA_FILE_PATH = path.join(__dirname, '../../dataStore.json');
 
@@ -27,6 +31,8 @@ export interface DatabaseState {
   conversations: Conversation[];
   messages: Message[];
   supportTickets: SupportTicket[];
+  faqs?: SupportFAQ[];
+  kbArticles?: KnowledgeBaseArticle[];
   aiConfigs: Record<string, AIAgentConfig>; // vendorId -> AIAgentConfig
   payments: PaymentTransaction[];
 }
@@ -42,6 +48,8 @@ class DataStoreService {
     conversations: [],
     messages: [],
     supportTickets: [],
+    faqs: [],
+    kbArticles: [],
     aiConfigs: {},
     payments: [],
   };
@@ -56,13 +64,324 @@ class DataStoreService {
         const raw = fs.readFileSync(DATA_FILE_PATH, 'utf-8');
         this.state = JSON.parse(raw);
         console.log('[DataStore] Loaded existing database from disk');
+        if (this.ensureSeedUpgrades()) {
+          this.persist();
+        }
+        firebaseService.syncInitialSeed({
+          users: this.state.users,
+          vendors: this.state.vendors,
+          products: this.state.products,
+          conversations: this.state.conversations,
+          supportTickets: this.state.supportTickets,
+          orders: this.state.orders,
+          faqs: this.state.faqs,
+          articles: this.state.kbArticles,
+        });
         return;
       } catch (err) {
         console.warn('[DataStore] Could not parse existing data file, initializing fresh seed:', err);
       }
     }
     this.seedInitialData();
+    this.ensureSeedUpgrades();
     this.persist();
+    firebaseService.syncInitialSeed({
+      users: this.state.users,
+      vendors: this.state.vendors,
+      products: this.state.products,
+      conversations: this.state.conversations,
+      supportTickets: this.state.supportTickets,
+      orders: this.state.orders,
+      faqs: this.state.faqs,
+      articles: this.state.kbArticles,
+    });
+  }
+
+  private ensureSeedUpgrades(): boolean {
+    let changed = false;
+
+    // Clean up any legacy third-vendor identifiers so only ConvoCart / NexaDigital branding remains
+    const sanitizeText = (text: string): string =>
+      text
+        .replace(/craftora@convocart\.com/gi, 'studio@convocart.com')
+        .replace(/vendor_craftora/gi, 'vendor_nexa_studio')
+        .replace(/prod_craftora_/gi, 'prod_nexa_')
+        .replace(/Craftor[āa]\s*Digital\s*&\s*Commerce\s*Studio/gi, 'NexaDigital Commerce & AI Studio')
+        .replace(/Craftor[āa]\s*Studio/gi, 'NexaDigital Studio')
+        .replace(/Craftor[āa]\s*Atelier/gi, 'NexaDigital Atelier')
+        .replace(/Craftor[āa]\s*Acoustics/gi, 'NexaDigital Acoustics')
+        .replace(/Craftor[āa]\s*OmniDesk/gi, 'NexaDesk')
+        .replace(/Craftor[āa]\s*Lumière/gi, 'NexaLumière')
+        .replace(/Craftor[āa]\s*Creator/gi, 'NexaCreator')
+        .replace(/Craftor[āa]/gi, 'ConvoCart');
+
+    const rawSerialized = JSON.stringify(this.state);
+    if (/craftora|craftor[āa]/i.test(rawSerialized)) {
+      this.state = JSON.parse(sanitizeText(rawSerialized));
+      if (this.state.aiConfigs && this.state.aiConfigs['vendor_craftora']) {
+        this.state.aiConfigs['vendor_nexa_studio'] = this.state.aiConfigs['vendor_craftora'];
+        delete this.state.aiConfigs['vendor_craftora'];
+      }
+      changed = true;
+    }
+
+    // Ensure second multilingual support agent exists for the Human Agent Dispatch Center
+    if (!this.state.users.find((u) => u.uid === 'user_support_2')) {
+      const salt = bcrypt.genSaltSync(10);
+      const defaultHash = this.state.passwords['user_support_1'] || bcrypt.hashSync('Password123!', salt);
+      this.state.users.push({
+        uid: 'user_support_2',
+        email: 'kenji@convocart.com',
+        displayName: 'Kenji Takahashi',
+        role: 'support_agent',
+        preferredLanguage: 'ja',
+        photoURL: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80',
+        phoneNumber: '+81-3-5555-0192',
+        createdAt: new Date(Date.now() - 45 * 86400000).toISOString(),
+        updatedAt: new Date().toISOString(),
+      });
+      this.state.passwords['user_support_2'] = defaultHash;
+      changed = true;
+    }
+
+    // Purge any legacy static seeded products, demo orders, demo conversations, and demo tickets
+    const STATIC_PRODUCT_IDS = new Set([
+      'prod_nexconn_pro_anc',
+      'prod_tokyo_mech_keyboard',
+      'prod_smartwatch_ultra',
+      'prod_espresso_machine_pro',
+      'prod_merino_wool_jacket',
+      'prod_skincare_elixir',
+      'prod_nexa_omnidesk',
+      'prod_nexa_lumiere',
+      'prod_nexa_sonic_kit',
+    ]);
+    const STATIC_ORDER_IDS = new Set(['ord_sample_9841']);
+    const STATIC_CONV_IDS = new Set(['conv_consumer_vendor_audio', 'conv_consumer_vendor_ubuy']);
+    const STATIC_MSG_IDS = new Set(['msg_1', 'msg_2', 'msg_3', 'msg_4', 'msg_intl_1', 'msg_intl_2']);
+    const STATIC_TICKET_IDS = new Set(['tkt_1001', 'tkt_1002']);
+
+    const prodBefore = this.state.products.length;
+    this.state.products = this.state.products.filter((p) => !STATIC_PRODUCT_IDS.has(p.productId));
+    if (this.state.products.length !== prodBefore) {
+      changed = true;
+      firebaseService.deleteDocsBatch('convocart_products', Array.from(STATIC_PRODUCT_IDS));
+    }
+
+    const ordBefore = this.state.orders.length;
+    this.state.orders = this.state.orders.filter((o) => !STATIC_ORDER_IDS.has(o.orderId));
+    if (this.state.orders.length !== ordBefore) {
+      changed = true;
+      firebaseService.deleteDocsBatch('convocart_orders', Array.from(STATIC_ORDER_IDS));
+    }
+
+    const convBefore = this.state.conversations.length;
+    this.state.conversations = this.state.conversations.filter((c) => !STATIC_CONV_IDS.has(c.conversationId));
+    if (this.state.conversations.length !== convBefore) {
+      changed = true;
+      firebaseService.deleteDocsBatch('convocart_conversations', Array.from(STATIC_CONV_IDS));
+    }
+
+    const msgBeforePurge = this.state.messages.length;
+    this.state.messages = this.state.messages.filter(
+      (m) => !STATIC_MSG_IDS.has(m.id) && !STATIC_CONV_IDS.has(m.conversationId)
+    );
+    if (this.state.messages.length !== msgBeforePurge) {
+      changed = true;
+    }
+
+    const tktBefore = this.state.supportTickets.length;
+    this.state.supportTickets = this.state.supportTickets.filter((t) => !STATIC_TICKET_IDS.has(t.ticketId));
+    if (this.state.supportTickets.length !== tktBefore) {
+      changed = true;
+      firebaseService.deleteDocsBatch('support-tickets', Array.from(STATIC_TICKET_IDS));
+    }
+
+    // Seed Support FAQs if empty
+    if (!this.state.faqs || this.state.faqs.length === 0) {
+      this.state.faqs = [
+        {
+          id: 'faq_1',
+          question: 'How does Multi-Language Translated Chat work between Buyers, Sellers, and Support Agents?',
+          answer:
+            'Every message sent in 1-on-1 or Support Dispatch chat is automatically detected and translated into each participant’s preferred language (English, Hindi, Japanese, Spanish, French, German, Chinese, Arabic) via Nexconn TranslateModule & our backend translation engine.',
+          category: 'Translated Chat',
+          helpful: 148,
+          notHelpful: 3,
+        },
+        {
+          id: 'faq_2',
+          question: 'What are the SLA response times in the Human Agent Dispatch Center?',
+          answer:
+            'Urgent escalations target ~2–4 hours (with live instant dispatch), High priority ~8–12 hours, Medium ~24 hours, and Low ~48 hours. Live escalated chats appear immediately in the Support Dispatch Center.',
+          category: 'Dispatch & SLA',
+          helpful: 121,
+          notHelpful: 2,
+        },
+        {
+          id: 'faq_3',
+          question: 'Are voice notes, webcam captures, and chat files saved safely?',
+          answer:
+            'Yes! Voice recordings, live webcam captures, and order inspection files are encrypted and persisted in secure ConvoCart cloud storage.',
+          category: 'Security & Storage',
+          helpful: 96,
+          notHelpful: 1,
+        },
+        {
+          id: 'faq_4',
+          question: 'Can I make live Voice or Video Calls with verified sellers and support specialists?',
+          answer:
+            'Yes. Click the Phone or Video button inside any 1-on-1 conversation to launch a live call session with microphone & camera controls directly with the seller or dispatch specialist.',
+          category: 'Voice & Video Calls',
+          helpful: 89,
+          notHelpful: 4,
+        },
+        {
+          id: 'faq_5',
+          question: 'Can I edit or recall a message after sending it in chat?',
+          answer:
+            'Yes! Hover over any message you sent to Edit the text (auto-retranslated) or Recall/Delete it immediately for everyone in the conversation.',
+          category: 'Chat Controls',
+          helpful: 74,
+          notHelpful: 2,
+        },
+        {
+          id: 'faq_6',
+          question: 'How does product-based seller support work?',
+          answer:
+            'Select any seller-uploaded product in the Support Hub or on its product page to contact that exact seller in real time or open a product-linked support ticket.',
+          category: 'Product Support',
+          helpful: 112,
+          notHelpful: 5,
+        },
+      ];
+      changed = true;
+    }
+
+    // Seed Knowledge Base Articles
+    if (!this.state.kbArticles || this.state.kbArticles.length === 0) {
+      this.state.kbArticles = [
+        {
+          id: 'kb_1',
+          title: 'Getting Started: Product-Based 1-on-1 Buyer–Seller Chat & Live Dispatch',
+          summary:
+            'Learn how ConvoCart connects buyers, sellers, and multilingual support agents in real time for every product.',
+          content:
+            '1. Open any seller-uploaded product and click "Message Seller" or choose the product in the Support Hub to launch a 1-on-1 encrypted conversation with that seller.\n2. Choose your preferred language from the composer globe menu (EN, HI, JA, ES, FR, DE, ZH, AR).\n3. Real-time messaging keeps buyer and seller synchronized across devices.\n4. Need a human specialist? Click "Escalate to Human" — a product-linked ticket is dispatched directly in the Support Dispatch Center.',
+          category: 'Getting Started',
+          tags: ['Product Chat', 'Translation', 'Dispatch'],
+          readTime: '3 min read',
+          views: 1240,
+          author: 'ConvoCart Support Team',
+          updatedAt: new Date(Date.now() - 2 * 86400000).toISOString(),
+        },
+        {
+          id: 'kb_2',
+          title: 'Using Voice Notes, Live Webcam Proof & Video Walkthroughs',
+          summary:
+            'Share crystal-clear voice notes, snap live webcam unboxing/defect photos, or start a live video inspection call.',
+          content:
+            '• Click the Microphone icon in chat to record a real-time voice message with a live frequency waveform.\n• Click the Camera icon to capture a photo directly from your webcam for instant fit or serial-number verification.\n• Click Phone or Video Call in the chat header to initiate a live call with the seller.',
+          category: 'Media & Calls',
+          tags: ['Voice Notes', 'WebRTC', 'Media Sync'],
+          readTime: '4 min read',
+          views: 892,
+          author: 'ConvoCart Engineering',
+          updatedAt: new Date(Date.now() - 4 * 86400000).toISOString(),
+        },
+        {
+          id: 'kb_3',
+          title: 'Understanding ConvoCart SLA Priorities & Refund Protection',
+          summary:
+            'Clear response guarantees (Urgent ~2–4h, High ~8–12h, Medium ~24h, Low ~48h) and buyer escrow policies.',
+          content:
+            'Every product-linked ticket is stamped with an SLA deadline and synchronized in real time. Approved refunds are processed automatically once resolved in the Support Dispatch Center.',
+          category: 'Policies & SLA',
+          tags: ['SLA', 'Refunds', 'Protection'],
+          readTime: '2 min read',
+          views: 675,
+          author: 'Trust & Safety',
+          updatedAt: new Date(Date.now() - 6 * 86400000).toISOString(),
+        },
+        {
+          id: 'kb_4',
+          title: 'Multi-Vendor Seller Guide: Managing Global Chats in Japanese, Hindi & Spanish',
+          summary:
+            'How verified sellers configure their AI concierge, response availability, and bilingual dispatch handoffs.',
+          content:
+            'Vendors can set their store preferred language in Store Profile & AI Agent Studio, review live revenue telemetry charts, and claim or transfer chats seamlessly with ConvoCart Dispatch specialists.',
+          category: 'Seller Guide',
+          tags: ['Vendors', 'AI Concierge', 'Multi-Language'],
+          readTime: '5 min read',
+          views: 534,
+          author: 'Partner Success',
+          updatedAt: new Date(Date.now() - 7 * 86400000).toISOString(),
+        },
+      ];
+      changed = true;
+    }
+
+    // Ensure existing FAQs and KB articles never expose underlying database/tech brand names
+    for (const f of this.state.faqs || []) {
+      if (/firebase|firestore|society-adc76/i.test(f.answer) || /firebase|firestore/i.test(f.category)) {
+        f.answer = f.answer
+          .replace(/Firebase Storage\s*\(society-adc76\)/gi, 'ConvoCart Encrypted Cloud Storage')
+          .replace(/Cloud Firestore/gi, 'ConvoCart Cloud Sync')
+          .replace(/Firebase|Firestore/gi, 'Cloud Sync');
+        f.category = f.category.replace(/Firebase\s*&\s*/gi, '');
+        changed = true;
+      }
+    }
+    for (const a of this.state.kbArticles || []) {
+      if (/firebase|firestore|society-adc76/i.test(`${a.summary} ${a.content} ${a.tags.join(',')}`)) {
+        a.summary = a.summary.replace(/Firebase|Firestore/gi, 'Cloud Sync');
+        a.content = a.content
+          .replace(/Firebase Storage/gi, 'Encrypted Cloud Storage')
+          .replace(/Firestore\s*\(support-tickets\)/gi, 'ConvoCart Cloud Sync')
+          .replace(/Cloud Firestore\s*\(society-adc76\)/gi, 'ConvoCart Cloud Sync')
+          .replace(/Firebase|Firestore/gi, 'Cloud Sync');
+        a.tags = a.tags.map((t) => t.replace(/Firebase Storage/gi, 'Cloud Media'));
+        changed = true;
+      }
+    }
+
+    // Clean up any leftover ephemeral unit-test messages
+    const beforeMsgCount = this.state.messages.length;
+    this.state.messages = this.state.messages.filter((m) => m.conversationId !== 'conv_test_ephemeral');
+    if (this.state.messages.length !== beforeMsgCount) {
+      changed = true;
+    }
+
+    // Ensure every escalated conversation has an assigned Human Support Specialist so buyers are never left unanswered
+    const supportAgents = this.state.users.filter((u) => u.role === 'support_agent');
+    if (supportAgents.length > 0) {
+      for (const conv of this.state.conversations) {
+        if ((conv.status === 'escalated' || conv.escalatedToSupport) && !conv.assignedSupportAgentId) {
+          const lang = conv.consumerPreferredLanguage || conv.vendorPreferredLanguage || 'en';
+          const matchedAgent =
+            supportAgents.find((a) => a.preferredLanguage === lang) ||
+            supportAgents.find((a) => a.uid === 'user_support_1') ||
+            supportAgents[0];
+          if (matchedAgent) {
+            conv.assignedSupportAgentId = matchedAgent.uid;
+            conv.assignedSupportAgentName = matchedAgent.displayName;
+            conv.supportAgentId = matchedAgent.uid;
+            conv.dispatchedAt = conv.dispatchedAt || new Date().toISOString();
+            const linkedTicket = this.state.supportTickets.find(
+              (t) => t.conversationId === conv.conversationId && t.status !== 'closed'
+            );
+            if (linkedTicket && !linkedTicket.assignedAgentId) {
+              linkedTicket.assignedAgentId = matchedAgent.uid;
+              linkedTicket.assignedAgentName = matchedAgent.displayName;
+              linkedTicket.status = 'in_progress';
+            }
+            changed = true;
+          }
+        }
+      }
+    }
+
+    return changed;
   }
 
   public persist() {
@@ -215,219 +534,8 @@ class DataStoreService {
 
     this.state.vendors = [vendor1, vendor2];
 
-    // 3. Products
-    this.state.products = [
-      {
-        productId: 'prod_nexconn_pro_anc',
-        vendorId: 'vendor_nexconn_audio',
-        vendorName: 'Nexconn Audio & Smart Tech',
-        title: 'Nexconn SonicPro ANC Studio Wireless Headphones',
-        description: 'Engineered for audiophiles and producers. Features hybrid 45dB Active Noise Cancellation, custom 40mm titanium diaphragm drivers, 65-hour playback time, ultra-low latency gaming mode, and Bluetooth 5.4 multi-point connectivity.',
-        categoryId: 'cat-electronics',
-        categoryName: 'Electronics & Gadgets',
-        brand: 'Nexconn Audio',
-        sku: 'NEX-SPRO-01',
-        price: 299,
-        discount: 15,
-        stock: 45,
-        images: [
-          'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&auto=format&fit=crop&q=80',
-        ],
-        variants: [
-          { id: 'var_color', name: 'Color', options: ['Obsidian Black', 'Lunar Silver', 'Midnight Navy'] },
-          { id: 'var_cable', name: 'Accessories', options: ['Standard Pack', 'Studio Pro Hard-Case Kit'], priceDiff: 25 },
-        ],
-        specifications: {
-          'Driver Size': '40mm Titanium Dome',
-          'Frequency Response': '10Hz – 40,000Hz (Hi-Res Audio Certified)',
-          'Battery Life': '65 Hours (ANC Off) / 48 Hours (ANC On)',
-          'Charging': 'USB-C Quick Charge (10 mins = 5 hours)',
-          'Noise Cancellation': 'Dual-chip Adaptive ANC (-45dB)',
-          'Microphones': '6 AI Beamforming Mics with Wind Shield',
-        },
-        shippingPolicy: 'Ships next business day via insured air parcel.',
-        returnPolicy: '30-day money back guarantee with zero restocking fee.',
-        status: 'active',
-        rating: 4.9,
-        reviewCount: 148,
-        isFeatured: true,
-        isTrending: true,
-        createdAt: new Date(Date.now() - 25 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        productId: 'prod_tokyo_mech_keyboard',
-        vendorId: 'vendor_ubuy_express',
-        vendorName: 'Ubuy Global Express Marketplace',
-        title: 'Akiba Keebs Master Artisan 75% Mechanical Keyboard (Hot-Swap)',
-        description: 'Direct Tokyo Import. CNC carved aerospace aluminum chassis with gasket mount structure, pre-lubed Gateron Oil King linear switches, PBT dye-sublimated cherry keycaps, and south-facing RGB per-key illumination.',
-        categoryId: 'cat-global',
-        categoryName: 'Ubuy Global Express',
-        brand: 'Akiba Keebs',
-        sku: 'AKB-75-JP',
-        price: 249,
-        discount: 10,
-        stock: 18,
-        images: [
-          'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&auto=format&fit=crop&q=80',
-        ],
-        variants: [
-          { id: 'var_switch', name: 'Switch Type', options: ['Oil King Linear', 'Baby Kangaroo Tactile'] },
-        ],
-        specifications: {
-          'Layout': '75% Compact (82 Keys)',
-          'Structure': 'Multi-layer Silicone Gasket Mounted',
-          'Connectivity': 'Tri-mode (2.4GHz / Bluetooth 5.2 / USB-C)',
-          'Polling Rate': '1000Hz (Wired & 2.4G)',
-          'Weight': '1.75 kg (Solid Aluminum)',
-        },
-        shippingPolicy: 'Shipped from Haneda Hub via DHL Worldwide Express (3-5 days delivery).',
-        returnPolicy: '14-day warranty with US/EU hub returns.',
-        status: 'active',
-        rating: 4.8,
-        reviewCount: 76,
-        isFeatured: true,
-        createdAt: new Date(Date.now() - 20 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        productId: 'prod_smartwatch_ultra',
-        vendorId: 'vendor_nexconn_audio',
-        vendorName: 'Nexconn Audio & Smart Tech',
-        title: 'Nexconn PulseTrack GPS Sapphire Rugged Smartwatch',
-        description: 'Ultra-tough titanium casing with sapphire crystal touch display. Dual-frequency precision GPS, continuous ECG and SpO2 health tracking, offline topological maps, 100m water resistance, and 14-day battery life.',
-        categoryId: 'cat-electronics',
-        categoryName: 'Electronics & Gadgets',
-        brand: 'Nexconn Tech',
-        sku: 'NEX-WATCH-U2',
-        price: 399,
-        discount: 20,
-        stock: 32,
-        images: [
-          'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&auto=format&fit=crop&q=80',
-        ],
-        specifications: {
-          'Display': '1.43-inch AMOLED Sapphire Display (1000 nits)',
-          'Battery': '500mAh (Up to 14 days normal usage)',
-          'Water Rating': '10 ATM (100 meters dive proof)',
-          'Sensors': 'Optical Heart Rate, SpO2, Skin Temp, Barometric Altimeter, Compass',
-        },
-        shippingPolicy: 'Free express shipping worldwide.',
-        returnPolicy: '30-day return policy.',
-        status: 'active',
-        rating: 4.7,
-        reviewCount: 89,
-        isFeatured: false,
-        isTrending: true,
-        createdAt: new Date(Date.now() - 15 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        productId: 'prod_espresso_machine_pro',
-        vendorId: 'vendor_ubuy_express',
-        vendorName: 'Ubuy Global Express Marketplace',
-        title: 'Milano Barista Craft Dual-Boiler Espresso Machine',
-        description: 'Direct Italian Import. Commercial grade 58mm portafilter, PID dual temperature control, commercial rotary vane pump, and cool-touch micro-foam steam wand for third-wave latte art at home.',
-        categoryId: 'cat-home',
-        categoryName: 'Home & Kitchen',
-        brand: 'Milano Craft',
-        sku: 'MIL-ESP-580',
-        price: 899,
-        discount: 12,
-        stock: 12,
-        images: [
-          'https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80',
-        ],
-        specifications: {
-          'Boiler Type': 'Dual Stainless Steel Boilers (Brew: 0.8L, Steam: 1.5L)',
-          'Pressure': '15 Bar Commercial Italian Rotary Pump',
-          'Portafilter': 'Commercial 58mm Solid Brass Chrome-plated',
-          'Power': '1800W Rapid Heat-Up',
-        },
-        shippingPolicy: 'Crated heavy cargo with white-glove curbside delivery.',
-        returnPolicy: '30-day satisfaction guarantee.',
-        status: 'active',
-        rating: 4.95,
-        reviewCount: 54,
-        isFeatured: true,
-        isTrending: false,
-        createdAt: new Date(Date.now() - 18 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        productId: 'prod_merino_wool_jacket',
-        vendorId: 'vendor_ubuy_express',
-        vendorName: 'Ubuy Global Express Marketplace',
-        title: 'Nordic Explorer Merino Insulated Technical Parka',
-        description: 'Tailored Scandinavian design combining 100% fine Merino wool thermal insulation with a breathable 20,000mm waterproof storm shell. Magnet-snap pockets and internal storm cuffs.',
-        categoryId: 'cat-fashion',
-        categoryName: 'Fashion & Apparel',
-        brand: 'Nordic Heritage',
-        sku: 'NOR-PARKA-09',
-        price: 349,
-        discount: 0,
-        stock: 25,
-        images: [
-          'https://images.unsplash.com/photo-1544923246-77307dd654cb?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=800&auto=format&fit=crop&q=80',
-        ],
-        variants: [
-          { id: 'var_size', name: 'Size', options: ['S', 'M', 'L', 'XL'] },
-          { id: 'var_color', name: 'Color', options: ['Deep Forest Green', 'Charcoal Heather'] },
-        ],
-        specifications: {
-          'Shell Material': '3-Layer Recycled Ripstop Nylon (20k Waterproof)',
-          'Insulation': '250gsm Virgin Merino Wool Blend',
-          'Zippers': 'YKK Aquaguard Matte Waterproof Zippers',
-        },
-        shippingPolicy: 'Free standard shipping.',
-        returnPolicy: '30-day exchange for sizing differences.',
-        status: 'active',
-        rating: 4.6,
-        reviewCount: 42,
-        isFeatured: false,
-        isTrending: true,
-        createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-      {
-        productId: 'prod_skincare_elixir',
-        vendorId: 'vendor_nexconn_audio',
-        vendorName: 'Nexconn Audio & Smart Tech',
-        title: 'Lumiere Botanical Bio-Retinol Night Recovery Elixir',
-        description: 'Clinically proven 1% plant-derived bakuchiol infused with squalane, cold-pressed rosehip seed oil, and tri-peptide complex to deeply restore cellular elasticity overnight.',
-        categoryId: 'cat-beauty',
-        categoryName: 'Beauty & Personal Care',
-        brand: 'Lumiere Organics',
-        sku: 'LUM-BIO-30',
-        price: 78,
-        discount: 25,
-        stock: 80,
-        images: [
-          'https://images.unsplash.com/photo-1608248597359-2169b22a0d92?w=800&auto=format&fit=crop&q=80',
-          'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&auto=format&fit=crop&q=80',
-        ],
-        specifications: {
-          'Volume': '30ml / 1.0 fl oz Dropper Bottle',
-          'Skin Type': 'Sensitive, Dry, Mature, Combination',
-          'Key Ingredients': '1% Bakuchiol, Olive Squalane, Peptides, Blue Tansy',
-        },
-        shippingPolicy: 'Ships in temperature-controlled protective wrapping.',
-        returnPolicy: '14-day unopened guarantee.',
-        status: 'active',
-        rating: 4.88,
-        reviewCount: 110,
-        isFeatured: false,
-        isTrending: true,
-        createdAt: new Date(Date.now() - 8 * 86400000).toISOString(),
-        updatedAt: new Date().toISOString(),
-      },
-    ];
+    // 3. Products — strictly dynamic seller-uploaded products only (no static seed catalog)
+    this.state.products = [];
 
     // 4. AIAgentConfig for Vendors
     this.state.aiConfigs['vendor_nexconn_audio'] = {
@@ -500,161 +608,13 @@ class DataStoreService {
       updatedAt: new Date().toISOString(),
     };
 
-    // 5. Initial Orders
-    const initialOrder: Order = {
-      orderId: 'ord_sample_9841',
-      checkoutGroupId: 'chk_group_101',
-      consumerId: 'user_consumer_1',
-      consumerName: 'Alex Johnson',
-      consumerEmail: 'customer@convocart.com',
-      vendorId: 'vendor_nexconn_audio',
-      vendorName: 'Nexconn Audio & Smart Tech',
-      items: [
-        {
-          productId: 'prod_nexconn_pro_anc',
-          vendorId: 'vendor_nexconn_audio',
-          title: 'Nexconn SonicPro ANC Studio Wireless Headphones',
-          price: 254.15,
-          discount: 15,
-          quantity: 1,
-          selectedVariant: { Color: 'Obsidian Black', Accessories: 'Standard Pack' },
-          image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80',
-        },
-      ],
-      subtotal: 254.15,
-      shipping: 0,
-      discount: 0,
-      tax: 20.33,
-      total: 274.48,
-      paymentStatus: 'captured',
-      orderStatus: 'shipped',
-      shippingStatus: 'In Transit — Estimated delivery tomorrow by 4 PM',
-      trackingNumber: 'TRK-NEX-889921',
-      shippingCarrier: 'FedEx Priority',
-      addressSnapshot: consumerUser.addresses![0],
-      paymentMethod: 'razorpay',
-      createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
-      updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-    };
+    // 5. Initial Orders, Conversations, Messages & Support Tickets (strictly dynamic per seller/buyer actions)
+    this.state.orders = [];
+    this.state.conversations = [];
+    this.state.messages = [];
+    this.state.supportTickets = [];
 
-    this.state.orders = [initialOrder];
-
-    // 6. Initial Conversations & Messages
-    const convId = 'conv_consumer_vendor_audio';
-    const initialConversation: Conversation = {
-      conversationId: convId,
-      consumerId: 'user_consumer_1',
-      consumerName: 'Alex Johnson',
-      consumerAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
-      vendorId: 'vendor_nexconn_audio',
-      vendorBusinessName: 'Nexconn Audio & Smart Tech',
-      productId: 'prod_nexconn_pro_anc',
-      productTitle: 'Nexconn SonicPro ANC Studio Wireless Headphones',
-      productImage: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80',
-      orderId: 'ord_sample_9841',
-      status: 'active',
-      aiHandlingEnabled: true,
-      lastMessage: {
-        text: 'Your tracking number is TRK-NEX-889921. Let us know if you need anything else!',
-        senderId: 'user_vendor_1',
-        timestamp: new Date(Date.now() - 1 * 86400000).toISOString(),
-        type: 'text',
-      },
-      unreadCount: {
-        user_consumer_1: 0,
-        user_vendor_1: 0,
-      },
-      createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
-      updatedAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-    };
-
-    this.state.conversations = [initialConversation];
-
-    this.state.messages = [
-      {
-        id: 'msg_1',
-        conversationId: convId,
-        senderId: 'user_consumer_1',
-        senderName: 'Alex Johnson',
-        senderRole: 'consumer',
-        recipientId: 'vendor_nexconn_audio',
-        text: 'Hi! Does this pair support simultaneous connection to both an iPad and an iPhone?',
-        type: 'text',
-        status: 'read',
-        createdAt: new Date(Date.now() - 3 * 86400000).toISOString(),
-      },
-      {
-        id: 'msg_2',
-        conversationId: convId,
-        senderId: 'agent_aria',
-        senderName: 'Aria (AI Assistant)',
-        senderRole: 'vendor',
-        recipientId: 'user_consumer_1',
-        text: 'Hello Alex! Yes, absolutely! The Nexconn SonicPro ANC features Bluetooth 5.4 multi-point pairing, which lets you seamlessly switch between your iPad and iPhone without manually disconnecting.',
-        type: 'text',
-        isAiGenerated: true,
-        status: 'read',
-        createdAt: new Date(Date.now() - 3 * 86400000 + 4000).toISOString(),
-      },
-      {
-        id: 'msg_3',
-        conversationId: convId,
-        senderId: 'user_consumer_1',
-        senderName: 'Alex Johnson',
-        senderRole: 'consumer',
-        recipientId: 'vendor_nexconn_audio',
-        text: 'Awesome, just placed my order!',
-        type: 'text',
-        status: 'read',
-        createdAt: new Date(Date.now() - 2 * 86400000).toISOString(),
-      },
-      {
-        id: 'msg_4',
-        conversationId: convId,
-        senderId: 'user_vendor_1',
-        senderName: 'Elena Rostova',
-        senderRole: 'vendor',
-        recipientId: 'user_consumer_1',
-        text: 'Your tracking number is TRK-NEX-889921. Let us know if you need anything else!',
-        type: 'text',
-        status: 'read',
-        createdAt: new Date(Date.now() - 1 * 86400000).toISOString(),
-      },
-    ];
-
-    // 7. Support Tickets
-    this.state.supportTickets = [
-      {
-        ticketId: 'tkt_1001',
-        consumerId: 'user_consumer_1',
-        consumerName: 'Alex Johnson',
-        consumerEmail: 'customer@convocart.com',
-        conversationId: convId,
-        orderId: 'ord_sample_9841',
-        vendorId: 'vendor_nexconn_audio',
-        assignedAgentId: 'user_support_1',
-        assignedAgentName: 'Sarah Connor',
-        priority: 'medium',
-        status: 'in_progress',
-        category: 'Delivery Inquiry',
-        subject: 'FedEx delivery window verification',
-        description: 'Customer inquired whether delivery signature is required for parcel TRK-NEX-889921.',
-        internalNotes: [
-          {
-            id: 'note_1',
-            authorId: 'user_support_1',
-            authorName: 'Sarah Connor',
-            note: 'FedEx confirmed no signature required; package will be safely delivered to front porch locker.',
-            createdAt: new Date(Date.now() - 12 * 3600000).toISOString(),
-          },
-        ],
-        slaDueHours: 24,
-        createdAt: new Date(Date.now() - 16 * 3600000).toISOString(),
-        updatedAt: new Date(Date.now() - 12 * 3600000).toISOString(),
-      },
-    ];
-
-    console.log('[DataStore] Seeded complete high-fidelity database');
+    console.log('[DataStore] Initialized dynamic zero-static database');
   }
 
   // Getters & Query helpers
@@ -663,11 +623,24 @@ class DataStoreService {
   }
 
   public findUserById(uid: string): UserProfile | undefined {
-    return this.state.users.find((u) => u.uid === uid);
+    return this.state.users.find((u) => u.uid === uid || u.firebaseUid === uid);
+  }
+
+  public findUserByFirebaseUid(firebaseUid: string): UserProfile | undefined {
+    return this.state.users.find((u) => u.firebaseUid === firebaseUid || u.uid === firebaseUid);
   }
 
   public findUserByEmail(email: string): UserProfile | undefined {
-    return this.state.users.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    const normalized = email.trim().toLowerCase();
+    const emailAliases: Record<string, string> = {
+      'consumer@convocart.com': 'customer@convocart.com',
+      'vendor@nexconnaudio.com': 'vendor@convocart.com',
+      'vendor@ubuyglobal.com': 'global@convocart.com',
+    };
+    const lookupEmail = emailAliases[normalized] || normalized;
+    return this.state.users.find(
+      (u) => u.email.toLowerCase() === normalized || u.email.toLowerCase() === lookupEmail
+    );
   }
 
   public getPasswordHash(uid: string): string | undefined {
@@ -678,14 +651,76 @@ class DataStoreService {
     this.state.users.push(user);
     this.state.passwords[user.uid] = passwordHash;
     this.persist();
+    void firebaseService.syncDoc('convocart_users', user.uid, user);
   }
 
   public updateUser(uid: string, updates: Partial<UserProfile>): UserProfile | undefined {
-    const idx = this.state.users.findIndex((u) => u.uid === uid);
+    const idx = this.state.users.findIndex((u) => u.uid === uid || u.firebaseUid === uid);
     if (idx === -1) return undefined;
-    this.state.users[idx] = { ...this.state.users[idx], ...updates, updatedAt: new Date().toISOString() };
+    const prev = this.state.users[idx];
+    const updatedUser: UserProfile = {
+      ...prev,
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.state.users[idx] = updatedUser;
+
+    const targetUid = updatedUser.uid;
+    const nowIso = new Date().toISOString();
+
+    // Propagate updated customer details across active conversations, orders, and support tickets
+    for (let i = 0; i < this.state.conversations.length; i++) {
+      const c = this.state.conversations[i];
+      if (c.consumerId === targetUid) {
+        this.state.conversations[i] = {
+          ...c,
+          consumerName: updatedUser.displayName,
+          consumerAvatar: updatedUser.photoURL || c.consumerAvatar,
+          consumerPreferredLanguage: updatedUser.preferredLanguage || c.consumerPreferredLanguage,
+          consumerEmail: updatedUser.email,
+          consumerPhone: updatedUser.phoneNumber || c.consumerPhone,
+          updatedAt: nowIso,
+        };
+        void firebaseService.syncDoc('convocart_conversations', c.conversationId, this.state.conversations[i]);
+      }
+    }
+
+    for (let i = 0; i < this.state.orders.length; i++) {
+      const o = this.state.orders[i];
+      if (o.consumerId === targetUid) {
+        this.state.orders[i] = {
+          ...o,
+          consumerName: updatedUser.displayName,
+          consumerEmail: updatedUser.email,
+          consumerPhone: updatedUser.phoneNumber || o.consumerPhone,
+        };
+      }
+    }
+
+    for (let i = 0; i < this.state.supportTickets.length; i++) {
+      const t = this.state.supportTickets[i];
+      if (t.consumerId === targetUid) {
+        this.state.supportTickets[i] = {
+          ...t,
+          consumerName: updatedUser.displayName,
+          consumerEmail: updatedUser.email,
+        };
+      }
+    }
+
     this.persist();
-    return this.state.users[idx];
+    void firebaseService.syncDoc('convocart_users', updatedUser.uid, updatedUser);
+    return updatedUser;
+  }
+
+  public deleteUser(uid: string): boolean {
+    const before = this.state.users.length;
+    this.state.users = this.state.users.filter((u) => u.uid !== uid);
+    delete this.state.passwords[uid];
+    if (this.state.users.length === before) return false;
+    this.persist();
+    void firebaseService.deleteDocFromCloud('convocart_users', uid);
+    return true;
   }
 
   public getVendors(): Vendor[] {
@@ -703,6 +738,7 @@ class DataStoreService {
   public addVendor(vendor: Vendor): void {
     this.state.vendors.push(vendor);
     this.persist();
+    void firebaseService.syncDoc('convocart_vendors', vendor.vendorId, vendor);
   }
 
   public updateVendor(vendorId: string, updates: Partial<Vendor>): Vendor | undefined {
@@ -710,6 +746,7 @@ class DataStoreService {
     if (idx === -1) return undefined;
     this.state.vendors[idx] = { ...this.state.vendors[idx], ...updates, updatedAt: new Date().toISOString() };
     this.persist();
+    void firebaseService.syncDoc('convocart_vendors', vendorId, this.state.vendors[idx]);
     return this.state.vendors[idx];
   }
 
@@ -784,6 +821,7 @@ class DataStoreService {
   public addProduct(product: Product): void {
     this.state.products.push(product);
     this.persist();
+    void firebaseService.syncDoc('convocart_products', product.productId, product);
   }
 
   public updateProduct(productId: string, updates: Partial<Product>): Product | undefined {
@@ -791,6 +829,7 @@ class DataStoreService {
     if (idx === -1) return undefined;
     this.state.products[idx] = { ...this.state.products[idx], ...updates, updatedAt: new Date().toISOString() };
     this.persist();
+    void firebaseService.syncDoc('convocart_products', productId, this.state.products[idx]);
     return this.state.products[idx];
   }
 
@@ -844,6 +883,7 @@ class DataStoreService {
   public addOrder(order: Order): void {
     this.state.orders.push(order);
     this.persist();
+    void firebaseService.syncDoc('convocart_orders', order.orderId, order);
   }
 
   public updateOrder(orderId: string, updates: Partial<Order>): Order | undefined {
@@ -851,6 +891,7 @@ class DataStoreService {
     if (idx === -1) return undefined;
     this.state.orders[idx] = { ...this.state.orders[idx], ...updates, updatedAt: new Date().toISOString() };
     this.persist();
+    void firebaseService.syncDoc('convocart_orders', orderId, this.state.orders[idx]);
     return this.state.orders[idx];
   }
 
@@ -882,6 +923,7 @@ class DataStoreService {
   public addConversation(conv: Conversation): void {
     this.state.conversations.push(conv);
     this.persist();
+    void firebaseService.syncDoc('convocart_conversations', conv.conversationId, conv);
   }
 
   public updateConversation(conversationId: string, updates: Partial<Conversation>): Conversation | undefined {
@@ -889,6 +931,7 @@ class DataStoreService {
     if (idx === -1) return undefined;
     this.state.conversations[idx] = { ...this.state.conversations[idx], ...updates, updatedAt: new Date().toISOString() };
     this.persist();
+    void firebaseService.syncDoc('convocart_conversations', conversationId, this.state.conversations[idx]);
     return this.state.conversations[idx];
   }
 
@@ -898,13 +941,51 @@ class DataStoreService {
       .sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime());
   }
 
+  public findMessageById(conversationId: string, messageId: string): Message | undefined {
+    return this.state.messages.find((m) => m.conversationId === conversationId && m.id === messageId);
+  }
+
+  public updateMessage(messageId: string, updates: Partial<Message>): Message | undefined {
+    const idx = this.state.messages.findIndex((m) => m.id === messageId);
+    if (idx === -1) return undefined;
+    this.state.messages[idx] = {
+      ...this.state.messages[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.persist();
+    void firebaseService.syncDoc('convocart_messages', messageId, this.state.messages[idx]);
+    return this.state.messages[idx];
+  }
+
+  public deleteMessage(messageId: string): boolean {
+    const before = this.state.messages.length;
+    this.state.messages = this.state.messages.filter((m) => m.id !== messageId);
+    if (this.state.messages.length === before) return false;
+    this.persist();
+    return true;
+  }
+
+  public deleteConversation(conversationId: string): boolean {
+    const before = this.state.conversations.length;
+    this.state.conversations = this.state.conversations.filter((c) => c.conversationId !== conversationId);
+    this.state.messages = this.state.messages.filter((m) => m.conversationId !== conversationId);
+    if (this.state.conversations.length === before) return false;
+    this.persist();
+    void firebaseService.deleteDocFromCloud('convocart_conversations', conversationId);
+    return true;
+  }
+
   public addMessage(message: Message): void {
     this.state.messages.push(message);
     // Update conversation lastMessage & unread count
     const conv = this.findConversationById(message.conversationId);
     if (conv) {
+      const previewText = message.metadata?.rsaEncrypted
+        ? '🔒 RSA-2048 Encrypted Message'
+        : message.text;
       conv.lastMessage = {
-        text: message.text,
+        text: previewText,
         senderId: message.senderId,
         timestamp: message.createdAt,
         type: message.type,
@@ -913,8 +994,10 @@ class DataStoreService {
       // Increment unread count for the other party
       const recipientId = message.recipientId;
       conv.unreadCount[recipientId] = (conv.unreadCount[recipientId] || 0) + 1;
+      void firebaseService.syncDoc('convocart_conversations', conv.conversationId, conv);
     }
     this.persist();
+    void firebaseService.syncDoc('convocart_messages', message.id, message);
   }
 
   public getSupportTickets(filters?: { consumerId?: string; assignedAgentId?: string; status?: string }): SupportTicket[] {
@@ -939,6 +1022,7 @@ class DataStoreService {
   public addSupportTicket(ticket: SupportTicket): void {
     this.state.supportTickets.push(ticket);
     this.persist();
+    void firebaseService.syncDoc('support-tickets', ticket.ticketId, ticket);
   }
 
   public updateSupportTicket(ticketId: string, updates: Partial<SupportTicket>): SupportTicket | undefined {
@@ -946,7 +1030,122 @@ class DataStoreService {
     if (idx === -1) return undefined;
     this.state.supportTickets[idx] = { ...this.state.supportTickets[idx], ...updates, updatedAt: new Date().toISOString() };
     this.persist();
+    void firebaseService.syncDoc('support-tickets', ticketId, this.state.supportTickets[idx]);
     return this.state.supportTickets[idx];
+  }
+
+  public deleteSupportTicket(ticketId: string): boolean {
+    const before = this.state.supportTickets.length;
+    this.state.supportTickets = this.state.supportTickets.filter((t) => t.ticketId !== ticketId);
+    if (this.state.supportTickets.length === before) return false;
+    this.persist();
+    void firebaseService.deleteDocFromCloud('support-tickets', ticketId);
+    return true;
+  }
+
+  public addSupportTicketReply(ticketId: string, reply: SupportTicketReply): SupportTicket | undefined {
+    const ticket = this.findSupportTicketById(ticketId);
+    if (!ticket) return undefined;
+    const replies = [...(ticket.replies || []), reply];
+    const nextStatus =
+      reply.isAdminOrAgent && ticket.status === 'open' ? 'in_progress' : ticket.status;
+    return this.updateSupportTicket(ticketId, { replies, status: nextStatus });
+  }
+
+  public updateSupportTicketReply(
+    ticketId: string,
+    replyId: string,
+    updates: Partial<SupportTicketReply>
+  ): SupportTicket | undefined {
+    const ticket = this.findSupportTicketById(ticketId);
+    if (!ticket || !ticket.replies) return undefined;
+    const replies = ticket.replies.map((r) => (r.id === replyId ? { ...r, ...updates } : r));
+    return this.updateSupportTicket(ticketId, { replies });
+  }
+
+  public getFAQs(): SupportFAQ[] {
+    return this.state.faqs || [];
+  }
+
+  public voteFAQ(faqId: string, type: 'helpful' | 'notHelpful'): SupportFAQ | undefined {
+    if (!this.state.faqs) return undefined;
+    const idx = this.state.faqs.findIndex((f) => f.id === faqId);
+    if (idx === -1) return undefined;
+    if (type === 'helpful') {
+      this.state.faqs[idx].helpful += 1;
+    } else {
+      this.state.faqs[idx].notHelpful += 1;
+    }
+    this.persist();
+    void firebaseService.syncDoc('convocart_faqs', faqId, this.state.faqs[idx]);
+    return this.state.faqs[idx];
+  }
+
+  public addFAQ(faq: SupportFAQ): SupportFAQ {
+    if (!this.state.faqs) this.state.faqs = [];
+    this.state.faqs.unshift(faq);
+    this.persist();
+    void firebaseService.syncDoc('convocart_faqs', faq.id, faq);
+    return faq;
+  }
+
+  public updateFAQ(faqId: string, updates: Partial<SupportFAQ>): SupportFAQ | undefined {
+    if (!this.state.faqs) return undefined;
+    const idx = this.state.faqs.findIndex((f) => f.id === faqId);
+    if (idx === -1) return undefined;
+    this.state.faqs[idx] = { ...this.state.faqs[idx], ...updates };
+    this.persist();
+    void firebaseService.syncDoc('convocart_faqs', faqId, this.state.faqs[idx]);
+    return this.state.faqs[idx];
+  }
+
+  public deleteFAQ(faqId: string): boolean {
+    if (!this.state.faqs) return false;
+    const before = this.state.faqs.length;
+    this.state.faqs = this.state.faqs.filter((f) => f.id !== faqId);
+    if (this.state.faqs.length === before) return false;
+    this.persist();
+    void firebaseService.deleteDocFromCloud('convocart_faqs', faqId);
+    return true;
+  }
+
+  public getKBArticles(): KnowledgeBaseArticle[] {
+    return this.state.kbArticles || [];
+  }
+
+  public addKBArticle(article: KnowledgeBaseArticle): KnowledgeBaseArticle {
+    if (!this.state.kbArticles) this.state.kbArticles = [];
+    this.state.kbArticles.unshift(article);
+    this.persist();
+    void firebaseService.syncDoc('convocart_kb', article.id, article);
+    return article;
+  }
+
+  public updateKBArticle(
+    articleId: string,
+    updates: Partial<KnowledgeBaseArticle>
+  ): KnowledgeBaseArticle | undefined {
+    if (!this.state.kbArticles) return undefined;
+    const idx = this.state.kbArticles.findIndex((a) => a.id === articleId);
+    if (idx === -1) return undefined;
+    this.state.kbArticles[idx] = {
+      ...this.state.kbArticles[idx],
+      ...updates,
+      updatedAt: new Date().toISOString(),
+    };
+    this.persist();
+    void firebaseService.syncDoc('convocart_kb', articleId, this.state.kbArticles[idx]);
+    return this.state.kbArticles[idx];
+  }
+
+  public deleteKBArticle(articleId: string): boolean {
+    if (!this.state.kbArticles) return false;
+    const before = this.state.kbArticles.length;
+    this.state.kbArticles = this.state.kbArticles.filter((a) => a.id !== articleId);
+    if (this.state.kbArticles.length === before) return false;
+    this.persist();
+    void firebaseService.deleteDocFromCloud('convocart_kb', articleId);
+    return true;
   }
 
   public getAIAgentConfig(vendorId: string): AIAgentConfig | undefined {

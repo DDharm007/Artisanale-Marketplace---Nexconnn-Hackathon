@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { apiRequest } from '../lib/api';
 import { Vendor } from '@convocart/shared';
 import { Store, Save, Check, ShieldCheck } from 'lucide-react';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export const VendorProfilePage: React.FC = () => {
+  const { user } = useAuthStore();
+  const vendorId = user?.vendorId || 'me';
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [businessName, setBusinessName] = useState('');
   const [description, setDescription] = useState('');
@@ -14,7 +17,7 @@ export const VendorProfilePage: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
-    apiRequest<Vendor>('/vendors/vendor_nexconn_audio').then((v) => {
+    apiRequest<Vendor>(`/vendors/${vendorId}`).then((v) => {
       setVendor(v);
       setBusinessName(v.businessName);
       setDescription(v.description);
@@ -22,13 +25,13 @@ export const VendorProfilePage: React.FC = () => {
       setContactEmail(v.contactEmail);
       setContactPhone(v.contactPhone);
     });
-  }, []);
+  }, [vendorId]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSaving(true);
     try {
-      await apiRequest('/vendors/vendor_nexconn_audio', {
+      await apiRequest(`/vendors/${vendorId}`, {
         method: 'PATCH',
         body: JSON.stringify({ businessName, description, logo, contactEmail, contactPhone }),
       });

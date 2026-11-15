@@ -18,7 +18,9 @@ import {
   DEFAULT_TAX_RATE,
   FREE_SHIPPING_THRESHOLD,
   STANDARD_SHIPPING_FEE,
+  Vendor,
 } from '@convocart/shared';
+import { apiRequest } from '../lib/api';
 import { cn } from '../lib/utils';
 
 export const CartPage: React.FC = () => {
@@ -27,12 +29,20 @@ export const CartPage: React.FC = () => {
   const { formatPrice, location } = usePreferencesStore();
   const { startConversationWithVendor } = useChatStore();
 
+  const [vendorNames, setVendorNames] = useState<Record<string, string>>({});
   const [couponCode, setCouponCode] = useState('');
   const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
   const [couponError, setCouponError] = useState<string | null>(null);
 
   useEffect(() => {
     fetchCart();
+    apiRequest<Vendor[]>('/vendors')
+      .then((list) => {
+        const map: Record<string, string> = {};
+        for (const v of list) map[v.vendorId] = v.businessName;
+        setVendorNames(map);
+      })
+      .catch(() => {});
   }, []);
 
   if (!cart || cart.items.length === 0) {
@@ -127,7 +137,7 @@ export const CartPage: React.FC = () => {
                 <div className="bg-[#16161a] px-4 py-2.5 border-b border-zinc-800 flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2 font-bold text-zinc-200">
                     <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                    <span>Seller: {vendorItems[0]?.vendorId === 'vendor_nexconn_audio' ? 'Nexconn Audio & Smart Tech' : 'Ubuy Global Express'}</span>
+                    <span>Seller: {vendorNames[vendorId] || vendorId}</span>
                   </div>
                   <button
                     onClick={() => startConversationWithVendor(vendorId, vendorItems[0]?.productId)}

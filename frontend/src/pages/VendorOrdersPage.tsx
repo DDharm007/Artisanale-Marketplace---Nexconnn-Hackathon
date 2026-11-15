@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Order, OrderStatus } from '@convocart/shared';
 import { apiRequest } from '../lib/api';
+import { useAuthStore } from '../stores/useAuthStore';
+import { useChatStore } from '../stores/useChatStore';
 import { formatCurrency, formatDate } from '../lib/utils';
-import { ShoppingBag, ArrowRight, Truck, Check, X, Eye } from 'lucide-react';
+import { ShoppingBag, ArrowRight, Truck, Check, X, Eye, MessageSquare, Mail, Phone, MapPin } from 'lucide-react';
 
 export const VendorOrdersPage: React.FC = () => {
+  const { user } = useAuthStore();
+  const { startConversationWithCustomer } = useChatStore();
+  const navigate = useNavigate();
   const [orders, setOrders] = useState<Order[]>([]);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [isLoading, setIsLoading] = useState(true);
@@ -100,10 +106,51 @@ export const VendorOrdersPage: React.FC = () => {
                     <span className="text-[10px] text-slate-400 block">{formatDate(order.createdAt)}</span>
                   </td>
                   <td className="py-3.5 px-4">
-                    <span className="font-bold text-slate-900">{order.consumerName}</span>
-                    <span className="text-[11px] text-slate-500 block truncate max-w-[150px]">
-                      {order.addressSnapshot.street}, {order.addressSnapshot.city}
-                    </span>
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-bold text-slate-900">{order.consumerName}</span>
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          try {
+                            await startConversationWithCustomer(
+                              order.consumerId,
+                              user?.vendorId || order.vendorId,
+                              order.orderId
+                            );
+                            navigate('/vendor/conversations');
+                          } catch (err) {
+                            console.error(err);
+                          }
+                        }}
+                        className="inline-flex items-center gap-1 rounded-lg bg-brand-50 px-2 py-0.5 text-[10px] font-bold text-brand-700 hover:bg-brand-100 transition-colors shrink-0"
+                        title="Open 1-on-1 Seller Chat with Buyer"
+                      >
+                        <MessageSquare className="h-3 w-3" /> Chat Buyer
+                      </button>
+                    </div>
+                    <div className="mt-0.5 space-y-0.5 text-[11px] text-slate-500">
+                      {order.consumerEmail && (
+                        <span className="flex items-center gap-1 truncate max-w-[200px]">
+                          <Mail className="h-3 w-3 text-slate-400 shrink-0" />
+                          {order.consumerEmail}
+                        </span>
+                      )}
+                      {(order.consumerPhone || order.addressSnapshot.phone) && (
+                        <span className="flex items-center gap-1">
+                          <Phone className="h-3 w-3 text-slate-400 shrink-0" />
+                          {order.consumerPhone || order.addressSnapshot.phone}
+                        </span>
+                      )}
+                      <span className="flex items-start gap-1 max-w-[220px]">
+                        <MapPin className="h-3 w-3 text-slate-400 shrink-0 mt-0.5" />
+                        <span>
+                          {order.addressSnapshot.street}, {order.addressSnapshot.city}
+                          {order.addressSnapshot.state ? `, ${order.addressSnapshot.state}` : ''}
+                          {order.addressSnapshot.postalCode ? ` ${order.addressSnapshot.postalCode}` : ''}
+                          {order.addressSnapshot.country ? `, ${order.addressSnapshot.country}` : ''}
+                        </span>
+                      </span>
+                    </div>
                   </td>
                   <td className="py-3.5 px-4">
                     <div className="space-y-0.5">

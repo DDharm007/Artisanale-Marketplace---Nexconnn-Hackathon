@@ -18,6 +18,8 @@ import { CheckoutPage } from './pages/CheckoutPage';
 import { OrdersPage } from './pages/OrdersPage';
 import { WishlistPage } from './pages/WishlistPage';
 import { ProfilePage } from './pages/ProfilePage';
+import { CustomerSupportPage } from './pages/CustomerSupportPage';
+import { AuthPage } from './pages/AuthPage';
 
 // Vendor Pages
 import { VendorOverviewPage } from './pages/VendorOverviewPage';
@@ -42,11 +44,16 @@ export function App() {
   const { fetchCart } = useCartStore();
 
   useEffect(() => {
-    // Attempt session restore or load demo consumer session by default
-    fetchMe().then(() => {
-      fetchCart();
-    });
+    void fetchMe();
   }, []);
+
+  useEffect(() => {
+    if (user?.uid) {
+      void fetchCart();
+    } else {
+      useCartStore.setState({ cart: null, itemCount: 0, subtotal: 0 });
+    }
+  }, [user?.uid]);
 
   return (
     <BrowserRouter>
@@ -56,6 +63,8 @@ export function App() {
 
         {/* Consumer Marketplace */}
         <Route element={<ConsumerLayout />}>
+          <Route path="/auth" element={<AuthPage />} />
+          <Route path="/login" element={<Navigate to="/auth" replace />} />
           <Route path="/shop" element={<HomePage />} />
           <Route path="/shop/products" element={<ProductListingPage />} />
           <Route path="/shop/products/:productId" element={<ProductDetailPage />} />
@@ -64,6 +73,7 @@ export function App() {
           <Route path="/shop/orders" element={<OrdersPage />} />
           <Route path="/shop/wishlist" element={<WishlistPage />} />
           <Route path="/shop/profile" element={<ProfilePage />} />
+          <Route path="/shop/support" element={<CustomerSupportPage />} />
         </Route>
 
         {/* Vendor Dashboard (3-Column Layout with Persistent Customer Chat) */}

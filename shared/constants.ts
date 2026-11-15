@@ -26,10 +26,28 @@ export const DEFAULT_CATEGORIES = [
 export const NEXCONN_APP_CONFIG = {
   appKey: '8w7jv4qb8gtvy',
   appSecret: '6bNYoqv739Ng',
-  accessKey: 'KCPAU3HTYNPRP5WUBGPCCTCHUMIJHUZ7JIDRAI2UTSN5WEMMJ7STQHL4OKMLHYJK2QF4ZEJEFYA57ZFPTGRRRRTDXUUROPL55UVPN5I',
+  accessKey: 'ASPGNSOBMWBGVB4KVVHIWB2XNMTJDHOA5MGCDG63NGY6LJZDZAS3AOPDJA4BIXHG3VUHQRCUROZBLF2RTYXS3EUTILRQLIYJCEHPNLQ',
 };
 
 export const DEFAULT_COMMISSION_RATE = 0.05; // 5% marketplace commission
 export const DEFAULT_TAX_RATE = 0.08; // 8% sales tax
 export const FREE_SHIPPING_THRESHOLD = 500;
 export const STANDARD_SHIPPING_FEE = 49;
+
+export interface ChatLanguageOption {
+  code: string;
+  name: string;
+  nativeName: string;
+  flag: string;
+}
+
+export const SUPPORTED_CHAT_LANGUAGES: ChatLanguageOption[] = [
+  { code: 'en', name: 'English', nativeName: 'English', flag: '🇺🇸' },
+  { code: 'es', name: 'Spanish', nativeName: 'Español', flag: '🇪🇸' },
+  { code: 'fr', name: 'French', nativeName: 'Français', flag: '🇫🇷' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch', flag: '🇩🇪' },
+  { code: 'ja', name: 'Japanese', nativeName: '日本語', flag: '🇯🇵' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी', flag: '🇮🇳' },
+  { code: 'zh', name: 'Chinese', nativeName: '中文', flag: '🇨🇳' },
+  { code: 'ar', name: 'Arabic', nativeName: 'العربية', flag: '🇸🇦' },
+];

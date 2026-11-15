@@ -59,6 +59,8 @@ export class ProductController {
     const body = req.body;
     const productId = `prod_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
 
+    const categoryMatch = DEFAULT_CATEGORIES.find((c) => c.id === body.categoryId);
+
     const newProduct: Product = {
       productId,
       vendorId: vendor.vendorId,
@@ -66,7 +68,7 @@ export class ProductController {
       title: body.title,
       description: body.description,
       categoryId: body.categoryId,
-      categoryName: body.categoryName || 'General',
+      categoryName: body.categoryName || categoryMatch?.name || 'General',
       brand: body.brand,
       sku: body.sku,
       price: body.price,
@@ -80,6 +82,8 @@ export class ProductController {
       status: body.status || 'active',
       rating: 5.0,
       reviewCount: 0,
+      isFeatured: body.isFeatured !== undefined ? Boolean(body.isFeatured) : true,
+      isTrending: body.isTrending !== undefined ? Boolean(body.isTrending) : true,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };

@@ -4,9 +4,12 @@ import { Product } from '@convocart/shared';
 import { apiRequest } from '../lib/api';
 import { formatCurrency } from '../lib/utils';
 import { Plus, Search, Edit3, Trash2, Eye, EyeOff, Package } from 'lucide-react';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export const VendorProductsPage: React.FC = () => {
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+  const vendorId = user?.vendorId || 'me';
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'archived'>('all');
@@ -15,7 +18,7 @@ export const VendorProductsPage: React.FC = () => {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const data = await apiRequest<Product[]>('/vendors/vendor_nexconn_audio/products');
+      const data = await apiRequest<Product[]>(`/vendors/${vendorId}/products`);
       setProducts(data);
     } catch (err) {
       console.error(err);
@@ -26,7 +29,7 @@ export const VendorProductsPage: React.FC = () => {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [vendorId]);
 
   const handleToggleStatus = async (productId: string, currentStatus: string) => {
     const nextStatus = currentStatus === 'active' ? 'draft' : 'active';

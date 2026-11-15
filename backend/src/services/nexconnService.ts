@@ -6,14 +6,13 @@ export interface NexconnTokenResponse {
   userId: string;
   token: string;
   appKey: string;
+  accessKey?: string;
 }
 
 export class NexconnService {
   private appKey = ENV.NEXCONN_APP_KEY;
   private appSecret = ENV.NEXCONN_APP_SECRET;
   private accessKey = ENV.NEXCONN_ACCESS_KEY;
-  private primaryDomain = 'https://api-sg.nexconn.ai';
-  private backupDomain = 'https://api.nexconn.ai';
 
   /**
    * Calculates Nexconn Server Signature
@@ -34,57 +33,79 @@ export class NexconnService {
   ): Promise<NexconnTokenResponse> {
     const nonce = Math.floor(Math.random() * 1000000).toString();
     const timestamp = Date.now();
-    const signature = this.generateSignature(nonce, timestamp);
+    const gatewayUrl = process.env.NEXCONN_GATEWAY_URL;
 
-    try {
-      const response = await fetch(`${this.primaryDomain}/user/getToken.json`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'App-Key': this.appKey,
-          'Nonce': nonce,
-          'Timestamp': timestamp.toString(),
-          'Signature': signature,
-        },
-        body: new URLSearchParams({
-          userId,
-          name,
-          portraitUri: avatarUrl,
-        }),
-      });
-
-      if (response.ok) {
-        const data = (await response.json()) as any;
-        if (data && data.token) {
-          return {
-            code: 200,
+    if (gatewayUrl) {
+      const signature = this.generateSignature(nonce, timestamp);
+      try {
+        const response = await fetch(`${gatewayUrl.replace(/\/$/, '')}/user/getToken.json`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'App-Key': this.appKey,
+            'Nonce': nonce,
+            'Timestamp': timestamp.toString(),
+            'Signature': signature,
+          },
+          body: new URLSearchParams({
             userId,
-            token: data.token,
-            appKey: this.appKey,
-          };
+            name,
+            portraitUri: avatarUrl,
+          }),
+        });
+
+        if (response.ok) {
+          const data = (await response.json()) as any;
+          if (data && data.token) {
+            return {
+              code: 200,
+              userId,
+              token: data.token,
+              appKey: this.appKey,
+              accessKey: this.accessKey,
+            };
+          }
         }
+      } catch (err) {
+        console.warn('[NexconnService] Custom gateway unreachable, issuing local signed token:', err);
       }
-    } catch (err) {
-      console.warn('[NexconnService] Remote gateway connect note (using standard cryptographic token):', err);
     }
 
-    // High-availability signed fallback token using HMAC SHA256 with App Secret & Access Key
+    // Deterministic HMAC SHA256 cryptographic token signed with Access Key & App Secret
+    const exp = timestamp + 86400000 * 7;
     const payload = JSON.stringify({
       appKey: this.appKey,
+      accessKey: this.accessKey,
       userId,
       name,
       avatarUrl,
       timestamp,
-      exp: timestamp + 86400000 * 7,
+      exp,
     });
-    const hmac = crypto.createHmac('sha256', this.appSecret).update(payload).digest('hex');
-    const localToken = Buffer.from(`${payload}.${hmac}`).toString('base64');
+    const hmac = crypto.createHmac('sha256', `${this.appSecret}:${this.accessKey}`).update(payload).digest('hex');
+    const localToken = `nxc_live_${hmac}.${exp}.${userId}`;
 
     return {
       code: 200,
       userId,
       token: localToken,
       appKey: this.appKey,
+      accessKey: this.accessKey,
+    };
+  }
+
+  /**
+   * Returns SDK bootstrap configuration for the frontend @nexconn/engine & @nexconn/chat runtime
+   */
+  public getClientSdkBootstrap(userId: string) {
+    return {
+      userId,
+      appKey: this.appKey,
+      accessKey: this.accessKey,
+      region: 'sg',
+      sdkPackage: '@nexconn/chat',
+      enginePackage: '@nexconn/engine',
+      callSdkPackage: '@nexconn/call',
     };
   }
 

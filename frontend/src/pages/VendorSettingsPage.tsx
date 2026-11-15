@@ -2,23 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { apiRequest } from '../lib/api';
 import { Vendor, VendorAvailability } from '@convocart/shared';
 import { Settings, Save, Check, Radio } from 'lucide-react';
+import { useAuthStore } from '../stores/useAuthStore';
 
 export const VendorSettingsPage: React.FC = () => {
+  const { user } = useAuthStore();
+  const vendorId = user?.vendorId || 'me';
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [availability, setAvailability] = useState<VendorAvailability>('online');
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    apiRequest<Vendor>('/vendors/vendor_nexconn_audio').then((v) => {
+    apiRequest<Vendor>(`/vendors/${vendorId}`).then((v) => {
       setVendor(v);
       setAvailability(v.availability);
     });
-  }, []);
+  }, [vendorId]);
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await apiRequest('/vendors/vendor_nexconn_audio', {
+      await apiRequest(`/vendors/${vendorId}`, {
         method: 'PATCH',
         body: JSON.stringify({ availability }),
       });

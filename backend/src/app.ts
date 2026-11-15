@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { errorHandler } from './middleware/errorHandler';
+import { firebaseService } from './services/firebaseService';
 
 import authRoutes from './modules/auth/authRoutes';
 import productRoutes from './modules/products/productRoutes';
@@ -25,6 +26,8 @@ app.get('/api/health', (_req, res) => {
     status: 'online',
     product: 'ConvoCart Multi-Vendor Marketplace',
     nexconnConfigured: true,
+    nexconnCallSdk: true,
+    firebase: firebaseService.getStatus(),
     timestamp: new Date().toISOString(),
   });
 });

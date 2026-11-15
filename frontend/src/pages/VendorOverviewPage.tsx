@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { apiRequest } from '../lib/api';
 import { VendorOverviewStats, Order } from '@convocart/shared';
 import { formatCurrency, formatDate } from '../lib/utils';
+import { useAuthStore } from '../stores/useAuthStore';
 import {
   DollarSign,
   ShoppingBag,
@@ -24,17 +25,20 @@ import {
 } from 'recharts';
 
 export const VendorOverviewPage: React.FC = () => {
+  const { user } = useAuthStore();
+  const vendorId = user?.vendorId || 'me';
   const [stats, setStats] = useState<VendorOverviewStats | null>(null);
   const [chartData, setChartData] = useState<any[]>([]);
   const [recentOrders, setRecentOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     apiRequest<{
       overview: VendorOverviewStats;
       chartData: any[];
       recentOrders: Order[];
-    }>('/vendors/vendor_nexconn_audio/statistics')
+    }>(`/vendors/${vendorId}/statistics`)
       .then((data) => {
         setStats(data.overview);
         setChartData(data.chartData);
@@ -42,7 +46,7 @@ export const VendorOverviewPage: React.FC = () => {
       })
       .catch((err) => console.error(err))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [vendorId]);
 
   if (isLoading || !stats) {
     return (

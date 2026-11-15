@@ -7,6 +7,18 @@
     @apply min-h-screen bg-[#09090b] text-zinc-100 antialiased;
     color-scheme: dark;
   }
+
+  /* Ensure form controls inside white/light surface cards always render dark readable text */
+  :is(.bg-white, .bg-slate-50, .bg-slate-100)
+    :is(input, select, textarea):not([class*="bg-zinc-"]):not([class*="bg-slate-8"]):not([class*="bg-slate-9"]):not([class*="bg-[#"]) {
+    color: #0f172a;
+    color-scheme: light;
+  }
+
+  :is(.bg-white, .bg-slate-50, .bg-slate-100)
+    :is(input, textarea):not([class*="bg-zinc-"]):not([class*="bg-slate-8"]):not([class*="bg-slate-9"]):not([class*="bg-[#"])::placeholder {
+    color: #94a3b8;
+  }
 }
 
 /* Custom subtle dark scrollbars */

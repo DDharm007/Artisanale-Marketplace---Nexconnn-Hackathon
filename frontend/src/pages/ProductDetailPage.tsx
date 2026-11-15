@@ -386,15 +386,21 @@ export const ProductDetailPage: React.FC = () => {
                 </button>
               </div>
 
-              {/* Contact Seller */}
+              {/* Contact Seller & Product Support */}
               <div className="pt-3 border-t border-zinc-800 space-y-2">
                 <button
                   onClick={handleContactSeller}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 py-2.5 px-4 text-xs font-bold text-zinc-200 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#00a884] hover:bg-[#029676] py-2.5 px-4 text-xs font-extrabold text-[#111b21] transition-colors"
                 >
-                  <MessageSquare className="h-4 w-4 text-zinc-400" />
-                  Message Seller
+                  <MessageSquare className="h-4 w-4" />
+                  Chat Real-Time with Seller
                 </button>
+                <Link
+                  to={`/shop/support?productId=${product.productId}`}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 py-2 px-4 text-xs font-bold text-zinc-200 transition-colors"
+                >
+                  Open Product Support Ticket
+                </Link>
                 <p className="text-[10px] text-zinc-500 text-center">
                   Direct verified seller communication powered by Nexconn
                 </p>
