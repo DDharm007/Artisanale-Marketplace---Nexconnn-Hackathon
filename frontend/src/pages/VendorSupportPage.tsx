@@ -98,7 +98,7 @@ export const VendorSupportPage: React.FC = () => {
         <div className="flex justify-end pt-2">
           <button
             type="submit"
-            className="rounded-2xl bg-slate-900 px-6 py-2.5 font-bold text-white hover:bg-brand-600 transition-colors flex items-center gap-1.5"
+            className="rounded-full bg-[#171717] px-6 py-2.5 font-bold text-[#D6B875] hover:bg-black transition-colors flex items-center gap-1.5"
           >
             <Send className="h-3.5 w-3.5" /> Submit Support Ticket
           </button>

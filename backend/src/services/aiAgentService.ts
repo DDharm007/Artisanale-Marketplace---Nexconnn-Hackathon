@@ -15,37 +15,76 @@ export interface AIResponseResult {
 
 export class AIAgentService {
   /**
-   * Evaluates if vendor is offline/away and AI agent is active and not taken over by human
+   * Securely calls Groq Cloud API using the configured environment key (not hardcoded)
+   */
+  private async callGroqLLM(systemPrompt: string, userMessage: string): Promise<string | null> {
+    if (!ENV.GROQ_API_KEY) return null;
+
+    const modelsToTry = [
+      ENV.GROQ_MODEL || 'qwen/qwen3.8-27b',
+      'openai/gpt-oss-20b',
+      'openai/gpt-oss-120b',
+    ];
+
+    for (const model of modelsToTry) {
+      try {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 3500);
+
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${ENV.GROQ_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          signal: controller.signal,
+          body: JSON.stringify({
+            model,
+            messages: [
+              { role: 'system', content: systemPrompt },
+              { role: 'user', content: userMessage },
+            ],
+            temperature: 0.3,
+            max_tokens: 180,
+          }),
+        });
+        clearTimeout(timeout);
+
+        if (res.ok) {
+          const data = (await res.json()) as any;
+          const content = data.choices?.[0]?.message?.content;
+          if (content && typeof content === 'string' && content.trim().length > 0) {
+            return content.trim();
+          }
+        } else {
+          const errBody = await res.text().catch(() => '');
+          console.warn(`[AIAgent] Groq model ${model} failed (${res.status}): ${errBody.slice(0, 100)}`);
+        }
+      } catch (err) {
+        console.warn(`[AIAgent] Groq call error with model ${model}:`, err);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Evaluates if vendor is offline/away (not on the website) and AI agent is active and not taken over by human
    */
   public shouldAIRespond(vendorId: string): boolean {
     const vendor = db.findVendorById(vendorId);
-    if (!vendor) return false;
+    // If vendor exists and is currently online on the website, AI does NOT intervene
+    if (vendor && vendor.availability === 'online') {
+      return false;
+    }
 
     const config = db.getAIAgentConfig(vendorId);
-    if (!config || !config.enabled) return false;
+    // If the vendor explicitly disabled their autonomous agent
+    if (config?.enabled === false) return false;
+    // If human seller has manually taken over this chat, AI does not intervene
+    if (config?.humanTakeoverActive) return false;
 
-    // If human seller has activated takeover, AI does NOT intervene
-    if (config.humanTakeoverActive) return false;
-
-    // If vendor is offline or away, AI takes over
-    if (vendor.availability === 'offline' || vendor.availability === 'away') {
-      return true;
-    }
-
-    // Check business hours if configured
-    if (config.businessHours.enabled) {
-      const now = new Date();
-      const currentHour = now.getUTCHours();
-      const [startH] = config.businessHours.start.split(':').map(Number);
-      const [endH] = config.businessHours.end.split(':').map(Number);
-
-      // Outside business hours -> AI responds
-      if (currentHour < startH || currentHour >= endH) {
-        return true;
-      }
-    }
-
-    return true; // Default auto-assist for customer satisfaction
+    // Vendor is NOT on the website (offline or away) -> AI agent auto-replies
+    return true;
   }
 
   /**
@@ -56,8 +95,42 @@ export class AIAgentService {
     customerMessage: string,
     context?: { productId?: string; orderId?: string; consumerId?: string; preferredLanguage?: string }
   ): Promise<AIResponseResult> {
-    const vendor = db.findVendorById(vendorId);
-    const config = db.getAIAgentConfig(vendorId);
+    const resolvedVendor = db.findVendorById(vendorId) || {
+      vendorId,
+      businessName: vendorId.replace('vendor_', '').replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase()),
+      description: 'Handcrafted studio dedicated to timeless artisanal creations.',
+      availability: 'offline',
+      businessPolicies: {
+        shipping: 'Handcrafted and shipped within 2-3 business days.',
+        returns: '30-day money-back satisfaction guarantee.',
+        warranty: 'Lifetime craftsmanship guarantee.',
+      },
+    } as any;
+    const resolvedConfig = db.getAIAgentConfig(vendorId) || {
+      vendorId,
+      agentName: `Artis AI of ${resolvedVendor.businessName}`,
+      enabled: true,
+      personality: 'warm, friendly, and knowledgeable artisanal concierge',
+      businessHours: { enabled: false, start: '09:00', end: '18:00' },
+      humanTakeoverActive: false,
+      shippingPolicy: resolvedVendor.businessPolicies?.shipping,
+      returnPolicy: resolvedVendor.businessPolicies?.returns,
+      warrantyInfo: resolvedVendor.businessPolicies?.warranty,
+      faqs: [],
+      escalationRules: [
+        'refund',
+        'cancel',
+        'damaged',
+        'defective',
+        'wrong item',
+        'return my',
+        'money back',
+      ],
+      supportedLanguages: ['en', 'es', 'fr', 'de', 'ja', 'hi', 'zh', 'ar'],
+      greetingMessage: `Welcome to ${resolvedVendor.businessName}! Ask about products, shipping, or live quotes in any language.`,
+      responseStyle: 'friendly',
+    } as any;
+
     const detectedLang = translationService.detectLanguage(customerMessage);
     const targetLang = context?.preferredLanguage || detectedLang || 'en';
 
@@ -69,6 +142,13 @@ export class AIAgentService {
     }
 
     const finalize = async (res: AIResponseResult): Promise<AIResponseResult> => {
+      // Strip any legacy brackets like [AgentName]: or [AgentName (AI)]:
+      let text = res.replyText.replace(/^\[.*?\]:\s*/, '').trim();
+      const prefix = `I am Artis AI of ${resolvedVendor.businessName}.`;
+      if (!text.toLowerCase().startsWith('i am artis ai')) {
+        text = `${prefix} ${text}`;
+      }
+      res.replyText = text;
       res.detectedLanguage = 'en';
       res.translatedReply = { en: res.replyText };
       if (targetLang && targetLang !== 'en') {
@@ -78,16 +158,24 @@ export class AIAgentService {
       return res;
     };
 
-    if (!vendor || !config) {
-      return finalize({
-        replyText: 'Thank you for reaching out. A human specialist has been notified and will assist you shortly.',
-        isAiGenerated: true,
-        escalateToHuman: true,
-      });
-    }
+    const vendor = resolvedVendor;
+    const config = resolvedConfig;
 
     const lowerMsg = normalizedQuery.toLowerCase();
     const vendorProducts = db.getProducts({ vendorId });
+
+    // 0. Instant deterministic reply for basic greetings (zero latency)
+    const cleanWords = lowerMsg.replace(/[^\w\s]/g, '').trim();
+    const isDirectGreeting = ['hi', 'hello', 'hey', 'namaste', 'hola', 'yo'].includes(cleanWords);
+    if (isDirectGreeting) {
+      const featuredItem = vendorProducts[0];
+      return finalize({
+        replyText: `Hello! Welcome to ${vendor.businessName}${featuredItem ? ` (featuring our handcrafted ${featuredItem.title})` : ''}. How can I assist you with product specs, dimensions, materials, or shipping today?`,
+        isAiGenerated: true,
+        escalateToHuman: false,
+        matchedProductId: featuredItem?.productId,
+      });
+    }
 
     // 1. Check strict escalation triggers (refunds, cancellations, returns, defects, human request)
     const isPolicyQuestion =
@@ -133,7 +221,7 @@ export class AIAgentService {
       'complaint',
       'unsatisfied',
       'talk to seller',
-      ...config.escalationRules.map((r) => r.toLowerCase()),
+      ...((config.escalationRules || []).map((r: string) => (r || '').toLowerCase())),
     ];
 
     if (!isPolicyQuestion) {
@@ -196,7 +284,47 @@ export class AIAgentService {
       });
     }
 
-    // 3. Match Store FAQs
+    // 2.5 Live Groq Cloud LLM Generation (Intelligent, dynamic, grounded inference)
+    if (ENV.GROQ_API_KEY) {
+      const systemPrompt = `You are Artis AI, the official autonomous AI assistant of the artisan studio "${vendor.businessName}".
+MANDATORY IDENTITY: You represent "${vendor.businessName}" and must always state or introduce yourself as "I am Artis AI of ${vendor.businessName}."
+Studio Description: ${vendor.description}.
+Persona & Tone: ${config.personality || 'friendly, warm, and helpful artisanal expert'}.
+
+STRICT GROUNDING RULES:
+1. ONLY answer using the verified facts, policies, and product details provided below.
+2. If asked about stock, prices, materials, dimensions, or shipping, answer accurately using the data below.
+3. NEVER approve refunds, cancellations, chargebacks, or unverified custom promises.
+4. If a customer asks for bespoke work or heavy discounts, warmly offer to connect them with the master artisan.
+5. Keep answers concise (2 to 3 sentences max), polite, and in the voice of Artis AI. Do not use markdown headers or bracket prefixes.
+
+Studio Policies:
+- Shipping: ${config.shippingPolicy || vendor.businessPolicies?.shipping || 'Handcrafted and shipped within 2-3 business days.'}
+- Returns: ${config.returnPolicy || vendor.businessPolicies?.returns || '30-day money-back guarantee with zero restocking fee.'}
+- Warranty: ${config.warrantyInfo || vendor.businessPolicies?.warranty || 'Lifetime craftsmanship guarantee.'}
+
+${matchedProduct ? `Currently Inquired Product:
+- Title: ${matchedProduct.title}
+- Price: $${matchedProduct.price.toFixed(2)}${matchedProduct.discount > 0 ? ` (${matchedProduct.discount}% store discount)` : ''}
+- Stock: ${matchedProduct.stock} units available
+- Description: ${matchedProduct.description}
+- Specs: ${JSON.stringify(matchedProduct.specifications)}` : `Featured Studio Creations:
+${vendorProducts.slice(0, 5).map(p => `- ${p.title} ($${p.price.toFixed(2)}, ${p.stock} in stock)`).join('\n')}`}
+
+${config.faqs?.length ? `Verified FAQs:\n${config.faqs.map(f => `Q: ${f.question}\nA: ${f.answer}`).join('\n')}` : ''}`;
+
+      const groqReply = await this.callGroqLLM(systemPrompt, normalizedQuery);
+      if (groqReply) {
+        return finalize({
+          replyText: `[${config.agentName} (AI)]: ${groqReply}`,
+          isAiGenerated: true,
+          escalateToHuman: false,
+          matchedProductId: matchedProduct?.productId,
+        });
+      }
+    }
+
+    // 3. Fallback Local Match Store FAQs (if LLM is unavailable)
     if (config.faqs && config.faqs.length > 0) {
       for (const faq of config.faqs) {
         const qWords = faq.question.toLowerCase().split(' ').filter((w) => w.length > 3);
@@ -329,9 +457,9 @@ export class AIAgentService {
     }
 
     // 5.5 Conversational greetings & check-ins (never repeat the initial greeting verbatim)
-    const cleanWords = lowerMsg.replace(/[^\w\s]/g, '').trim();
+    const checkinWords = lowerMsg.replace(/[^\w\s]/g, '').trim();
     const isGreeting =
-      ['hi', 'hello', 'hey', 'namaste', 'hola', 'konnichiwa', 'yo', 'sup', 'help'].includes(cleanWords) ||
+      ['hi', 'hello', 'hey', 'namaste', 'hola', 'konnichiwa', 'yo', 'sup', 'help'].includes(checkinWords) ||
       lowerMsg.startsWith('hi ') ||
       lowerMsg.startsWith('hello ') ||
       lowerMsg.includes('good morning') ||

@@ -269,7 +269,7 @@ export const VendorCustomersPage: React.FC = () => {
                             type="button"
                             onClick={() => handleMessageCustomer(cust)}
                             disabled={messagingUid === cust.uid}
-                            className="inline-flex items-center gap-1 rounded-xl bg-brand-600 px-2.5 py-1.5 text-[11px] font-bold text-white hover:bg-brand-700 transition-colors disabled:opacity-60"
+                            className="inline-flex items-center gap-1 rounded-full bg-[#171717] px-2.5 py-1.5 text-[11px] font-bold text-[#D6B875] hover:bg-black transition-colors disabled:opacity-60"
                           >
                             {messagingUid === cust.uid ? (
                               <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -462,7 +462,7 @@ export const VendorCustomersPage: React.FC = () => {
                 type="button"
                 onClick={() => handleMessageCustomer(selectedCustomer)}
                 disabled={messagingUid === selectedCustomer.uid}
-                className="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-4 py-2 text-xs font-bold text-white hover:bg-brand-700 transition-colors disabled:opacity-60"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#171717] px-4 py-2 text-xs font-bold text-[#D6B875] hover:bg-black transition-colors disabled:opacity-60"
               >
                 {messagingUid === selectedCustomer.uid ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />

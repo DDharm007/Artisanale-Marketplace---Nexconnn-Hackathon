@@ -6,7 +6,7 @@ import { PersistentChatPanel } from '../../features/chat/PersistentChatPanel';
 
 export const ConsumerLayout: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#09090b] text-zinc-100">
+    <div className="min-h-screen flex flex-col bg-[#ECEAE4] text-[#171717]">
       <Navbar />
       <main className="flex-1">
         <Outlet />

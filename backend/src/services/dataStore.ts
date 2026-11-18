@@ -381,6 +381,328 @@ class DataStoreService {
       }
     }
 
+    if (this.ensureArtisanalMarketplaceSeed()) {
+      changed = true;
+    }
+
+    return changed;
+  }
+
+  private ensureArtisanalMarketplaceSeed(): boolean {
+    let changed = false;
+    const salt = bcrypt.genSaltSync(10);
+    const defaultHash = this.state.passwords['user_consumer_1'] || bcrypt.hashSync('Password123!', salt);
+
+    const artisanVendors = [
+      {
+        vendorId: 'vendor_atelier_terra',
+        ownerUid: 'user_vendor_atelier_terra',
+        artisanName: 'Lorenzo Moretti',
+        businessName: 'Atelier Terra',
+        location: 'Florence, Italy',
+        category: 'sculptures-candles',
+        logo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+        description: 'Florentine sculptural stoneware & raw architectural earth ceramics handcrafted by Master Lorenzo Moretti.',
+      },
+      {
+        vendorId: 'vendor_lumiere_botanique',
+        ownerUid: 'user_vendor_lumiere_botanique',
+        artisanName: 'Camille Laurent',
+        businessName: 'Lumière Botanique',
+        location: 'Grasse, France',
+        category: 'sculptures-candles',
+        logo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+        description: 'Small-batch organic botanical soy wax candles, beeswax tapers, and cold-process apothecary soaps from Grasse.',
+      },
+      {
+        vendorId: 'vendor_kyoto_kiln',
+        ownerUid: 'user_vendor_kyoto_kiln',
+        artisanName: 'Kenji Takahashi',
+        businessName: 'Kyoto Kiln Works',
+        location: 'Kyoto, Japan',
+        category: 'ceramics-pottery',
+        logo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80',
+        description: 'Traditional anagama wood-fired Japanese stoneware tea sets, Yunomi mugs, and celadon vessels.',
+      },
+      {
+        vendorId: 'vendor_oaxaca_earth',
+        ownerUid: 'user_vendor_oaxaca_earth',
+        artisanName: 'Mateo & Sofia Reyes',
+        businessName: 'Oaxaca Earth Studio',
+        location: 'Oaxaca, Mexico',
+        category: 'ceramics-pottery',
+        logo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80',
+        description: 'Generational Zapotec burnished red clay terracotta planters, woven palm baskets, and folk clay figurines.',
+      },
+      {
+        vendorId: 'vendor_nordic_timber',
+        ownerUid: 'user_vendor_nordic_timber',
+        artisanName: 'Freja Lindqvist',
+        businessName: 'Nordic Timber Craft',
+        location: 'Copenhagen, Denmark',
+        category: 'leather-woodcraft',
+        logo: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80',
+        description: 'Danish steam-bent black walnut sculptures, spline-joined gallery frames, and carved serving trays.',
+      },
+      {
+        vendorId: 'vendor_soleil_orfevre',
+        ownerUid: 'user_vendor_soleil_orfevre',
+        artisanName: 'Claire Beaumont',
+        businessName: 'Soleil Orfèvre',
+        location: 'Lyon, France',
+        category: 'artisan-jewellery',
+        logo: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80',
+        description: 'Hand-forged recycled brass necklaces, 925 sterling silver cuffs, and natural emerald cabochon rings.',
+      },
+      {
+        vendorId: 'vendor_atlas_loom',
+        ownerUid: 'user_vendor_atlas_loom',
+        artisanName: 'Amina Mansouri',
+        businessName: 'Atlas Loom Collective',
+        location: 'Marrakech, Morocco',
+        category: 'textiles-weaving',
+        logo: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80',
+        description: 'Cooperative of High Atlas master weavers crafting Berber kilim rugs, alpaca throws, and macramé tapestries.',
+      },
+      {
+        vendorId: 'vendor_scriptorium_carta',
+        ownerUid: 'user_vendor_scriptorium_carta',
+        artisanName: 'Julian Vance',
+        businessName: 'Scriptorium Carta',
+        location: 'Bath, United Kingdom',
+        category: 'fine-art-prints',
+        logo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80',
+        description: 'Coptic-stitched cotton rag sketchbooks, hand-pulled linocut botanical prints, and brass wax-seal stationery.',
+      },
+      {
+        vendorId: 'vendor_bottega_cuoio',
+        ownerUid: 'user_vendor_bottega_cuoio',
+        artisanName: 'Marco Bellini',
+        businessName: 'Bottega Cuoio',
+        location: 'Siena, Italy',
+        category: 'leather-woodcraft',
+        logo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80',
+        description: 'Saddle-stitched Tuscan vegetable-tanned leather journals, bifold wallets, and solid brass key fobs.',
+      },
+      {
+        vendorId: 'vendor_porto_argila',
+        ownerUid: 'user_vendor_porto_argila',
+        artisanName: 'Inês Ferreira',
+        businessName: 'Porto Argila Atelier',
+        location: 'Porto, Portugal',
+        category: 'ceramics-pottery',
+        logo: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&auto=format&fit=crop&q=80',
+        description: 'Hand-painted Portuguese majolica plates, fluted centerpiece bowls, and vitrified stoneware dinnerware.',
+      },
+      {
+        vendorId: 'vendor_jaipur_handloom',
+        ownerUid: 'user_vendor_jaipur_handloom',
+        artisanName: 'Aarav Sharma',
+        businessName: 'Jaipur Handloom Guild',
+        location: 'Jaipur, India',
+        category: 'textiles-weaving',
+        logo: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=200&auto=format&fit=crop&q=80',
+        description: 'Organic flax linen tablecloths, punch-needle embroidered cushions, and natural indigo canvas market bags.',
+      },
+      {
+        vendorId: 'vendor_aegean_stone',
+        ownerUid: 'user_vendor_aegean_stone',
+        artisanName: 'Nikos Papadopoulos',
+        businessName: 'Aegean Stone & Clay',
+        location: 'Naxos, Greece',
+        category: 'ceramics-pottery',
+        logo: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80',
+        description: 'Cycladic marble & travertine coasters, granite-textured amphora vases, and pinched stoneware pitchers.',
+      },
+    ];
+
+    for (const av of artisanVendors) {
+      if (!this.state.users.find((u) => u.uid === av.ownerUid)) {
+        this.state.users.push({
+          uid: av.ownerUid,
+          email: `${av.vendorId.replace('vendor_', '')}@artisanale.com`,
+          displayName: av.artisanName,
+          role: 'vendor',
+          vendorId: av.vendorId,
+          preferredLanguage: 'en',
+          photoURL: av.logo,
+          createdAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        this.state.passwords[av.ownerUid] = defaultHash;
+        changed = true;
+      }
+
+      if (!this.state.vendors.find((v) => v.vendorId === av.vendorId)) {
+        this.state.vendors.push({
+          vendorId: av.vendorId,
+          ownerUid: av.ownerUid,
+          businessName: av.businessName,
+          description: av.description,
+          logo: av.logo,
+          banner: av.logo,
+          category: av.category,
+          verificationStatus: 'approved',
+          rating: 4.9,
+          reviewCount: 185,
+          businessPolicies: {
+            shipping: `Hand-packed in ${av.location}. Free carbon-neutral express shipping on orders over $75.`,
+            returns: '30-day artisan satisfaction guarantee with complimentary return courier pickup.',
+            warranty: 'Signed Certificate of Studio Authenticity & lifetime craftsmanship care support.',
+          },
+          availability: 'online',
+          aiAgentEnabled: true,
+          commissionRate: 0.05,
+          contactEmail: `atelier@${av.vendorId.replace('vendor_', '')}.com`,
+          contactPhone: '+1-555-ARTISAN',
+          createdAt: new Date(Date.now() - 30 * 86400000).toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        changed = true;
+      }
+
+      if (!this.state.aiConfigs[av.vendorId]) {
+        this.state.aiConfigs[av.vendorId] = {
+          vendorId: av.vendorId,
+          enabled: true,
+          agentName: `${av.artisanName} (${av.businessName})`,
+          avatarUrl: av.logo || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+          greetingMessage: `Welcome to ${av.businessName} in ${av.location}! I'm ${av.artisanName}. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?`,
+          personality: 'friendly',
+          responseStyle: 'friendly',
+          businessHours: {
+            enabled: true,
+            start: '09:00',
+            end: '18:00',
+            timezone: 'UTC',
+          },
+          faqs: [],
+          shippingPolicy: 'Handcrafted and shipped within 2 business days.',
+          returnPolicy: '30-day returns for undamaged artisanal items.',
+          warrantyInfo: 'Lifetime craftsmanship guarantee.',
+          escalationRules: ['human', 'manager', 'refund', 'damaged'],
+          humanTakeoverActive: false,
+          supportedLanguages: ['en', 'hi', 'ja', 'es', 'fr', 'de'],
+          updatedAt: new Date().toISOString(),
+        };
+        changed = true;
+      }
+    }
+
+    const catalogProducts: Array<{
+      id: string;
+      title: string;
+      price: number;
+      category: string;
+      vendorId: string;
+      studio: string;
+      description: string;
+      modelUrl: string;
+    }> = [
+      { id: 'art-01-abstract-ceramic-sculptures', title: 'Abstract Ceramic Sculptures', price: 49.0, category: 'sculptures-candles', vendorId: 'vendor_atelier_terra', studio: 'Atelier Terra', description: 'Hand-sculpted modernist contemplative figure with negative-space torso arches and raw grogged sandstone finish.', modelUrl: '/assets/3d/sculpture_v3.glb' },
+      { id: 'art-02-bubble-candles', title: 'Bubble Candles', price: 24.55, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Interlocking sculptural knot candle hand-poured in small batches using 100% organic botanical soy wax.', modelUrl: '/assets/3d/candle_v3.glb' },
+      { id: 'art-03-handmade-ceramic-vases', title: 'Handmade Ceramic Vases', price: 84.0, category: 'ceramics-pottery', vendorId: 'vendor_aegean_stone', studio: 'Aegean Stone & Clay', description: 'Wheel-thrown amphora vessel with weathered granite mineral texture and raised shoulder ribs.', modelUrl: '/assets/3d/vase_granite.glb' },
+      { id: 'art-04-terracotta-pots', title: 'Terracotta Pots', price: 36.0, category: 'ceramics-pottery', vendorId: 'vendor_oaxaca_earth', studio: 'Oaxaca Earth Studio', description: 'Breathable sun-baked red clay planter pot with double relief rings, rolled rim, and matching drainage saucer.', modelUrl: '/assets/3d/terracotta_pot.glb' },
+      { id: 'art-05-stoneware-pottery', title: 'Stoneware Pottery', price: 58.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Hand-thrown stoneware bottle-neck vessel featuring exposed raw clay at the base and celadon ash glaze.', modelUrl: '/assets/3d/stoneware_pottery.glb' },
+      { id: 'art-06-decorative-ceramic-bowls', title: 'Decorative Ceramic Bowls', price: 44.0, category: 'ceramics-pottery', vendorId: 'vendor_porto_argila', studio: 'Porto Argila Atelier', description: 'Wide fluted pedestal centerpiece bowl resting on a raw terracotta foot with three glazed ceramic orbs.', modelUrl: '/assets/3d/ceramic_bowl.glb' },
+      { id: 'art-07-wooden-sculptures', title: 'Wooden Sculptures', price: 72.0, category: 'sculptures-candles', vendorId: 'vendor_nordic_timber', studio: 'Nordic Timber Craft', description: 'Continuous hand-carved American black walnut ribbon sculpture mounted on solid brass rods.', modelUrl: '/assets/3d/wooden_sculpture.glb' },
+      { id: 'art-08-ceramic-candle-holders', title: 'Ceramic Candle Holders', price: 32.0, category: 'sculptures-candles', vendorId: 'vendor_atelier_terra', studio: 'Atelier Terra', description: 'Sculptural U-arch terracotta duo candle holder fitted with spun brass collars and beeswax tapers.', modelUrl: '/assets/3d/candle_holder.glb' },
+      { id: 'art-09-handmade-incense-holders', title: 'Handmade Incense Holders', price: 26.0, category: 'sculptures-candles', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Minimalist oval sandstone ash-catcher tray paired with a solid brass sphere holder.', modelUrl: '/assets/3d/incense_holder.glb' },
+      { id: 'art-10-sculptural-candles', title: 'Sculptural Candles', price: 29.0, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Twisted fluted architectural column pillar candle crafted from golden raw beeswax.', modelUrl: '/assets/3d/sculptural_candle.glb' },
+      { id: 'art-11-soy-wax-candles', title: 'Soy Wax Candles', price: 28.0, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Curated trio of ribbed and tiered soy wax pillar candles on a round travertine stone coaster.', modelUrl: '/assets/3d/soy_wax_candles.glb' },
+      { id: 'art-12-scented-jar-candles', title: 'Scented Jar Candles', price: 34.5, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Twin-wick amber glazed apothecary jar candle infused with cedarwood, fig leaf, and bergamot.', modelUrl: '/assets/3d/scented_jar_candle.glb' },
+      { id: 'art-13-handmade-coffee-mugs', title: 'Handmade Coffee Mugs', price: 22.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Wheel-thrown speckled oatmeal stoneware coffee mug with unglazed terracotta foot ring.', modelUrl: '/assets/3d/handmade_coffee_mug.glb' },
+      { id: 'art-14-ceramic-tea-sets', title: 'Ceramic Tea Sets', price: 64.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Traditional Japanese stoneware teapot with bamboo arch handle and two Yunomi teacups on a slate tray.', modelUrl: '/assets/3d/ceramic_tea_set.glb' },
+      { id: 'art-15-stoneware-dinner-sets', title: 'Stoneware Dinner Sets', price: 88.0, category: 'ceramics-pottery', vendorId: 'vendor_porto_argila', studio: 'Porto Argila Atelier', description: 'Three-piece artisanal stoneware place setting with dinner plate, salad plate, and soup bowl.', modelUrl: '/assets/3d/dinner_set.glb' },
+      { id: 'art-16-ceramic-pitchers', title: 'Ceramic Pitchers', price: 46.0, category: 'ceramics-pottery', vendorId: 'vendor_aegean_stone', studio: 'Aegean Stone & Clay', description: 'Tall wheel-thrown stoneware water and flower pitcher with pinched lip and raw clay loop handle.', modelUrl: '/assets/3d/ceramic_pitcher.glb' },
+      { id: 'art-17-handmade-pottery-jars', title: 'Handmade Pottery Jars', price: 52.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Airtight lidded stoneware tea and spice canister finished in celadon sage glaze with walnut finial.', modelUrl: '/assets/3d/pottery_jar.glb' },
+      { id: 'art-18-ceramic-planters', title: 'Ceramic Planters', price: 54.0, category: 'ceramics-pottery', vendorId: 'vendor_nordic_timber', studio: 'Nordic Timber Craft', description: 'Architectural satin-white ceramic cylinder planter elevated on a three-legged walnut stand.', modelUrl: '/assets/3d/ceramic_planter.glb' },
+      { id: 'art-19-handmade-earrings', title: 'Handmade Earrings', price: 38.0, category: 'artisan-jewellery', vendorId: 'vendor_soleil_orfevre', studio: 'Soleil Orfèvre', description: 'Geometric statement drop earrings combining hammered raw brass arches and terracotta half-moons.', modelUrl: '/assets/3d/handmade_earrings.glb' },
+      { id: 'art-20-brass-necklaces', title: 'Brass Necklaces', price: 56.0, category: 'artisan-jewellery', vendorId: 'vendor_soleil_orfevre', studio: 'Soleil Orfèvre', description: 'Hand-forged golden brass collar torque suspending a hammered crescent pendant with emerald cabochon.', modelUrl: '/assets/3d/brass_necklace.glb' },
+      { id: 'art-21-gemstone-rings', title: 'Gemstone Rings', price: 68.0, category: 'artisan-jewellery', vendorId: 'vendor_soleil_orfevre', studio: 'Soleil Orfèvre', description: 'Hammered gold-brass signet bezel ring hand-set with an octagonal faceted emerald gemstone.', modelUrl: '/assets/3d/gemstone_ring.glb' },
+      { id: 'art-22-beaded-bracelets', title: 'Beaded Bracelets', price: 29.0, category: 'artisan-jewellery', vendorId: 'vendor_jaipur_handloom', studio: 'Jaipur Handloom Guild', description: 'Hand-strung gemstone bracelet alternating natural jade, turquoise, red jasper, and brass spacers.', modelUrl: '/assets/3d/beaded_bracelet.glb' },
+      { id: 'art-23-polymer-clay-jewellery', title: 'Polymer Clay Jewellery', price: 27.0, category: 'artisan-jewellery', vendorId: 'vendor_atelier_terra', studio: 'Atelier Terra', description: 'Small-batch terrazzo-inlaid polymer clay arch drop earrings on surgical titanium posts.', modelUrl: '/assets/3d/polymer_clay_jewellery.glb' },
+      { id: 'art-24-handmade-pendants', title: 'Handmade Pendants', price: 45.0, category: 'artisan-jewellery', vendorId: 'vendor_soleil_orfevre', studio: 'Soleil Orfèvre', description: 'Lost-wax cast bronze sunburst medallion pendant centered with a natural turquoise cabochon.', modelUrl: '/assets/3d/handmade_pendant.glb' },
+      { id: 'art-25-silver-jewellery', title: 'Silver Jewellery', price: 76.0, category: 'artisan-jewellery', vendorId: 'vendor_soleil_orfevre', studio: 'Soleil Orfèvre', description: 'Hand-wrought 925 sterling silver double-wave open cuff bracelet.', modelUrl: '/assets/3d/silver_jewellery.glb' },
+      { id: 'art-26-handwoven-rugs', title: 'Handwoven Rugs', price: 118.0, category: 'textiles-weaving', vendorId: 'vendor_atlas_loom', studio: 'Atlas Loom Collective', description: 'Authentic flat-weave Berber kilim wool rug with raised tufted diamond motifs and fringe.', modelUrl: '/assets/3d/handwoven_rug.glb' },
+      { id: 'art-27-macrame-wall-hangings', title: 'Macramé Wall Hangings', price: 48.0, category: 'textiles-weaving', vendorId: 'vendor_atlas_loom', studio: 'Atlas Loom Collective', description: 'Hand-knotted organic cotton macramé tapestry suspended from a solid oak dowel.', modelUrl: '/assets/3d/macrame_hanging.glb' },
+      { id: 'art-28-embroidered-cushion-covers', title: 'Embroidered Cushion Covers', price: 39.0, category: 'textiles-weaving', vendorId: 'vendor_jaipur_handloom', studio: 'Jaipur Handloom Guild', description: 'Heavyweight Belgian flax linen cushion cover with raised punch-needle botanical embroidery.', modelUrl: '/assets/3d/embroidered_cushion.glb' },
+      { id: 'art-29-handmade-table-runners', title: 'Handmade Table Runners', price: 42.0, category: 'textiles-weaving', vendorId: 'vendor_jaipur_handloom', studio: 'Jaipur Handloom Guild', description: 'Hand-loomed slub cotton and flax linen table runner woven with terracotta heritage stripes.', modelUrl: '/assets/3d/table_runner.glb' },
+      { id: 'art-30-woven-baskets', title: 'Woven Baskets', price: 47.0, category: 'textiles-weaving', vendorId: 'vendor_oaxaca_earth', studio: 'Oaxaca Earth Studio', description: 'Two-tone hand-coiled seagrass and palm fiber belly basket with braided loop handles.', modelUrl: '/assets/3d/woven_basket.glb' },
+      { id: 'art-31-crochet-bags', title: 'Crochet Bags', price: 52.0, category: 'textiles-weaving', vendorId: 'vendor_atlas_loom', studio: 'Atlas Loom Collective', description: 'Hand-crocheted Madagascar raffia market tote bag with wide shoulder straps.', modelUrl: '/assets/3d/crochet_bag.glb' },
+      { id: 'art-32-handwoven-blankets', title: 'Handwoven Blankets', price: 94.0, category: 'textiles-weaving', vendorId: 'vendor_atlas_loom', studio: 'Atlas Loom Collective', description: 'Heirloom merino and alpaca wool throw blanket bundled with a cognac leather carrier strap.', modelUrl: '/assets/3d/handwoven_blanket.glb' },
+      { id: 'art-33-linen-tablecloths', title: 'Linen Tablecloths', price: 66.0, category: 'textiles-weaving', vendorId: 'vendor_jaipur_handloom', studio: 'Jaipur Handloom Guild', description: 'Stone-washed organic flax linen tablecloth with matching napkin and terracotta ring.', modelUrl: '/assets/3d/linen_tablecloth.glb' },
+      { id: 'art-34-original-canvas-paintings', title: 'Original Canvas Paintings', price: 135.0, category: 'fine-art-prints', vendorId: 'vendor_atelier_terra', studio: 'Atelier Terra', description: 'Original mixed-media impasto relief painting mounted in a solid white-oak gallery floater frame.', modelUrl: '/assets/3d/canvas_painting.glb' },
+      { id: 'art-35-handmade-miniature-art', title: 'Handmade Miniature Art', price: 58.0, category: 'fine-art-prints', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Hand-sculpted miniature bonsai sculpture rooted in a glazed cobalt stoneware pot.', modelUrl: '/assets/3d/miniature_art.glb' },
+      { id: 'art-36-hand-painted-plates', title: 'Hand-Painted Plates', price: 49.0, category: 'fine-art-prints', vendorId: 'vendor_porto_argila', studio: 'Porto Argila Atelier', description: 'Hand-painted Portuguese majolica wall & display plate with cobalt and ochre brushwork.', modelUrl: '/assets/3d/painted_plate.glb' },
+      { id: 'art-37-wooden-picture-frames', title: 'Wooden Picture Frames', price: 38.0, category: 'fine-art-prints', vendorId: 'vendor_nordic_timber', studio: 'Nordic Timber Craft', description: 'Hand-joined solid American walnut gallery frame with maple corner splines and cotton matboard.', modelUrl: '/assets/3d/wooden_frame.glb' },
+      { id: 'art-38-handmade-sketchbooks', title: 'Handmade Sketchbooks', price: 31.0, category: 'fine-art-prints', vendorId: 'vendor_scriptorium_carta', studio: 'Scriptorium Carta', description: 'Lay-flat Coptic-stitched sketchbook filled with 300 gsm deckle-edge cotton watercolor paper.', modelUrl: '/assets/3d/handmade_sketchbook.glb' },
+      { id: 'art-39-artisan-prints', title: 'Artisan Prints', price: 42.0, category: 'fine-art-prints', vendorId: 'vendor_scriptorium_carta', studio: 'Scriptorium Carta', description: 'Signed limited-edition hand-pulled linocut botanical relief print in magnetic oak hanger bars.', modelUrl: '/assets/3d/artisan_print.glb' },
+      { id: 'art-40-clay-art-figurines', title: 'Clay Art Figurines', price: 44.0, category: 'fine-art-prints', vendorId: 'vendor_oaxaca_earth', studio: 'Oaxaca Earth Studio', description: 'Hand-pinched stoneware songbird figurine with glazed terracotta wings and brass beak.', modelUrl: '/assets/3d/clay_figurine.glb' },
+      { id: 'art-41-handmade-leather-journals', title: 'Handmade Leather Journals', price: 46.0, category: 'leather-woodcraft', vendorId: 'vendor_bottega_cuoio', studio: 'Bottega Cuoio', description: 'Refillable Tuscan vegetable-tanned cognac leather wrap journal with archival cotton pages.', modelUrl: '/assets/3d/leather_journal.glb' },
+      { id: 'art-42-wooden-serving-trays', title: 'Wooden Serving Trays', price: 54.0, category: 'leather-woodcraft', vendorId: 'vendor_nordic_timber', studio: 'Nordic Timber Craft', description: 'Carved oval walnut and white oak platter serving tray with solid brushed brass arch handles.', modelUrl: '/assets/3d/wooden_tray.glb' },
+      { id: 'art-43-natural-handmade-soaps', title: 'Natural Handmade Soaps', price: 24.0, category: 'leather-woodcraft', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Trio of cold-process botanical bar soaps tied with jute twine on a slotted oak dish.', modelUrl: '/assets/3d/natural_soap.glb' },
+      { id: 'art-44-leather-wallets', title: 'Leather Wallets', price: 58.0, category: 'leather-woodcraft', vendorId: 'vendor_bottega_cuoio', studio: 'Bottega Cuoio', description: 'Saddle-stitched minimalist bifold cardholder wallet crafted from full-grain cognac bridle leather.', modelUrl: '/assets/3d/leather_wallet.glb' },
+      { id: 'art-45-handmade-keychains', title: 'Handmade Keychains', price: 19.0, category: 'leather-woodcraft', vendorId: 'vendor_bottega_cuoio', studio: 'Bottega Cuoio', description: 'Looped vegetable-tanned leather fob keychain accented with a faceted walnut bead and brass ring.', modelUrl: '/assets/3d/handmade_keychain.glb' },
+      { id: 'art-46-artisan-coasters', title: 'Artisan Coasters', price: 28.0, category: 'leather-woodcraft', vendorId: 'vendor_aegean_stone', studio: 'Aegean Stone & Clay', description: 'Set of 4 honed stone & terrazzo coasters inlaid with brass rings in a brass wire cradle.', modelUrl: '/assets/3d/artisan_coasters.glb' },
+      { id: 'art-47-wooden-phone-stands', title: 'Wooden Phone Stands', price: 26.0, category: 'leather-woodcraft', vendorId: 'vendor_nordic_timber', studio: 'Nordic Timber Craft', description: 'Steam-bent walnut desk dock with passive acoustic sound port and solid brass support ledge.', modelUrl: '/assets/3d/phone_stand.glb' },
+      { id: 'art-48-handmade-stationery', title: 'Handmade Stationery', price: 32.0, category: 'leather-woodcraft', vendorId: 'vendor_scriptorium_carta', studio: 'Scriptorium Carta', description: 'Set of 12 deckle-edge cotton cards and envelopes tied with silk ribbon + brass wax seal stamp.', modelUrl: '/assets/3d/handmade_stationery.glb' },
+      { id: 'art-49-reusable-fabric-bags', title: 'Reusable Fabric Bags', price: 34.0, category: 'leather-woodcraft', vendorId: 'vendor_jaipur_handloom', studio: 'Jaipur Handloom Guild', description: 'Structured 16 oz organic cotton canvas market tote with indigo base and riveted leather handles.', modelUrl: '/assets/3d/fabric_bag.glb' },
+      { id: 'art-50-handcrafted-gift-boxes', title: 'Handcrafted Gift Boxes', price: 39.0, category: 'leather-woodcraft', vendorId: 'vendor_scriptorium_carta', studio: 'Scriptorium Carta', description: 'Heirloom linen-wrapped rigid keepsake gift box finished with a woven gold satin ribbon bow.', modelUrl: '/assets/3d/gift_box.glb' },
+      // Aliases for Hero & Homepage quick-add IDs
+      { id: 'art-sculpture', title: 'Abstract Ceramic Sculptures', price: 49.0, category: 'sculptures-candles', vendorId: 'vendor_atelier_terra', studio: 'Atelier Terra', description: 'Hand-sculpted modernist contemplative figure in sandstone stoneware.', modelUrl: '/assets/3d/sculpture_v3.glb' },
+      { id: 'art-candle', title: 'Bubble Candles', price: 24.55, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Sculptural knot candle hand-poured with organic soy wax.', modelUrl: '/assets/3d/candle_v3.glb' },
+      { id: 'art-vessel', title: 'Set of Candles', price: 16.99, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Four botanical tea-light candles housed in a matte stoneware vessel.', modelUrl: '/assets/3d/vessel_v3.glb' },
+      { id: 'art-vase-edition', title: 'Amphora Vessel', price: 84.0, category: 'ceramics-pottery', vendorId: 'vendor_aegean_stone', studio: 'Aegean Stone & Clay', description: 'Monumental granite-textured ceramic amphora vessel.', modelUrl: '/assets/3d/vase_granite.glb' },
+      { id: 'art-teardrop-edition', title: 'Striped Teardrop Vase', price: 38.5, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Ribbed terracotta and white slip-banded teardrop bud vase.', modelUrl: '/assets/3d/teardrop.glb' },
+      { id: 'art-vessel-edition', title: 'Terracotta Incense Vessel', price: 34.0, category: 'sculptures-candles', vendorId: 'vendor_oaxaca_earth', studio: 'Oaxaca Earth Studio', description: 'Handcrafted ceramic vessel with four scented wax compartments.', modelUrl: '/assets/3d/vessel_v3.glb' },
+      { id: 'cat-soy-wax-candles', title: 'Soy Wax Candles', price: 28.0, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Trio of fluted soy wax pillar candles on a travertine dish.', modelUrl: '/assets/3d/soy_wax_candles.glb' },
+      { id: 'cat-scented-jar-candles', title: 'Scented Jar Candles', price: 34.5, category: 'sculptures-candles', vendorId: 'vendor_lumiere_botanique', studio: 'Lumière Botanique', description: 'Glazed apothecary jar candle with walnut dust lid.', modelUrl: '/assets/3d/scented_jar_candle.glb' },
+      { id: 'cat-handmade-coffee-mugs', title: 'Handmade Coffee Mugs', price: 22.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Wheel-thrown speckled stoneware coffee mug.', modelUrl: '/assets/3d/handmade_coffee_mug.glb' },
+      { id: 'cat-ceramic-tea-sets', title: 'Ceramic Tea Sets', price: 64.0, category: 'ceramics-pottery', vendorId: 'vendor_kyoto_kiln', studio: 'Kyoto Kiln Works', description: 'Kyusu stoneware teapot and two Yunomi cups on a slate tray.', modelUrl: '/assets/3d/ceramic_tea_set.glb' },
+    ];
+
+    for (const cp of catalogProducts) {
+      if (!this.state.products.find((p) => p.productId === cp.id)) {
+        this.state.products.push({
+          productId: cp.id,
+          vendorId: cp.vendorId,
+          title: cp.title,
+          description: cp.description,
+          categoryId: cp.category,
+          brand: cp.studio,
+          price: cp.price,
+          discount: 0,
+          stock: 25,
+          sku: `SKU-${cp.id.toUpperCase()}`,
+          images: [cp.modelUrl],
+          variants: [],
+          specifications: {
+            Craftsmanship: '100% Handcrafted in Studio',
+            Interactive3D: cp.modelUrl,
+          },
+          rating: 4.9,
+          reviewCount: 48,
+          isFeatured: cp.id.startsWith('art-0') || cp.id.startsWith('art-1'),
+          shippingPolicy: 'Handcrafted and shipped with tracked courier within 2-3 business days.',
+          returnPolicy: '30-day money-back guarantee with zero restocking fee.',
+          status: 'active',
+          createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
+          updatedAt: new Date().toISOString(),
+        });
+        changed = true;
+      }
+    }
+
+    // Remove any non-artisanal headphone products if present
+    const beforeLen = this.state.products.length;
+    this.state.products = this.state.products.filter(
+      (p) => !p.title.toLowerCase().includes('headphone')
+    );
+    if (this.state.products.length !== beforeLen) {
+      changed = true;
+    }
+
     return changed;
   }
 
@@ -487,7 +809,7 @@ class DataStoreService {
       ownerUid: 'user_vendor_1',
       businessName: 'Nexconn Audio & Smart Tech',
       description: 'Official flagship store for premium studio acoustics, wireless noise-canceling headsets, and AI-enhanced wearable audio gear.',
-      logo: 'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80',
+      logo: 'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&auto=format&fit=crop&q=80',
       banner: 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&auto=format&fit=crop&q=80',
       category: 'Electronics & Gadgets',
       verificationStatus: 'approved',
@@ -906,9 +1228,9 @@ class DataStoreService {
     } else if (role === 'vendor') {
       // Find vendorId for this user
       const vendor = this.findVendorByOwnerUid(userId);
-      if (vendor) {
-        list = this.state.conversations.filter((c) => c.vendorId === vendor.vendorId);
-      }
+      list = this.state.conversations.filter(
+        (c) => (vendor && c.vendorId === vendor.vendorId) || c.consumerId === userId
+      );
     } else if (role === 'support_agent' || role === 'admin') {
       list = this.state.conversations;
     }

@@ -28,8 +28,8 @@ export class AuthController {
       description: 'Verified seller storefront powered by ConvoCart & Nexconn SDK.',
       logo:
         params.photoURL ||
-        'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80',
-      category: 'Electronics & Gadgets',
+        'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&auto=format&fit=crop&q=80',
+      category: 'Artisanal & Handcrafted',
       verificationStatus: 'approved',
       rating: 5.0,
       reviewCount: 0,

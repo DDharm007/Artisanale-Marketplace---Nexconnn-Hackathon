@@ -24,6 +24,8 @@ import {
   DollarSign,
   Mail,
   MapPin,
+  Menu,
+  X,
 } from 'lucide-react';
 import { SUPPORTED_CHAT_LANGUAGES, Vendor } from '@convocart/shared';
 import { useAuthStore } from '../../stores/useAuthStore';
@@ -32,14 +34,15 @@ import { apiRequest } from '../../lib/api';
 import { MessageBubble } from '../../features/chat/MessageBubble';
 import { MessageComposer } from '../../features/chat/MessageComposer';
 import { CallModal } from '../../features/chat/CallModal';
+import { WHATSAPP_DARK_BG_STYLE } from '../../features/chat/whatsappWallpaper';
 import { cn, formatCurrency } from '../../lib/utils';
 
 const DEFAULT_AVATAR =
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
+  'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&auto=format&fit=crop&q=80';
 
 export const VendorLayout: React.FC = () => {
   const navigate = useNavigate();
-  const { user, logout, switchDemoRole } = useAuthStore();
+  const { user, logout } = useAuthStore();
   const {
     conversations,
     activeConversationId,
@@ -61,6 +64,8 @@ export const VendorLayout: React.FC = () => {
 
   const [vendor, setVendor] = useState<Vendor | null>(null);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
+  const [isMobileChatOpen, setIsMobileChatOpen] = useState(false);
   const [showPaymentPrompt, setShowPaymentPrompt] = useState(false);
   const [payAmount, setPayAmount] = useState('99.00');
   const [payTitle, setPayTitle] = useState('Custom Store Invoice');
@@ -110,27 +115,35 @@ export const VendorLayout: React.FC = () => {
     conversations.find((c) => c.conversationId === activeConversationId) || conversations[0];
   const activeMsgs = activeConv ? messages[activeConv.conversationId] || [] : [];
 
-  return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-100 dark:bg-slate-950 font-sans">
-      {/* 1. LEFT SIDEBAR */}
-      <aside
-        className={cn(
-          'flex flex-col border-r border-slate-200 bg-white transition-all duration-300 dark:border-slate-800 dark:bg-slate-900 shrink-0 z-30',
-          isSidebarCollapsed ? 'w-20' : 'w-64'
-        )}
-      >
-        <div className="flex h-16 items-center justify-between px-4 border-b border-slate-200 dark:border-slate-800">
-          <div className="flex items-center gap-2.5 overflow-hidden">
-            <img src="/logo.png" alt="ConvoCart" className="h-9 w-auto shrink-0 brightness-110" />
-            {!isSidebarCollapsed && (
-              <span className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
-                Vendor Studio
-              </span>
-            )}
-          </div>
+  // Reusable Sidebar Nav Content
+  const renderNavContent = (isMobile = false) => (
+    <>
+      <div className="flex h-16 items-center justify-between px-4 border-b border-[#E4DEC8]">
+        <div className="flex items-center gap-2 overflow-hidden">
+          <span
+            className="text-2xl font-normal text-[#171717] tracking-tight select-none"
+            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+          >
+            artisanale
+          </span>
+          {(!isSidebarCollapsed || isMobile) && (
+            <span className="rounded-full bg-[#171717] text-[#D6B875] px-2 py-0.5 text-[9px] font-bold tracking-widest uppercase">
+              STUDIO
+            </span>
+          )}
+        </div>
+        {isMobile ? (
+          <button
+            onClick={() => setIsMobileNavOpen(false)}
+            className="rounded-lg p-1.5 text-[#8C867A] hover:bg-[#ECEAE4] hover:text-[#171717] transition-colors cursor-pointer"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        ) : (
           <button
             onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-            className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600 transition-colors"
+            className="rounded-lg p-1.5 text-[#8C867A] hover:bg-[#ECEAE4] hover:text-[#171717] transition-colors cursor-pointer"
           >
             {isSidebarCollapsed ? (
               <ChevronRight className="h-4 w-4" />
@@ -138,380 +151,324 @@ export const VendorLayout: React.FC = () => {
               <ChevronLeft className="h-4 w-4" />
             )}
           </button>
-        </div>
-
-        {/* Dynamic Vendor Profile Pill */}
-        {!isSidebarCollapsed && (
-          <div className="mx-3 my-3 flex items-center gap-3 rounded-2xl bg-brand-50/70 p-2.5 border border-brand-100 dark:bg-slate-800/80 dark:border-slate-700">
-            <img
-              src={vendor?.logo || DEFAULT_AVATAR}
-              alt="store logo"
-              className="h-9 w-9 rounded-xl object-cover ring-1 ring-brand-300"
-            />
-            <div className="flex-1 min-w-0">
-              <h4 className="text-xs font-bold text-slate-900 dark:text-white truncate">
-                {vendor?.businessName || user?.displayName || 'Merchant Store'}
-              </h4>
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-600 capitalize">
-                <ShieldCheck className="h-3 w-3" /> {vendor?.availability || 'online'} • Verified
-              </span>
-            </div>
-          </div>
         )}
+      </div>
 
-        {/* Navigation List */}
-        <nav className="flex-1 overflow-y-auto px-2 py-2 space-y-1">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.exact}
-                className={({ isActive }) =>
-                  cn(
-                    'flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold transition-colors group relative',
-                    isActive
-                      ? 'bg-brand-600 text-white shadow-sm'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800'
-                  )
-                }
-              >
-                <Icon className="h-4 w-4 shrink-0" />
-                {!isSidebarCollapsed && <span className="truncate">{item.label}</span>}
-                {!isSidebarCollapsed && item.badge ? (
-                  <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[10px] font-bold text-white">
-                    {item.badge}
-                  </span>
-                ) : null}
-                {!isSidebarCollapsed && item.isNew && (
-                  <span className="ml-auto rounded bg-purple-100 px-1 text-[9px] font-bold text-purple-700">
-                    AI
-                  </span>
-                )}
-              </NavLink>
-            );
-          })}
-        </nav>
-
-        <div className="border-t border-slate-200 p-2 dark:border-slate-800">
-          <button
-            onClick={() => {
-              logout();
-              navigate('/shop');
-            }}
-            className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors"
-          >
-            <LogOut className="h-4 w-4 shrink-0" />
-            {!isSidebarCollapsed && <span>Logout</span>}
-          </button>
-        </div>
-      </aside>
-
-      {/* 2. CENTER WORKSPACE */}
-      <main className="flex-1 flex flex-col h-full overflow-hidden bg-slate-50 dark:bg-slate-950">
-        {/* Top workspace bar with multi-vendor quick switcher */}
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 dark:border-slate-800 dark:bg-slate-900 shrink-0 gap-3">
-          <div className="flex items-center gap-3">
-            <NavLink
-              to="/shop"
-              className="text-xs font-bold text-brand-600 hover:underline flex items-center gap-1"
-            >
-              ← Back to Consumer Marketplace
-            </NavLink>
-          </div>
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
-              onClick={() => switchDemoRole('vendor', 'vendor@convocart.com')}
-              className={cn(
-                'rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors',
-                user?.vendorId === 'vendor_nexconn_audio'
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              )}
-            >
-              Nexconn Audio
-            </button>
-            <button
-              onClick={() => switchDemoRole('vendor', 'global@convocart.com')}
-              className={cn(
-                'rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors',
-                user?.vendorId === 'vendor_ubuy_express'
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              )}
-            >
-              Ubuy Global (JP)
-            </button>
-            <button
-              onClick={() => switchDemoRole('vendor', 'studio@convocart.com')}
-              className={cn(
-                'rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors',
-                user?.vendorId === 'vendor_nexa_studio'
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-              )}
-            >
-              NexaDigital Studio (HI)
-            </button>
-            <span className="hidden xl:inline-flex items-center gap-1.5 rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              Nexconn Engine Active
+      {/* Dynamic Vendor Profile Pill */}
+      {(!isSidebarCollapsed || isMobile) && (
+        <div className="mx-3 my-3 flex items-center gap-3 rounded-2xl bg-[#ECEAE4]/80 p-2.5 border border-[#E4DEC8]">
+          <img
+            src={
+              vendor?.logo && !vendor.logo.includes('photo-1546435770')
+                ? vendor.logo
+                : DEFAULT_AVATAR
+            }
+            alt="store logo"
+            className="h-9 w-9 rounded-xl object-cover ring-1 ring-[#D6B875] shrink-0"
+          />
+          <div className="flex-1 min-w-0">
+            <h4 className="text-xs font-bold text-[#171717] truncate">
+              {vendor?.businessName || user?.displayName || 'Artisan Studio'}
+            </h4>
+            <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-[#686359] capitalize">
+              <ShieldCheck className="h-3 w-3 text-[#D6B875]" /> {vendor?.availability || 'online'} • Verified
             </span>
           </div>
         </div>
+      )}
 
-        <div className="flex-1 overflow-y-auto p-6">
+      {/* Navigation List */}
+      <nav className="flex-1 overflow-y-auto px-2 py-2 space-y-1">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              end={item.exact}
+              onClick={() => {
+                if (isMobile) setIsMobileNavOpen(false);
+              }}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-medium transition-colors group relative',
+                  isActive
+                    ? 'bg-[#171717] text-[#D6B875] font-semibold shadow-xs'
+                    : 'text-[#686359] hover:bg-[#ECEAE4] hover:text-[#171717]'
+                )
+              }
+            >
+              <Icon className="h-4 w-4 shrink-0" />
+              {(!isSidebarCollapsed || isMobile) && <span className="truncate">{item.label}</span>}
+              {(!isSidebarCollapsed || isMobile) && item.badge ? (
+                <span className="ml-auto flex h-4 w-4 items-center justify-center rounded-full bg-[#171717] border border-[#D6B875]/40 text-[10px] font-bold text-[#D6B875]">
+                  {item.badge}
+                </span>
+              ) : null}
+              {(!isSidebarCollapsed || isMobile) && item.isNew && (
+                <span className="ml-auto rounded bg-[#171717] text-[#D6B875] px-1 text-[9px] font-bold">
+                  AI
+                </span>
+              )}
+            </NavLink>
+          );
+        })}
+      </nav>
+
+      <div className="border-t border-[#E4DEC8] p-2">
+        <button
+          onClick={() => {
+            logout();
+            navigate('/shop');
+          }}
+          className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold text-[#8C867A] hover:text-rose-700 hover:bg-rose-50/50 transition-colors cursor-pointer"
+        >
+          <LogOut className="h-4 w-4 shrink-0" />
+          {(!isSidebarCollapsed || isMobile) && <span>Logout</span>}
+        </button>
+      </div>
+    </>
+  );
+
+  // Reusable Customer Chat Aside Content
+  const renderChatAside = (isMobileDrawer = false) => (
+    <div className="flex flex-col h-full bg-[#FAF8F3]">
+      <div className="flex h-16 items-center justify-between border-b border-[#E4DEC8] px-4 bg-[#FAF8F3]">
+        <div className="flex items-center gap-2">
+          <MessageSquare className="h-4 w-4 text-[#171717]" />
+          <h3 className="font-bold text-xs uppercase tracking-wider text-[#171717]">
+            Customer Conversations
+          </h3>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="rounded-full bg-[#171717] px-2.5 py-0.5 text-[10px] font-bold text-[#D6B875]">
+            {conversations.length} Active
+          </span>
+          {isMobileDrawer && (
+            <button
+              onClick={() => setIsMobileChatOpen(false)}
+              className="p-1 text-[#686359] hover:text-[#171717] cursor-pointer"
+              aria-label="Close Chat"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Multi-Language Translation Bar */}
+      <div className="flex items-center justify-between gap-2 border-b border-[#E4DEC8] bg-[#171717] px-3 py-1.5 text-[11px] text-[#ECEAE4]">
+        <div className="flex items-center gap-1.5">
+          <Languages className="h-3.5 w-3.5 text-[#D6B875]" />
+          <select
+            value={targetLanguage}
+            onChange={(e) => setTargetLanguage(e.target.value)}
+            className="rounded bg-black/60 border border-[#D6B875]/30 px-1.5 py-0.5 text-[11px] text-white focus:outline-none"
+          >
+            {SUPPORTED_CHAT_LANGUAGES.map((l) => (
+              <option key={l.code} value={l.code}>
+                {l.flag} {l.code.toUpperCase()}
+              </option>
+            ))}
+          </select>
+        </div>
+        <button
+          onClick={() => toggleAutoTranslate()}
+          className={cn(
+            'rounded-full px-2 py-0.5 text-[10px] font-semibold transition-colors cursor-pointer',
+            autoTranslate
+              ? 'bg-[#D6B875] text-[#171717]'
+              : 'border border-[#D6B875]/40 text-[#D6B875] hover:bg-white/10'
+          )}
+        >
+          {autoTranslate ? 'Auto-Translate ON' : 'Translate OFF'}
+        </button>
+      </div>
+
+      {/* Top mini conversation selector tabs */}
+      <div className="flex overflow-x-auto border-b border-[#E4DEC8] bg-[#FAF8F3] p-1.5 gap-1.5 no-scrollbar shrink-0">
+        {conversations.slice(0, 8).map((c) => {
+          const isSelected = activeConv?.conversationId === c.conversationId;
+          const unread = user ? c.unreadCount?.[user.uid] || 0 : 0;
+          return (
+            <button
+              key={c.conversationId}
+              onClick={() => void selectConversation(c.conversationId, false)}
+              className={cn(
+                'relative flex items-center gap-1.5 rounded-xl px-2.5 py-1 text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer shrink-0',
+                isSelected
+                  ? 'bg-[#171717] text-[#D6B875] shadow-xs'
+                  : 'bg-white text-[#686359] border border-[#E4DEC8] hover:bg-[#ECEAE4]'
+              )}
+            >
+              <img
+                src={c.consumerAvatar || DEFAULT_AVATAR}
+                alt=""
+                className="h-4 w-4 rounded-full object-cover shrink-0"
+              />
+              <span className="truncate max-w-[85px]">{c.consumerName.split(' ')[0]}</span>
+              {unread > 0 && (
+                <span className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-600 text-[9px] font-bold text-white">
+                  {unread}
+                </span>
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Active Conversation Stage */}
+      <div className="flex-1 flex flex-col min-h-0 bg-[#171717]">
+        {activeConv ? (
+          <div className="bg-[#201C18] px-4 py-2.5 border-b border-[#332D27] flex items-center justify-between text-xs text-white shrink-0">
+            <div className="min-w-0 flex items-center gap-2">
+              <img
+                src={activeConv.consumerAvatar || DEFAULT_AVATAR}
+                alt=""
+                className="h-7 w-7 rounded-full object-cover border border-[#D6B875]/40 shrink-0"
+              />
+              <div className="truncate">
+                <p className="font-bold text-white truncate text-[11px]">{activeConv.consumerName}</p>
+                <p className="text-[10px] text-[#A8A29E] truncate">
+                  {activeConv.productTitle || 'General Store Dialogue'}
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1 text-[#D6B875]">
+              <button
+                onClick={() => startCall(activeConv.consumerName, activeConv.consumerAvatar, false)}
+                className="p-1 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                title="Voice Call"
+              >
+                <Phone className="h-3.5 w-3.5" />
+              </button>
+              <button
+                onClick={() => startCall(activeConv.consumerName, activeConv.consumerAvatar, true)}
+                className="p-1 rounded-full hover:bg-white/10 transition-colors cursor-pointer"
+                title="Video Call"
+              >
+                <Video className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+        ) : null}
+
+        <div style={WHATSAPP_DARK_BG_STYLE} className="flex-1 overflow-y-auto p-3 space-y-1">
+          {activeMsgs.map((m) => (
+            <MessageBubble
+              key={m.id}
+              message={m}
+              isMe={m.senderId === user?.uid}
+              targetLanguage={targetLanguage}
+            />
+          ))}
+        </div>
+
+        <MessageComposer
+          conversationId={activeConv?.conversationId}
+          onSendMessage={(text, type, mediaUrl, metadata) =>
+            sendMessage(text, type, mediaUrl, metadata, activeConv?.conversationId)
+          }
+          targetLanguage={targetLanguage}
+        />
+      </div>
+    </div>
+  );
+
+  return (
+    <div className="flex h-screen w-screen overflow-hidden bg-[#ECEAE4] text-[#171717] font-sans">
+      {/* 1. DESKTOP LEFT SIDEBAR (hidden on <md) */}
+      <aside
+        className={cn(
+          'hidden md:flex flex-col border-r border-[#E4DEC8] bg-[#FAF8F3] transition-all duration-300 shrink-0 z-30',
+          isSidebarCollapsed ? 'w-20' : 'w-64'
+        )}
+      >
+        {renderNavContent(false)}
+      </aside>
+
+      {/* MOBILE LEFT SIDEBAR DRAWER (<md) */}
+      {isMobileNavOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs md:hidden"
+            onClick={() => setIsMobileNavOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-[#FAF8F3] border-r border-[#E4DEC8] shadow-2xl md:hidden animate-in slide-in-from-left duration-250">
+            {renderNavContent(true)}
+          </aside>
+        </>
+      )}
+
+      {/* 2. CENTER WORKSPACE */}
+      <main className="flex-1 flex flex-col h-full overflow-hidden bg-[#ECEAE4] min-w-0">
+        {/* Top workspace bar */}
+        <div className="flex h-16 items-center justify-between border-b border-[#E4DEC8] bg-[#FAF8F3] px-4 sm:px-6 shrink-0 gap-3">
+          <div className="flex items-center gap-3">
+            {/* Mobile Hamburger Toggle for Left Nav */}
+            <button
+              onClick={() => setIsMobileNavOpen(true)}
+              className="md:hidden flex h-9 w-9 items-center justify-center rounded-lg text-[#171717] hover:bg-[#ECEAE4] transition-colors cursor-pointer"
+              aria-label="Open Studio Navigation"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+
+            <NavLink
+              to="/shop"
+              className="text-xs font-semibold text-[#171717] hover:text-[#D6B875] flex items-center gap-1.5 transition-colors"
+            >
+              ← Back to Marketplace
+            </NavLink>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:inline text-[11px] font-medium text-[#8C867A]">
+              Studio Workspace
+            </span>
+
+            {/* Mobile & Tablet Customer Chat Button (<xl) */}
+            <button
+              onClick={() => setIsMobileChatOpen(true)}
+              className="xl:hidden flex items-center gap-1.5 rounded-full bg-[#171717] px-3 py-1.5 text-xs font-semibold text-[#D6B875] hover:bg-black transition-colors cursor-pointer"
+              title="Customer Conversations"
+            >
+              <MessageSquare className="h-3.5 w-3.5" />
+              <span>Chat</span>
+              {unreadTotal > 0 && (
+                <span className="flex h-4 w-4 items-center justify-center rounded-full bg-[#D6B875] text-[9px] font-bold text-[#171717]">
+                  {unreadTotal}
+                </span>
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6">
           <Outlet />
         </div>
       </main>
 
-      {/* 3. RIGHT-SIDE MULTILINGUAL CUSTOMER CHAT */}
-      <aside className="w-80 lg:w-96 flex flex-col border-l border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900 shrink-0">
-        <div className="flex h-16 items-center justify-between border-b border-slate-200 px-4 bg-slate-50 dark:border-slate-800 dark:bg-slate-800/40">
-          <div className="flex items-center gap-2">
-            <MessageSquare className="h-4 w-4 text-brand-600" />
-            <h3 className="font-bold text-xs uppercase tracking-wider text-slate-800 dark:text-slate-100">
-              Customer Conversations
-            </h3>
-          </div>
-          <span className="rounded-full bg-brand-100 px-2 py-0.5 text-[10px] font-bold text-brand-700">
-            {conversations.length} Active
-          </span>
-        </div>
-
-        {/* Multi-Language Translation Bar */}
-        <div className="flex items-center justify-between gap-2 border-b border-slate-200 bg-slate-900 px-3 py-1.5 text-[11px] text-slate-200">
-          <div className="flex items-center gap-1.5">
-            <Languages className="h-3.5 w-3.5 text-emerald-400" />
-            <select
-              value={targetLanguage}
-              onChange={(e) => setTargetLanguage(e.target.value)}
-              className="rounded bg-slate-800 border border-slate-700 px-1.5 py-0.5 text-[11px] text-white focus:outline-none"
-            >
-              {SUPPORTED_CHAT_LANGUAGES.map((l) => (
-                <option key={l.code} value={l.code}>
-                  {l.flag} {l.code.toUpperCase()}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => toggleAutoTranslate()}
-              className={cn(
-                'rounded px-2 py-0.5 text-[10px] font-bold border',
-                autoTranslate
-                  ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                  : 'bg-slate-800 border-slate-700 text-slate-400'
-              )}
-            >
-              Auto {autoTranslate ? 'ON' : 'OFF'}
-            </button>
-          </div>
-
-          {activeConv && !activeConv.escalatedToSupport && !activeConv.assignedSupportAgentId && (
-            <button
-              onClick={() =>
-                escalateConversation(
-                  activeConv.conversationId,
-                  'Vendor escalated conversation to Human Dispatch Center'
-                )
-              }
-              className="inline-flex items-center gap-1 rounded bg-amber-500/20 border border-amber-500/40 px-2 py-0.5 text-[10px] font-bold text-amber-300 hover:bg-amber-500/30"
-              title="Escalate to Human Support Dispatch"
-            >
-              <Headset className="h-3 w-3" /> Escalate
-            </button>
-          )}
-        </div>
-
-        <div className="flex flex-1 flex-col overflow-hidden">
-          <div className="flex gap-2 p-2 border-b border-slate-100 overflow-x-auto dark:border-slate-800 shrink-0">
-            {conversations.map((c) => {
-              const isSelected = activeConv?.conversationId === c.conversationId;
-              return (
-                <button
-                  key={c.conversationId}
-                  onClick={() => selectConversation(c.conversationId, false)}
-                  className={cn(
-                    'flex items-center gap-2 rounded-xl px-2.5 py-1 text-xs font-medium transition-all shrink-0',
-                    isSelected
-                      ? 'bg-slate-900 text-white shadow-sm'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                  )}
-                >
-                  <img
-                    src={c.consumerAvatar || DEFAULT_AVATAR}
-                    alt=""
-                    className="h-5 w-5 rounded-full object-cover"
-                  />
-                  <span className="truncate max-w-[90px]">{c.consumerName}</span>
-                  {c.status === 'escalated' && (
-                    <AlertTriangle className="h-3 w-3 text-amber-400 shrink-0" />
-                  )}
-                </button>
-              );
-            })}
-          </div>
-
-          {activeConv ? (
-            <div className="border-b border-slate-200 bg-slate-50 dark:bg-slate-800/40">
-              <div className="flex items-center justify-between px-3 py-2 text-xs">
-                <div className="min-w-0">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-bold text-slate-900 dark:text-white truncate">
-                      {activeConv.consumerName}
-                    </span>
-                    {activeConv.consumerPreferredLanguage && (
-                      <span className="rounded bg-slate-200 px-1.5 py-0.5 text-[9px] font-bold uppercase text-slate-700">
-                        {activeConv.consumerPreferredLanguage}
-                      </span>
-                    )}
-                  </div>
-                  {(activeConv.consumerEmail || activeConv.consumerPhone || activeConv.consumerAddressSummary || typeof activeConv.consumerTotalOrders === 'number') && (
-                    <div className="mt-0.5 space-y-0.5 text-[10px] text-slate-500 dark:text-slate-400">
-                      {(activeConv.consumerEmail || activeConv.consumerPhone) && (
-                        <div className="flex flex-wrap items-center gap-x-2 truncate max-w-[185px]">
-                          {activeConv.consumerEmail && (
-                            <span className="inline-flex items-center gap-0.5 truncate">
-                              <Mail className="h-2.5 w-2.5 shrink-0" />
-                              {activeConv.consumerEmail}
-                            </span>
-                          )}
-                          {activeConv.consumerPhone && (
-                            <span className="inline-flex items-center gap-0.5">
-                              <Phone className="h-2.5 w-2.5 shrink-0" />
-                              {activeConv.consumerPhone}
-                            </span>
-                          )}
-                        </div>
-                      )}
-                      {activeConv.consumerAddressSummary && (
-                        <p className="inline-flex items-center gap-0.5 truncate max-w-[185px]">
-                          <MapPin className="h-2.5 w-2.5 shrink-0" />
-                          {activeConv.consumerAddressSummary}
-                        </p>
-                      )}
-                      {typeof activeConv.consumerTotalOrders === 'number' && (
-                        <p className="font-semibold text-emerald-700 dark:text-emerald-400">
-                          {activeConv.consumerTotalOrders} order{activeConv.consumerTotalOrders === 1 ? '' : 's'} •{' '}
-                          {formatCurrency(activeConv.consumerTotalSpent || 0)}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  {activeConv.productTitle && (
-                    <p className="text-[10px] text-brand-600 truncate max-w-[175px]">
-                      {activeConv.productTitle}
-                    </p>
-                  )}
-                </div>
-                <div className="flex items-center gap-1 shrink-0">
-                  <button
-                    onClick={() =>
-                      void updateConversationSettings(activeConv.conversationId, {
-                        aiHandlingEnabled: !activeConv.aiHandlingEnabled,
-                      })
-                    }
-                    className={cn(
-                      'inline-flex items-center gap-1 rounded-lg px-2 py-1 text-[10px] font-bold border transition-colors',
-                      activeConv.aiHandlingEnabled
-                        ? 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100'
-                        : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
-                    )}
-                    title="Toggle between AI Concierge auto-reply and Human Seller Takeover"
-                  >
-                    {activeConv.aiHandlingEnabled ? (
-                      <>
-                        <Bot className="h-3 w-3" /> AI Auto
-                      </>
-                    ) : (
-                      <>
-                        <User className="h-3 w-3" /> Seller Live
-                      </>
-                    )}
-                  </button>
-                  <button
-                    onClick={() => setShowPaymentPrompt((v) => !v)}
-                    className="rounded-lg p-1 text-emerald-700 bg-emerald-50 hover:bg-emerald-100"
-                    title="Send In-Chat Payment Request ($)"
-                  >
-                    <DollarSign className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    onClick={() => startCall(activeConv.consumerName, activeConv.consumerAvatar, false)}
-                    className="rounded-lg p-1 text-slate-600 hover:bg-slate-200"
-                    title="Call Customer"
-                  >
-                    <Phone className="h-3.5 w-3.5" />
-                  </button>
-                  <button
-                    onClick={() => startCall(activeConv.consumerName, activeConv.consumerAvatar, true)}
-                    className="rounded-lg p-1 text-slate-600 hover:bg-slate-200"
-                    title="Video Call"
-                  >
-                    <Video className="h-3.5 w-3.5" />
-                  </button>
-                </div>
-              </div>
-
-              {showPaymentPrompt && (
-                <div className="flex items-center gap-1.5 border-t border-slate-200 bg-emerald-50/70 px-3 py-2 text-[11px]">
-                  <input
-                    type="text"
-                    value={payTitle}
-                    onChange={(e) => setPayTitle(e.target.value)}
-                    placeholder="Invoice title"
-                    className="flex-1 min-w-0 rounded border border-slate-300 bg-white px-2 py-1 text-[11px] focus:outline-none"
-                  />
-                  <input
-                    type="number"
-                    min="1"
-                    step="0.01"
-                    value={payAmount}
-                    onChange={(e) => setPayAmount(e.target.value)}
-                    className="w-16 rounded border border-slate-300 bg-white px-1.5 py-1 text-[11px] focus:outline-none"
-                  />
-                  <button
-                    onClick={async () => {
-                      const amt = parseFloat(payAmount);
-                      if (!Number.isFinite(amt) || amt <= 0) return;
-                      await sendPaymentRequest(
-                        activeConv.conversationId,
-                        amt,
-                        payTitle || 'Custom Payment Request',
-                        activeConv.orderId
-                      );
-                      setShowPaymentPrompt(false);
-                    }}
-                    className="rounded bg-emerald-600 px-2 py-1 text-[10px] font-bold text-white hover:bg-emerald-700"
-                  >
-                    Send $
-                  </button>
-                </div>
-              )}
-            </div>
-          ) : null}
-
-          <div className="flex-1 overflow-y-auto p-3 space-y-1 bg-[#0b141a]">
-            {activeMsgs.map((m) => (
-              <MessageBubble
-                key={m.id}
-                message={m}
-                isMe={m.senderId === user?.uid}
-                targetLanguage={targetLanguage}
-              />
-            ))}
-          </div>
-
-          <MessageComposer
-            conversationId={activeConv?.conversationId}
-            onSendMessage={(text, type, mediaUrl, metadata) =>
-              sendMessage(text, type, mediaUrl, metadata, activeConv?.conversationId)
-            }
-            targetLanguage={targetLanguage}
-          />
-        </div>
+      {/* 3. DESKTOP RIGHT-SIDE CUSTOMER CHAT (hidden on <xl, shown on xl+) */}
+      <aside className="hidden xl:flex w-80 lg:w-96 flex-col border-l border-[#E4DEC8] bg-[#FAF8F3] shadow-sm shrink-0">
+        {renderChatAside(false)}
       </aside>
+
+      {/* MOBILE / TABLET RIGHT-SIDE CHAT DRAWER (<xl) */}
+      {isMobileChatOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs xl:hidden"
+            onClick={() => setIsMobileChatOpen(false)}
+            aria-hidden="true"
+          />
+          <aside className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[360px] xs:max-w-[400px] flex-col bg-[#FAF8F3] border-l border-[#E4DEC8] shadow-2xl xl:hidden animate-in slide-in-from-right duration-250">
+            {renderChatAside(true)}
+          </aside>
+        </>
+      )}
 
       <CallModal />
     </div>

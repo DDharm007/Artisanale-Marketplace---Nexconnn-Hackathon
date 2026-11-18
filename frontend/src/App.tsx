@@ -19,6 +19,8 @@ import { OrdersPage } from './pages/OrdersPage';
 import { WishlistPage } from './pages/WishlistPage';
 import { ProfilePage } from './pages/ProfilePage';
 import { CustomerSupportPage } from './pages/CustomerSupportPage';
+import { AboutUsPage } from './pages/AboutUsPage';
+import { BlogPage } from './pages/BlogPage';
 import { AuthPage } from './pages/AuthPage';
 
 // Vendor Pages
@@ -48,11 +50,7 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    if (user?.uid) {
-      void fetchCart();
-    } else {
-      useCartStore.setState({ cart: null, itemCount: 0, subtotal: 0 });
-    }
+    void fetchCart();
   }, [user?.uid]);
 
   return (
@@ -66,6 +64,8 @@ export function App() {
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/login" element={<Navigate to="/auth" replace />} />
           <Route path="/shop" element={<HomePage />} />
+          <Route path="/shop/about" element={<AboutUsPage />} />
+          <Route path="/shop/blog" element={<BlogPage />} />
           <Route path="/shop/products" element={<ProductListingPage />} />
           <Route path="/shop/products/:productId" element={<ProductDetailPage />} />
           <Route path="/shop/cart" element={<CartPage />} />

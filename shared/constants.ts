@@ -15,12 +15,12 @@ export const ORDER_STATUS_FLOW: Record<OrderStatus, OrderStatus[]> = {
 };
 
 export const DEFAULT_CATEGORIES = [
-  { id: 'cat-electronics', name: 'Electronics & Gadgets', slug: 'electronics', icon: 'Cpu', description: 'Smartphones, Audio, Wearables & Accessories' },
-  { id: 'cat-fashion', name: 'Fashion & Apparel', slug: 'fashion', icon: 'Shirt', description: 'Men, Women, Footwear & Accessories' },
-  { id: 'cat-home', name: 'Home & Kitchen', slug: 'home-kitchen', icon: 'Home', description: 'Smart Appliances, Decor, Cookware' },
-  { id: 'cat-beauty', name: 'Beauty & Personal Care', slug: 'beauty', icon: 'Sparkles', description: 'Skincare, Fragrances, Haircare' },
-  { id: 'cat-global', name: 'Ubuy Global Express', slug: 'global-express', icon: 'Globe', description: 'Curated International Brands & Import Exclusives' },
-  { id: 'cat-books', name: 'Books & Stationery', slug: 'books', icon: 'BookOpen', description: 'Bestsellers, Office supplies & Tech notebooks' },
+  { id: 'ceramics-pottery', name: 'Ceramics & Pottery', slug: 'ceramics-pottery', icon: 'Sparkles', description: 'Handmade Stoneware, Teaware, Vases & Terracotta' },
+  { id: 'sculptures-candles', name: 'Sculptures & Candles', slug: 'sculptures-candles', icon: 'Flame', description: 'Soy Wax Candles, Scented Vessels & Sculptures' },
+  { id: 'artisan-jewellery', name: 'Artisan Jewellery', slug: 'artisan-jewellery', icon: 'Gem', description: 'Handcrafted Earrings, Rings, Necklaces & Pendants' },
+  { id: 'textiles-weaving', name: 'Textiles & Weaving', slug: 'textiles-weaving', icon: 'Scissors', description: 'Handwoven Rugs, Macramé, Cushion Covers & Table Runners' },
+  { id: 'fine-art-prints', name: 'Fine Art & Prints', slug: 'fine-art-prints', icon: 'Palette', description: 'Original Canvas Paintings, Miniature Art & Plates' },
+  { id: 'leather-woodcraft', name: 'Leather, Wood & Gifts', slug: 'leather-woodcraft', icon: 'Package', description: 'Handmade Leather Journals, Serving Trays & Gift Boxes' },
 ];
 
 export const NEXCONN_APP_CONFIG = {

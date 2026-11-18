@@ -5,10 +5,13 @@ import { apiRequest } from '../lib/api';
 import { formatCurrency } from '../lib/utils';
 import { Plus, Search, Edit3, Trash2, Eye, EyeOff, Package } from 'lucide-react';
 import { useAuthStore } from '../stores/useAuthStore';
+import { useReviewStore } from '../stores/useReviewStore';
+import { StarRatingDisplay } from '../components/ui/StarRating';
 
 export const VendorProductsPage: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAuthStore();
+  const { getProductRatingStats } = useReviewStore();
   const vendorId = user?.vendorId || 'me';
   const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState('');
@@ -67,17 +70,22 @@ export const VendorProductsPage: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E4DEC8]">
         <div>
-          <h1 className="text-2xl font-black text-slate-900">Store Catalog Management</h1>
-          <p className="text-xs text-slate-500 mt-1">
+          <h1
+            className="text-3xl font-normal text-[#171717]"
+            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+          >
+            Store Catalog Management
+          </h1>
+          <p className="text-xs text-[#686359] mt-1">
             Manage inventory, publish new variations, and update pricing models.
           </p>
         </div>
 
         <Link
           to="/vendor/products/new"
-          className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-700 transition-colors"
+          className="inline-flex items-center gap-2 rounded-full bg-[#171717] px-5 py-2.5 text-xs font-bold text-[#D6B875] shadow-xs hover:bg-black transition-colors"
         >
           <Plus className="h-4 w-4" /> Add New Product
         </Link>
@@ -86,32 +94,32 @@ export const VendorProductsPage: React.FC = () => {
       {/* Filter and Search Bar */}
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#8C867A]" />
           <input
             type="text"
             placeholder="Search products by title or SKU..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl border border-slate-300 bg-white pl-9 pr-3 py-2 text-xs focus:border-brand-500 focus:outline-none"
+            className="w-full rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] pl-9 pr-3 py-2 text-xs text-[#171717] focus:border-[#D6B875] focus:outline-none"
           />
         </div>
 
-        <div className="flex rounded-xl bg-slate-200/60 p-1 text-xs font-semibold">
+        <div className="flex rounded-xl bg-[#ECEAE4] border border-[#E4DEC8] p-1 text-xs font-semibold">
           <button
             onClick={() => setStatusFilter('all')}
-            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'all' ? 'bg-white shadow text-slate-900' : 'text-slate-600'}`}
+            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'all' ? 'bg-[#171717] text-[#D6B875] shadow-xs' : 'text-[#686359] hover:text-[#171717]'}`}
           >
             All Products
           </button>
           <button
             onClick={() => setStatusFilter('active')}
-            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'active' ? 'bg-white shadow text-slate-900' : 'text-slate-600'}`}
+            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'active' ? 'bg-[#171717] text-[#D6B875] shadow-xs' : 'text-[#686359] hover:text-[#171717]'}`}
           >
             Active Only
           </button>
           <button
             onClick={() => setStatusFilter('archived')}
-            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'archived' ? 'bg-white shadow text-slate-900' : 'text-slate-600'}`}
+            className={`rounded-lg px-3 py-1 transition-colors ${statusFilter === 'archived' ? 'bg-[#171717] text-[#D6B875] shadow-xs' : 'text-[#686359] hover:text-[#171717]'}`}
           >
             Archived
           </button>
@@ -119,12 +127,13 @@ export const VendorProductsPage: React.FC = () => {
       </div>
 
       {/* Product List Table */}
-      <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+      <div className="rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] shadow-xs overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="bg-slate-50 border-b border-slate-200 text-slate-400 font-bold uppercase tracking-wider">
+              <tr className="bg-[#ECEAE4] border-b border-[#E4DEC8] text-[#8C867A] font-semibold uppercase tracking-wider text-[11px]">
                 <th className="py-3.5 px-4">Product</th>
+                <th className="py-3.5 px-4">Star Rating</th>
                 <th className="py-3.5 px-4">SKU</th>
                 <th className="py-3.5 px-4">Price</th>
                 <th className="py-3.5 px-4">Inventory</th>
@@ -132,24 +141,31 @@ export const VendorProductsPage: React.FC = () => {
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
-              {filtered.map((prod) => (
-                <tr key={prod.productId} className="hover:bg-slate-50/70 transition-colors">
+            <tbody className="divide-y divide-[#E4DEC8]">
+              {filtered.map((prod) => {
+                const stats = getProductRatingStats(prod.productId);
+                return (
+                <tr key={prod.productId} className="hover:bg-[#ECEAE4]/60 transition-colors">
                   <td className="py-3 px-4">
                     <div className="flex items-center gap-3">
-                      <img
-                        src={prod.images[0]}
-                        alt=""
-                        className="h-10 w-10 rounded-xl object-cover border border-slate-200 shrink-0"
-                      />
+                      <div className="h-10 w-10 rounded-xl bg-white border border-[#E4DEC8] shrink-0 flex items-center justify-center text-[10px] font-bold text-[#D6B875]">
+                        3D
+                      </div>
                       <div className="truncate max-w-xs">
-                        <h4 className="font-bold text-slate-900 truncate">{prod.title}</h4>
-                        <span className="text-[11px] text-slate-400">{prod.categoryName}</span>
+                        <h4 className="font-bold text-[#171717] truncate">{prod.title}</h4>
+                        <span className="text-[11px] text-[#8C867A]">{prod.categoryName || prod.categoryId}</span>
                       </div>
                     </div>
                   </td>
-                  <td className="py-3 px-4 font-mono text-slate-600">{prod.sku}</td>
-                  <td className="py-3 px-4 font-extrabold text-slate-900">
+                  <td className="py-3 px-4">
+                    <StarRatingDisplay
+                      rating={stats.rating}
+                      count={stats.count}
+                      size="xs"
+                    />
+                  </td>
+                  <td className="py-3 px-4 font-mono text-[#555047]">{prod.sku}</td>
+                  <td className="py-3 px-4 font-extrabold text-[#171717]">
                     {formatCurrency(prod.price)}
                     {prod.discount > 0 && (
                       <span className="ml-1 text-[10px] text-rose-600">(-{prod.discount}%)</span>
@@ -157,7 +173,7 @@ export const VendorProductsPage: React.FC = () => {
                   </td>
                   <td className="py-3 px-4">
                     <span
-                      className={`font-semibold ${prod.stock > 10 ? 'text-emerald-600' : 'text-amber-600'}`}
+                      className={`font-semibold ${prod.stock > 10 ? 'text-emerald-700' : 'text-amber-700'}`}
                     >
                       {prod.stock} in stock
                     </span>
@@ -166,8 +182,8 @@ export const VendorProductsPage: React.FC = () => {
                     <span
                       className={`rounded-full px-2.5 py-0.5 text-[10px] font-bold capitalize ${
                         prod.status === 'active'
-                          ? 'bg-emerald-50 text-emerald-700'
-                          : 'bg-slate-100 text-slate-600'
+                          ? 'bg-[#171717] text-[#D6B875]'
+                          : 'bg-[#ECEAE4] text-[#686359]'
                       }`}
                     >
                       {prod.status}
@@ -177,7 +193,7 @@ export const VendorProductsPage: React.FC = () => {
                     <div className="flex items-center justify-end gap-1.5">
                       <button
                         onClick={() => handleToggleStatus(prod.productId, prod.status)}
-                        className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+                        className="rounded-lg p-1.5 text-[#8C867A] hover:bg-[#ECEAE4] hover:text-[#171717]"
                         title="Toggle Active Status"
                       >
                         {prod.status === 'active' ? (
@@ -188,14 +204,14 @@ export const VendorProductsPage: React.FC = () => {
                       </button>
                       <button
                         onClick={() => navigate(`/vendor/products/${prod.productId}/edit`)}
-                        className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-brand-600"
+                        className="rounded-lg p-1.5 text-[#8C867A] hover:bg-[#ECEAE4] hover:text-[#171717]"
                         title="Edit Product"
                       >
                         <Edit3 className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDeleteProduct(prod.productId)}
-                        className="rounded-lg p-1.5 text-slate-400 hover:bg-rose-50 hover:text-rose-600"
+                        className="rounded-lg p-1.5 text-[#8C867A] hover:bg-rose-50 hover:text-rose-600"
                         title="Archive Product"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -203,7 +219,8 @@ export const VendorProductsPage: React.FC = () => {
                     </div>
                   </td>
                 </tr>
-              ))}
+              );
+              })}
             </tbody>
           </table>
         </div>

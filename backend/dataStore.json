@@ -22,8 +22,9 @@
         }
       ],
       "createdAt": "2026-10-15T07:26:20.076Z",
-      "updatedAt": "2026-11-14T13:17:45.196Z",
-      "rsaKeyFingerprint": "2FF8:1112:8B1A:4E4C"
+      "updatedAt": "2026-11-18T05:51:09.601Z",
+      "rsaKeyFingerprint": "6C25:44BB:64FC:2FAB",
+      "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0O+tbDXIFRgpmub4DdX73HZeyX0XcYdBrep+i9O8QwTrKr5TtB1mlaR6fuLQCtjgI/TS0r7bUS9bkzY3yzsZG1421RqsbRpoXRurvDcRRJAJ034+Z5W9DBxH3B4jNpJTCaZ9+GesHsXjYbWcBnathfPHgUqmyYtCYY6oWrzIPRA+O+MCh19eb5m9tAT3nA5MMXNZlVNCzaqafgJLsaYCWKQEsgnqWC5dSjTZOCIVxt4Gs2GQTEarsW31uZR+ESDsE9FEV0VGNRfAVqy2Jr2eOD4eOOhp8Gx2EYOp1WApA5UcPHKVEKjYs5Qt0T6j1x63bnU/HTrOEDO675wDLkvZ0wIDAQAB"
     },
     {
       "uid": "user_vendor_1",
@@ -35,8 +36,8 @@
       "photoURL": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0182",
       "createdAt": "2026-10-05T07:26:20.076Z",
-      "updatedAt": "2026-11-14T14:03:30.046Z",
-      "rsaKeyFingerprint": "23B0:9708:3AC1:758F",
+      "updatedAt": "2026-11-15T17:10:31.021Z",
+      "rsaKeyFingerprint": "A08D:B00C:5F89:91DF",
       "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9oNs7P1iQROQfS/kOJ2AaV+Oy3EOnXLO0hS4rv7073F2Tb7fVpKNAw6Z3clrxv/lGFUTCqfWCC26eUUx7z9iu7HuBMFG5wJMo8mgoaFD5WP1LevGLv0JvdNI7yWo14q208z99h+7m4lqEVNb1oiSmWpfPhRsjDbsAedm5XCi8ZcPOWa/nwa7F5h4CPfyc7/AoFt0OQvmQxjVlXS+F98A1syCQHP05oq+axqJc8Dxxb6yLGTPgHgQ7zFZIaUFMlctGq1bJqdUjN7+M5P5KrLx1o9wBpb4JmYHVZY1+3WxAT+ESCLDjGyqEg8BTXrolPhnrnZ85ZLkw7eOJlQRosmcQwIDAQAB"
     },
     {
@@ -316,6 +317,170 @@
       "updatedAt": "2026-11-14T14:11:14.512Z",
       "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv94Gdl9e4sJa/gXLtSjF9Uzr8cNlMiLdulHivu7o+Hhwr8uDFb0ZDUC3S4nedsqYAPswYOEJFEtzFZOTzKvkkAOu7cmiuZyih6H4v6OrgeKmXwk1YC5Xm1sRaW7eIOK+nUzzenvxZPga84n1CSiz0QiobjSuKn+Yy+Lr3lGJRFCb6kaeKy9JCEGOqvusDgRJppQZfD89fyQpSL9qbpmLvDuJ00ETRHAuSvPpSIb0jcBKYqoylBRyUFQ3bIDEZt4YltNVg21Hdi9QUhqiBvT3kUTKNbsIhHZ+N3h2sXVtwngHrO5yZEBex/n2HWidcmURitsYkPmlfWA1chlko+LAtQIDAQAB",
       "rsaKeyFingerprint": "1AD0:6D75:7532:2B03"
+    },
+    {
+      "uid": "user_vendor_atelier_terra",
+      "email": "atelier_terra@artisanale.com",
+      "displayName": "Lorenzo Moretti",
+      "role": "vendor",
+      "vendorId": "vendor_atelier_terra",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_lumiere_botanique",
+      "email": "lumiere_botanique@artisanale.com",
+      "displayName": "Camille Laurent",
+      "role": "vendor",
+      "vendorId": "vendor_lumiere_botanique",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_kyoto_kiln",
+      "email": "kyoto_kiln@artisanale.com",
+      "displayName": "Kenji Takahashi",
+      "role": "vendor",
+      "vendorId": "vendor_kyoto_kiln",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_oaxaca_earth",
+      "email": "oaxaca_earth@artisanale.com",
+      "displayName": "Mateo & Sofia Reyes",
+      "role": "vendor",
+      "vendorId": "vendor_oaxaca_earth",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_nordic_timber",
+      "email": "nordic_timber@artisanale.com",
+      "displayName": "Freja Lindqvist",
+      "role": "vendor",
+      "vendorId": "vendor_nordic_timber",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_soleil_orfevre",
+      "email": "soleil_orfevre@artisanale.com",
+      "displayName": "Claire Beaumont",
+      "role": "vendor",
+      "vendorId": "vendor_soleil_orfevre",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_atlas_loom",
+      "email": "atlas_loom@artisanale.com",
+      "displayName": "Amina Mansouri",
+      "role": "vendor",
+      "vendorId": "vendor_atlas_loom",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_scriptorium_carta",
+      "email": "scriptorium_carta@artisanale.com",
+      "displayName": "Julian Vance",
+      "role": "vendor",
+      "vendorId": "vendor_scriptorium_carta",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_bottega_cuoio",
+      "email": "bottega_cuoio@artisanale.com",
+      "displayName": "Marco Bellini",
+      "role": "vendor",
+      "vendorId": "vendor_bottega_cuoio",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_porto_argila",
+      "email": "porto_argila@artisanale.com",
+      "displayName": "Inês Ferreira",
+      "role": "vendor",
+      "vendorId": "vendor_porto_argila",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_jaipur_handloom",
+      "email": "jaipur_handloom@artisanale.com",
+      "displayName": "Aarav Sharma",
+      "role": "vendor",
+      "vendorId": "vendor_jaipur_handloom",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "user_vendor_aegean_stone",
+      "email": "aegean_stone@artisanale.com",
+      "displayName": "Nikos Papadopoulos",
+      "role": "vendor",
+      "vendorId": "vendor_aegean_stone",
+      "preferredLanguage": "en",
+      "photoURL": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "uid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "firebaseUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "authProvider": "firebase",
+      "emailVerified": false,
+      "email": "gend@masti.mc",
+      "displayName": "Hello World",
+      "phoneNumber": "7890654321",
+      "role": "vendor",
+      "preferredLanguage": "en",
+      "city": "Nude Wada",
+      "country": "India",
+      "vendorId": "vendor_1794981493676_lfc",
+      "addresses": [
+        {
+          "id": "addr_1794981493681",
+          "fullName": "Hello World",
+          "phone": "7890654321",
+          "street": "Shaitaan Gali, Andher nagar, Samshaan ke Samne",
+          "city": "Nude Wada",
+          "state": "Khalifa",
+          "postalCode": "123456",
+          "country": "India",
+          "isDefault": true
+        }
+      ],
+      "photoURL": "https://api.dicebear.com/7.x/initials/svg?seed=Hello%20World",
+      "createdAt": "2026-11-18T05:58:13.759Z",
+      "updatedAt": "2026-11-18T16:03:29.693Z",
+      "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx8MNzoTXPNnxVh4axg5vCU9o7QkDh9mgD6DUq9POqAUf42lCOuDdmPXMgyHLrkyaso7P4ivtY0SPjK0r8f2BgrixRcTzUOnYzlsLMFwTiKVI8mD1M30hOID8JMiW6SgJf7YrSZgLeoXenCMitPjB5khguvBWlRhFE0HDBACp3/kFG8lUOgywofE6+jI6OC3Gh1wuaL8nqlTL95lkvjjMIYoORNU5eUMJR8YlTMzeXFBeZZ85xHYwmI/jXMrZqZaUNi5VV2/j6FV6qT/L1svKkXv+8Z9K+i/fwJ/J3WHxM8kFYQZYmATNxOFZuQKyVdwvfrz0PEiV8BlFrABRBhkW8QIDAQAB",
+      "rsaKeyFingerprint": "12B9:E4FD:9B82:822F"
     }
   ],
   "passwords": {
@@ -333,7 +498,20 @@
     "user_1794658045932_ilgj": "$2a$10$.ixwRgMIF9xJ8nyBSa9BJe/PcMtENedcOko3tGNUzTHI5/xzDMUzy",
     "user_1794658046012_lx56": "$2a$10$KHh/GH9gWwVmenOK407EV.vQOr7a8ijEhdAMkPPHSzCvpzh1dWRBy",
     "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": "$2a$10$e3Y7LLTfZmFToLB3XEX8KuRxLyq9/K9ROfZoxwbybK8NetqWVoKE2",
-    "3maoBhU7jJW37ppzT1Eb8LuwWji1": "$2a$10$z8gAsW1bgrKG7BtgSFKrmenOi6QXrmg6liX3RdMXVHbCQv6pDiltq"
+    "3maoBhU7jJW37ppzT1Eb8LuwWji1": "$2a$10$z8gAsW1bgrKG7BtgSFKrmenOi6QXrmg6liX3RdMXVHbCQv6pDiltq",
+    "user_vendor_atelier_terra": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_lumiere_botanique": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_kyoto_kiln": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_oaxaca_earth": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_nordic_timber": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_soleil_orfevre": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_atlas_loom": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_scriptorium_carta": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_bottega_cuoio": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_porto_argila": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_jaipur_handloom": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "user_vendor_aegean_stone": "$2a$10$CvplWf5570Y/X83CVgGEjOZcAvUCDRFARCuK/E0nyj9oXwUYUxBi6",
+    "I50RqVKss5f8rX9HD2OjJ7S6fdl2": "$2a$10$jLd12T6mDS3//SCfmd4sZOYki2fYfm05U6xj4sa2JALp73gzxuZWW"
   },
   "vendors": [
     {
@@ -499,6 +677,317 @@
       "contactPhone": "+91-9876543210",
       "createdAt": "2026-11-14T12:51:52.280Z",
       "updatedAt": "2026-11-14T12:51:52.280Z"
+    },
+    {
+      "vendorId": "vendor_atelier_terra",
+      "ownerUid": "user_vendor_atelier_terra",
+      "businessName": "Atelier Terra",
+      "description": "Florentine sculptural stoneware & raw architectural earth ceramics handcrafted by Master Lorenzo Moretti.",
+      "logo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "category": "sculptures-candles",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Florence, Italy. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@atelier_terra.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_lumiere_botanique",
+      "ownerUid": "user_vendor_lumiere_botanique",
+      "businessName": "Lumière Botanique",
+      "description": "Small-batch organic botanical soy wax candles, beeswax tapers, and cold-process apothecary soaps from Grasse.",
+      "logo": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "category": "sculptures-candles",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Grasse, France. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@lumiere_botanique.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_kyoto_kiln",
+      "ownerUid": "user_vendor_kyoto_kiln",
+      "businessName": "Kyoto Kiln Works",
+      "description": "Traditional anagama wood-fired Japanese stoneware tea sets, Yunomi mugs, and celadon vessels.",
+      "logo": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&auto=format&fit=crop&q=80",
+      "category": "ceramics-pottery",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Kyoto, Japan. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@kyoto_kiln.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_oaxaca_earth",
+      "ownerUid": "user_vendor_oaxaca_earth",
+      "businessName": "Oaxaca Earth Studio",
+      "description": "Generational Zapotec burnished red clay terracotta planters, woven palm baskets, and folk clay figurines.",
+      "logo": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80",
+      "category": "ceramics-pottery",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Oaxaca, Mexico. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@oaxaca_earth.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_nordic_timber",
+      "ownerUid": "user_vendor_nordic_timber",
+      "businessName": "Nordic Timber Craft",
+      "description": "Danish steam-bent black walnut sculptures, spline-joined gallery frames, and carved serving trays.",
+      "logo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+      "category": "leather-woodcraft",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Copenhagen, Denmark. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@nordic_timber.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_soleil_orfevre",
+      "ownerUid": "user_vendor_soleil_orfevre",
+      "businessName": "Soleil Orfèvre",
+      "description": "Hand-forged recycled brass necklaces, 925 sterling silver cuffs, and natural emerald cabochon rings.",
+      "logo": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
+      "category": "artisan-jewellery",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Lyon, France. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@soleil_orfevre.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_atlas_loom",
+      "ownerUid": "user_vendor_atlas_loom",
+      "businessName": "Atlas Loom Collective",
+      "description": "Cooperative of High Atlas master weavers crafting Berber kilim rugs, alpaca throws, and macramé tapestries.",
+      "logo": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&auto=format&fit=crop&q=80",
+      "category": "textiles-weaving",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Marrakech, Morocco. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@atlas_loom.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_scriptorium_carta",
+      "ownerUid": "user_vendor_scriptorium_carta",
+      "businessName": "Scriptorium Carta",
+      "description": "Coptic-stitched cotton rag sketchbooks, hand-pulled linocut botanical prints, and brass wax-seal stationery.",
+      "logo": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=200&auto=format&fit=crop&q=80",
+      "category": "fine-art-prints",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Bath, United Kingdom. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@scriptorium_carta.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_bottega_cuoio",
+      "ownerUid": "user_vendor_bottega_cuoio",
+      "businessName": "Bottega Cuoio",
+      "description": "Saddle-stitched Tuscan vegetable-tanned leather journals, bifold wallets, and solid brass key fobs.",
+      "logo": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&auto=format&fit=crop&q=80",
+      "category": "leather-woodcraft",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Siena, Italy. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@bottega_cuoio.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_porto_argila",
+      "ownerUid": "user_vendor_porto_argila",
+      "businessName": "Porto Argila Atelier",
+      "description": "Hand-painted Portuguese majolica plates, fluted centerpiece bowls, and vitrified stoneware dinnerware.",
+      "logo": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=200&auto=format&fit=crop&q=80",
+      "category": "ceramics-pottery",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Porto, Portugal. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@porto_argila.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_jaipur_handloom",
+      "ownerUid": "user_vendor_jaipur_handloom",
+      "businessName": "Jaipur Handloom Guild",
+      "description": "Organic flax linen tablecloths, punch-needle embroidered cushions, and natural indigo canvas market bags.",
+      "logo": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=200&auto=format&fit=crop&q=80",
+      "category": "textiles-weaving",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Jaipur, India. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@jaipur_handloom.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_aegean_stone",
+      "ownerUid": "user_vendor_aegean_stone",
+      "businessName": "Aegean Stone & Clay",
+      "description": "Cycladic marble & travertine coasters, granite-textured amphora vases, and pinched stoneware pitchers.",
+      "logo": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+      "banner": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?w=200&auto=format&fit=crop&q=80",
+      "category": "ceramics-pottery",
+      "verificationStatus": "approved",
+      "rating": 4.9,
+      "reviewCount": 185,
+      "businessPolicies": {
+        "shipping": "Hand-packed in Naxos, Greece. Free carbon-neutral express shipping on orders over $75.",
+        "returns": "30-day artisan satisfaction guarantee with complimentary return courier pickup.",
+        "warranty": "Signed Certificate of Studio Authenticity & lifetime craftsmanship care support."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "atelier@aegean_stone.com",
+      "contactPhone": "+1-555-ARTISAN",
+      "createdAt": "2026-10-19T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "vendorId": "vendor_1794981493676_lfc",
+      "ownerUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "businessName": "Gend Masti",
+      "description": "Verified seller storefront powered by ConvoCart & Nexconn SDK.",
+      "logo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "category": "Electronics & Gadgets",
+      "verificationStatus": "approved",
+      "rating": 5,
+      "reviewCount": 0,
+      "businessPolicies": {
+        "shipping": "Standard delivery in 3-5 business days.",
+        "returns": "7-day replacement guarantee.",
+        "warranty": "1-year standard warranty."
+      },
+      "availability": "online",
+      "aiAgentEnabled": true,
+      "commissionRate": 0.05,
+      "contactEmail": "gend@masti.mc",
+      "contactPhone": "7890654321",
+      "createdAt": "2026-11-18T05:58:13.676Z",
+      "updatedAt": "2026-11-18T05:58:13.676Z"
     }
   ],
   "products": [
@@ -557,34 +1046,6 @@
       "isTrending": true,
       "createdAt": "2026-11-14T12:07:25.944Z",
       "updatedAt": "2026-11-14T12:07:26.385Z"
-    },
-    {
-      "productId": "prod_1794660748965_iyud",
-      "vendorId": "vendor_1794660712280_26v",
-      "vendorName": "Aura Sound Studio",
-      "title": "Aura Studio Pro Wireless Headphones",
-      "description": "Studio-grade active noise cancelling headphones with 50h battery, lossless USB-C audio, and 40mm titanium drivers.",
-      "categoryId": "cat-electronics",
-      "categoryName": "Electronics & Gadgets",
-      "brand": "Aura Sound",
-      "sku": "AURA-PRO-01",
-      "price": 249,
-      "discount": 10,
-      "stock": 19,
-      "images": [
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80"
-      ],
-      "variants": [],
-      "specifications": {},
-      "shippingPolicy": "Ships within 24 hours via express courier.",
-      "returnPolicy": "30-day money-back guarantee with zero restocking fee.",
-      "status": "active",
-      "rating": 5,
-      "reviewCount": 0,
-      "isFeatured": true,
-      "isTrending": true,
-      "createdAt": "2026-11-14T12:52:28.965Z",
-      "updatedAt": "2026-11-14T12:56:23.478Z"
     },
     {
       "productId": "prod_test_ground_1794661339775",
@@ -729,14 +1190,1633 @@
       "reviewCount": 0,
       "createdAt": "2026-11-14T13:17:44.945Z",
       "updatedAt": "2026-11-14T13:17:44.955Z"
+    },
+    {
+      "productId": "prod_test_ground_1794762629469",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Test Seller SonicPro Reference Headset",
+      "description": "Seller-uploaded test studio headset",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "SonicTest",
+      "sku": "TST-1794762629469",
+      "price": 299,
+      "discount": 0,
+      "stock": 15,
+      "images": [],
+      "specifications": {
+        "Battery": "40 Hours"
+      },
+      "shippingPolicy": "Express shipping",
+      "returnPolicy": "30-day return",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-15T17:10:29.469Z",
+      "updatedAt": "2026-11-15T17:10:29.473Z"
+    },
+    {
+      "productId": "prod_tkt_test_1794762630109",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Seller Uploaded Acoustic Dac Amp",
+      "description": "Hi-Fi desktop headphone amp uploaded by seller",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "AudioLab",
+      "sku": "AUD-1794762630109",
+      "price": 179,
+      "discount": 0,
+      "stock": 10,
+      "images": [],
+      "specifications": {},
+      "shippingPolicy": "Next day air",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-15T17:10:30.109Z",
+      "updatedAt": "2026-11-15T17:10:30.121Z"
+    },
+    {
+      "productId": "art-01-abstract-ceramic-sculptures",
+      "vendorId": "vendor_atelier_terra",
+      "title": "Abstract Ceramic Sculptures",
+      "description": "Hand-sculpted modernist contemplative figure with negative-space torso arches and raw grogged sandstone finish.",
+      "category": "sculptures-candles",
+      "brand": "Atelier Terra",
+      "price": 49,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-01-ABSTRACT-CERAMIC-SCULPTURES",
+      "images": [
+        "/assets/3d/sculpture_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/sculpture_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-02-bubble-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Bubble Candles",
+      "description": "Interlocking sculptural knot candle hand-poured in small batches using 100% organic botanical soy wax.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 24.55,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-02-BUBBLE-CANDLES",
+      "images": [
+        "/assets/3d/candle_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/candle_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-03-handmade-ceramic-vases",
+      "vendorId": "vendor_aegean_stone",
+      "title": "Handmade Ceramic Vases",
+      "description": "Wheel-thrown amphora vessel with weathered granite mineral texture and raised shoulder ribs.",
+      "category": "ceramics-pottery",
+      "brand": "Aegean Stone & Clay",
+      "price": 84,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-03-HANDMADE-CERAMIC-VASES",
+      "images": [
+        "/assets/3d/vase_granite.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/vase_granite.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-04-terracotta-pots",
+      "vendorId": "vendor_oaxaca_earth",
+      "title": "Terracotta Pots",
+      "description": "Breathable sun-baked red clay planter pot with double relief rings, rolled rim, and matching drainage saucer.",
+      "category": "ceramics-pottery",
+      "brand": "Oaxaca Earth Studio",
+      "price": 36,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-04-TERRACOTTA-POTS",
+      "images": [
+        "/assets/3d/terracotta_pot.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/terracotta_pot.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-05-stoneware-pottery",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Stoneware Pottery",
+      "description": "Hand-thrown stoneware bottle-neck vessel featuring exposed raw clay at the base and celadon ash glaze.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 58,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-05-STONEWARE-POTTERY",
+      "images": [
+        "/assets/3d/stoneware_pottery.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/stoneware_pottery.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-06-decorative-ceramic-bowls",
+      "vendorId": "vendor_porto_argila",
+      "title": "Decorative Ceramic Bowls",
+      "description": "Wide fluted pedestal centerpiece bowl resting on a raw terracotta foot with three glazed ceramic orbs.",
+      "category": "ceramics-pottery",
+      "brand": "Porto Argila Atelier",
+      "price": 44,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-06-DECORATIVE-CERAMIC-BOWLS",
+      "images": [
+        "/assets/3d/ceramic_bowl.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/ceramic_bowl.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-07-wooden-sculptures",
+      "vendorId": "vendor_nordic_timber",
+      "title": "Wooden Sculptures",
+      "description": "Continuous hand-carved American black walnut ribbon sculpture mounted on solid brass rods.",
+      "category": "sculptures-candles",
+      "brand": "Nordic Timber Craft",
+      "price": 72,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-07-WOODEN-SCULPTURES",
+      "images": [
+        "/assets/3d/wooden_sculpture.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/wooden_sculpture.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-08-ceramic-candle-holders",
+      "vendorId": "vendor_atelier_terra",
+      "title": "Ceramic Candle Holders",
+      "description": "Sculptural U-arch terracotta duo candle holder fitted with spun brass collars and beeswax tapers.",
+      "category": "sculptures-candles",
+      "brand": "Atelier Terra",
+      "price": 32,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-08-CERAMIC-CANDLE-HOLDERS",
+      "images": [
+        "/assets/3d/candle_holder.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/candle_holder.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-09-handmade-incense-holders",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Handmade Incense Holders",
+      "description": "Minimalist oval sandstone ash-catcher tray paired with a solid brass sphere holder.",
+      "category": "sculptures-candles",
+      "brand": "Kyoto Kiln Works",
+      "price": 26,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-09-HANDMADE-INCENSE-HOLDERS",
+      "images": [
+        "/assets/3d/incense_holder.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/incense_holder.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-10-sculptural-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Sculptural Candles",
+      "description": "Twisted fluted architectural column pillar candle crafted from golden raw beeswax.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 29,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-10-SCULPTURAL-CANDLES",
+      "images": [
+        "/assets/3d/sculptural_candle.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/sculptural_candle.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-11-soy-wax-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Soy Wax Candles",
+      "description": "Curated trio of ribbed and tiered soy wax pillar candles on a round travertine stone coaster.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 28,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-11-SOY-WAX-CANDLES",
+      "images": [
+        "/assets/3d/soy_wax_candles.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/soy_wax_candles.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-12-scented-jar-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Scented Jar Candles",
+      "description": "Twin-wick amber glazed apothecary jar candle infused with cedarwood, fig leaf, and bergamot.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 34.5,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-12-SCENTED-JAR-CANDLES",
+      "images": [
+        "/assets/3d/scented_jar_candle.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/scented_jar_candle.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-13-handmade-coffee-mugs",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Handmade Coffee Mugs",
+      "description": "Wheel-thrown speckled oatmeal stoneware coffee mug with unglazed terracotta foot ring.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 22,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-13-HANDMADE-COFFEE-MUGS",
+      "images": [
+        "/assets/3d/handmade_coffee_mug.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_coffee_mug.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-14-ceramic-tea-sets",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Ceramic Tea Sets",
+      "description": "Traditional Japanese stoneware teapot with bamboo arch handle and two Yunomi teacups on a slate tray.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 64,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-14-CERAMIC-TEA-SETS",
+      "images": [
+        "/assets/3d/ceramic_tea_set.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/ceramic_tea_set.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-15-stoneware-dinner-sets",
+      "vendorId": "vendor_porto_argila",
+      "title": "Stoneware Dinner Sets",
+      "description": "Three-piece artisanal stoneware place setting with dinner plate, salad plate, and soup bowl.",
+      "category": "ceramics-pottery",
+      "brand": "Porto Argila Atelier",
+      "price": 88,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-15-STONEWARE-DINNER-SETS",
+      "images": [
+        "/assets/3d/dinner_set.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/dinner_set.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-16-ceramic-pitchers",
+      "vendorId": "vendor_aegean_stone",
+      "title": "Ceramic Pitchers",
+      "description": "Tall wheel-thrown stoneware water and flower pitcher with pinched lip and raw clay loop handle.",
+      "category": "ceramics-pottery",
+      "brand": "Aegean Stone & Clay",
+      "price": 46,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-16-CERAMIC-PITCHERS",
+      "images": [
+        "/assets/3d/ceramic_pitcher.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/ceramic_pitcher.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-17-handmade-pottery-jars",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Handmade Pottery Jars",
+      "description": "Airtight lidded stoneware tea and spice canister finished in celadon sage glaze with walnut finial.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 52,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-17-HANDMADE-POTTERY-JARS",
+      "images": [
+        "/assets/3d/pottery_jar.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/pottery_jar.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-18-ceramic-planters",
+      "vendorId": "vendor_nordic_timber",
+      "title": "Ceramic Planters",
+      "description": "Architectural satin-white ceramic cylinder planter elevated on a three-legged walnut stand.",
+      "category": "ceramics-pottery",
+      "brand": "Nordic Timber Craft",
+      "price": 54,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-18-CERAMIC-PLANTERS",
+      "images": [
+        "/assets/3d/ceramic_planter.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/ceramic_planter.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-19-handmade-earrings",
+      "vendorId": "vendor_soleil_orfevre",
+      "title": "Handmade Earrings",
+      "description": "Geometric statement drop earrings combining hammered raw brass arches and terracotta half-moons.",
+      "category": "artisan-jewellery",
+      "brand": "Soleil Orfèvre",
+      "price": 38,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-19-HANDMADE-EARRINGS",
+      "images": [
+        "/assets/3d/handmade_earrings.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_earrings.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": true,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-20-brass-necklaces",
+      "vendorId": "vendor_soleil_orfevre",
+      "title": "Brass Necklaces",
+      "description": "Hand-forged golden brass collar torque suspending a hammered crescent pendant with emerald cabochon.",
+      "category": "artisan-jewellery",
+      "brand": "Soleil Orfèvre",
+      "price": 56,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-20-BRASS-NECKLACES",
+      "images": [
+        "/assets/3d/brass_necklace.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/brass_necklace.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-21-gemstone-rings",
+      "vendorId": "vendor_soleil_orfevre",
+      "title": "Gemstone Rings",
+      "description": "Hammered gold-brass signet bezel ring hand-set with an octagonal faceted emerald gemstone.",
+      "category": "artisan-jewellery",
+      "brand": "Soleil Orfèvre",
+      "price": 68,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-21-GEMSTONE-RINGS",
+      "images": [
+        "/assets/3d/gemstone_ring.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/gemstone_ring.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-22-beaded-bracelets",
+      "vendorId": "vendor_jaipur_handloom",
+      "title": "Beaded Bracelets",
+      "description": "Hand-strung gemstone bracelet alternating natural jade, turquoise, red jasper, and brass spacers.",
+      "category": "artisan-jewellery",
+      "brand": "Jaipur Handloom Guild",
+      "price": 29,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-22-BEADED-BRACELETS",
+      "images": [
+        "/assets/3d/beaded_bracelet.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/beaded_bracelet.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-23-polymer-clay-jewellery",
+      "vendorId": "vendor_atelier_terra",
+      "title": "Polymer Clay Jewellery",
+      "description": "Small-batch terrazzo-inlaid polymer clay arch drop earrings on surgical titanium posts.",
+      "category": "artisan-jewellery",
+      "brand": "Atelier Terra",
+      "price": 27,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-23-POLYMER-CLAY-JEWELLERY",
+      "images": [
+        "/assets/3d/polymer_clay_jewellery.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/polymer_clay_jewellery.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-24-handmade-pendants",
+      "vendorId": "vendor_soleil_orfevre",
+      "title": "Handmade Pendants",
+      "description": "Lost-wax cast bronze sunburst medallion pendant centered with a natural turquoise cabochon.",
+      "category": "artisan-jewellery",
+      "brand": "Soleil Orfèvre",
+      "price": 45,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-24-HANDMADE-PENDANTS",
+      "images": [
+        "/assets/3d/handmade_pendant.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_pendant.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-25-silver-jewellery",
+      "vendorId": "vendor_soleil_orfevre",
+      "title": "Silver Jewellery",
+      "description": "Hand-wrought 925 sterling silver double-wave open cuff bracelet.",
+      "category": "artisan-jewellery",
+      "brand": "Soleil Orfèvre",
+      "price": 76,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-25-SILVER-JEWELLERY",
+      "images": [
+        "/assets/3d/silver_jewellery.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/silver_jewellery.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-26-handwoven-rugs",
+      "vendorId": "vendor_atlas_loom",
+      "title": "Handwoven Rugs",
+      "description": "Authentic flat-weave Berber kilim wool rug with raised tufted diamond motifs and fringe.",
+      "category": "textiles-weaving",
+      "brand": "Atlas Loom Collective",
+      "price": 118,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-26-HANDWOVEN-RUGS",
+      "images": [
+        "/assets/3d/handwoven_rug.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handwoven_rug.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-27-macrame-wall-hangings",
+      "vendorId": "vendor_atlas_loom",
+      "title": "Macramé Wall Hangings",
+      "description": "Hand-knotted organic cotton macramé tapestry suspended from a solid oak dowel.",
+      "category": "textiles-weaving",
+      "brand": "Atlas Loom Collective",
+      "price": 48,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-27-MACRAME-WALL-HANGINGS",
+      "images": [
+        "/assets/3d/macrame_hanging.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/macrame_hanging.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-28-embroidered-cushion-covers",
+      "vendorId": "vendor_jaipur_handloom",
+      "title": "Embroidered Cushion Covers",
+      "description": "Heavyweight Belgian flax linen cushion cover with raised punch-needle botanical embroidery.",
+      "category": "textiles-weaving",
+      "brand": "Jaipur Handloom Guild",
+      "price": 39,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-28-EMBROIDERED-CUSHION-COVERS",
+      "images": [
+        "/assets/3d/embroidered_cushion.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/embroidered_cushion.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-29-handmade-table-runners",
+      "vendorId": "vendor_jaipur_handloom",
+      "title": "Handmade Table Runners",
+      "description": "Hand-loomed slub cotton and flax linen table runner woven with terracotta heritage stripes.",
+      "category": "textiles-weaving",
+      "brand": "Jaipur Handloom Guild",
+      "price": 42,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-29-HANDMADE-TABLE-RUNNERS",
+      "images": [
+        "/assets/3d/table_runner.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/table_runner.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.343Z",
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    {
+      "productId": "art-30-woven-baskets",
+      "vendorId": "vendor_oaxaca_earth",
+      "title": "Woven Baskets",
+      "description": "Two-tone hand-coiled seagrass and palm fiber belly basket with braided loop handles.",
+      "category": "textiles-weaving",
+      "brand": "Oaxaca Earth Studio",
+      "price": 47,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-30-WOVEN-BASKETS",
+      "images": [
+        "/assets/3d/woven_basket.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/woven_basket.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-31-crochet-bags",
+      "vendorId": "vendor_atlas_loom",
+      "title": "Crochet Bags",
+      "description": "Hand-crocheted Madagascar raffia market tote bag with wide shoulder straps.",
+      "category": "textiles-weaving",
+      "brand": "Atlas Loom Collective",
+      "price": 52,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-31-CROCHET-BAGS",
+      "images": [
+        "/assets/3d/crochet_bag.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/crochet_bag.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-32-handwoven-blankets",
+      "vendorId": "vendor_atlas_loom",
+      "title": "Handwoven Blankets",
+      "description": "Heirloom merino and alpaca wool throw blanket bundled with a cognac leather carrier strap.",
+      "category": "textiles-weaving",
+      "brand": "Atlas Loom Collective",
+      "price": 94,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-32-HANDWOVEN-BLANKETS",
+      "images": [
+        "/assets/3d/handwoven_blanket.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handwoven_blanket.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-33-linen-tablecloths",
+      "vendorId": "vendor_jaipur_handloom",
+      "title": "Linen Tablecloths",
+      "description": "Stone-washed organic flax linen tablecloth with matching napkin and terracotta ring.",
+      "category": "textiles-weaving",
+      "brand": "Jaipur Handloom Guild",
+      "price": 66,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-33-LINEN-TABLECLOTHS",
+      "images": [
+        "/assets/3d/linen_tablecloth.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/linen_tablecloth.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-34-original-canvas-paintings",
+      "vendorId": "vendor_atelier_terra",
+      "title": "Original Canvas Paintings",
+      "description": "Original mixed-media impasto relief painting mounted in a solid white-oak gallery floater frame.",
+      "category": "fine-art-prints",
+      "brand": "Atelier Terra",
+      "price": 135,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-34-ORIGINAL-CANVAS-PAINTINGS",
+      "images": [
+        "/assets/3d/canvas_painting.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/canvas_painting.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-35-handmade-miniature-art",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Handmade Miniature Art",
+      "description": "Hand-sculpted miniature bonsai sculpture rooted in a glazed cobalt stoneware pot.",
+      "category": "fine-art-prints",
+      "brand": "Kyoto Kiln Works",
+      "price": 58,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-35-HANDMADE-MINIATURE-ART",
+      "images": [
+        "/assets/3d/miniature_art.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/miniature_art.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-36-hand-painted-plates",
+      "vendorId": "vendor_porto_argila",
+      "title": "Hand-Painted Plates",
+      "description": "Hand-painted Portuguese majolica wall & display plate with cobalt and ochre brushwork.",
+      "category": "fine-art-prints",
+      "brand": "Porto Argila Atelier",
+      "price": 49,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-36-HAND-PAINTED-PLATES",
+      "images": [
+        "/assets/3d/painted_plate.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/painted_plate.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-37-wooden-picture-frames",
+      "vendorId": "vendor_nordic_timber",
+      "title": "Wooden Picture Frames",
+      "description": "Hand-joined solid American walnut gallery frame with maple corner splines and cotton matboard.",
+      "category": "fine-art-prints",
+      "brand": "Nordic Timber Craft",
+      "price": 38,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-37-WOODEN-PICTURE-FRAMES",
+      "images": [
+        "/assets/3d/wooden_frame.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/wooden_frame.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-38-handmade-sketchbooks",
+      "vendorId": "vendor_scriptorium_carta",
+      "title": "Handmade Sketchbooks",
+      "description": "Lay-flat Coptic-stitched sketchbook filled with 300 gsm deckle-edge cotton watercolor paper.",
+      "category": "fine-art-prints",
+      "brand": "Scriptorium Carta",
+      "price": 31,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-38-HANDMADE-SKETCHBOOKS",
+      "images": [
+        "/assets/3d/handmade_sketchbook.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_sketchbook.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-39-artisan-prints",
+      "vendorId": "vendor_scriptorium_carta",
+      "title": "Artisan Prints",
+      "description": "Signed limited-edition hand-pulled linocut botanical relief print in magnetic oak hanger bars.",
+      "category": "fine-art-prints",
+      "brand": "Scriptorium Carta",
+      "price": 42,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-39-ARTISAN-PRINTS",
+      "images": [
+        "/assets/3d/artisan_print.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/artisan_print.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-40-clay-art-figurines",
+      "vendorId": "vendor_oaxaca_earth",
+      "title": "Clay Art Figurines",
+      "description": "Hand-pinched stoneware songbird figurine with glazed terracotta wings and brass beak.",
+      "category": "fine-art-prints",
+      "brand": "Oaxaca Earth Studio",
+      "price": 44,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-40-CLAY-ART-FIGURINES",
+      "images": [
+        "/assets/3d/clay_figurine.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/clay_figurine.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-41-handmade-leather-journals",
+      "vendorId": "vendor_bottega_cuoio",
+      "title": "Handmade Leather Journals",
+      "description": "Refillable Tuscan vegetable-tanned cognac leather wrap journal with archival cotton pages.",
+      "category": "leather-woodcraft",
+      "brand": "Bottega Cuoio",
+      "price": 46,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-41-HANDMADE-LEATHER-JOURNALS",
+      "images": [
+        "/assets/3d/leather_journal.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/leather_journal.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-42-wooden-serving-trays",
+      "vendorId": "vendor_nordic_timber",
+      "title": "Wooden Serving Trays",
+      "description": "Carved oval walnut and white oak platter serving tray with solid brushed brass arch handles.",
+      "category": "leather-woodcraft",
+      "brand": "Nordic Timber Craft",
+      "price": 54,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-42-WOODEN-SERVING-TRAYS",
+      "images": [
+        "/assets/3d/wooden_tray.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/wooden_tray.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-43-natural-handmade-soaps",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Natural Handmade Soaps",
+      "description": "Trio of cold-process botanical bar soaps tied with jute twine on a slotted oak dish.",
+      "category": "leather-woodcraft",
+      "brand": "Lumière Botanique",
+      "price": 24,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-43-NATURAL-HANDMADE-SOAPS",
+      "images": [
+        "/assets/3d/natural_soap.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/natural_soap.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-44-leather-wallets",
+      "vendorId": "vendor_bottega_cuoio",
+      "title": "Leather Wallets",
+      "description": "Saddle-stitched minimalist bifold cardholder wallet crafted from full-grain cognac bridle leather.",
+      "category": "leather-woodcraft",
+      "brand": "Bottega Cuoio",
+      "price": 58,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-44-LEATHER-WALLETS",
+      "images": [
+        "/assets/3d/leather_wallet.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/leather_wallet.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-45-handmade-keychains",
+      "vendorId": "vendor_bottega_cuoio",
+      "title": "Handmade Keychains",
+      "description": "Looped vegetable-tanned leather fob keychain accented with a faceted walnut bead and brass ring.",
+      "category": "leather-woodcraft",
+      "brand": "Bottega Cuoio",
+      "price": 19,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-45-HANDMADE-KEYCHAINS",
+      "images": [
+        "/assets/3d/handmade_keychain.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_keychain.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-46-artisan-coasters",
+      "vendorId": "vendor_aegean_stone",
+      "title": "Artisan Coasters",
+      "description": "Set of 4 honed stone & terrazzo coasters inlaid with brass rings in a brass wire cradle.",
+      "category": "leather-woodcraft",
+      "brand": "Aegean Stone & Clay",
+      "price": 28,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-46-ARTISAN-COASTERS",
+      "images": [
+        "/assets/3d/artisan_coasters.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/artisan_coasters.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-47-wooden-phone-stands",
+      "vendorId": "vendor_nordic_timber",
+      "title": "Wooden Phone Stands",
+      "description": "Steam-bent walnut desk dock with passive acoustic sound port and solid brass support ledge.",
+      "category": "leather-woodcraft",
+      "brand": "Nordic Timber Craft",
+      "price": 26,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-47-WOODEN-PHONE-STANDS",
+      "images": [
+        "/assets/3d/phone_stand.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/phone_stand.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-48-handmade-stationery",
+      "vendorId": "vendor_scriptorium_carta",
+      "title": "Handmade Stationery",
+      "description": "Set of 12 deckle-edge cotton cards and envelopes tied with silk ribbon + brass wax seal stamp.",
+      "category": "leather-woodcraft",
+      "brand": "Scriptorium Carta",
+      "price": 32,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-48-HANDMADE-STATIONERY",
+      "images": [
+        "/assets/3d/handmade_stationery.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_stationery.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-49-reusable-fabric-bags",
+      "vendorId": "vendor_jaipur_handloom",
+      "title": "Reusable Fabric Bags",
+      "description": "Structured 16 oz organic cotton canvas market tote with indigo base and riveted leather handles.",
+      "category": "leather-woodcraft",
+      "brand": "Jaipur Handloom Guild",
+      "price": 34,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-49-REUSABLE-FABRIC-BAGS",
+      "images": [
+        "/assets/3d/fabric_bag.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/fabric_bag.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-50-handcrafted-gift-boxes",
+      "vendorId": "vendor_scriptorium_carta",
+      "title": "Handcrafted Gift Boxes",
+      "description": "Heirloom linen-wrapped rigid keepsake gift box finished with a woven gold satin ribbon bow.",
+      "category": "leather-woodcraft",
+      "brand": "Scriptorium Carta",
+      "price": 39,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-50-HANDCRAFTED-GIFT-BOXES",
+      "images": [
+        "/assets/3d/gift_box.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/gift_box.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-sculpture",
+      "vendorId": "vendor_atelier_terra",
+      "title": "Abstract Ceramic Sculptures",
+      "description": "Hand-sculpted modernist contemplative figure in sandstone stoneware.",
+      "category": "sculptures-candles",
+      "brand": "Atelier Terra",
+      "price": 49,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-SCULPTURE",
+      "images": [
+        "/assets/3d/sculpture_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/sculpture_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-candle",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Bubble Candles",
+      "description": "Sculptural knot candle hand-poured with organic soy wax.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 24.55,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-CANDLE",
+      "images": [
+        "/assets/3d/candle_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/candle_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-vessel",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Set of Candles",
+      "description": "Four botanical tea-light candles housed in a matte stoneware vessel.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 16.99,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-VESSEL",
+      "images": [
+        "/assets/3d/vessel_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/vessel_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-vase-edition",
+      "vendorId": "vendor_aegean_stone",
+      "title": "Amphora Vessel",
+      "description": "Monumental granite-textured ceramic amphora vessel.",
+      "category": "ceramics-pottery",
+      "brand": "Aegean Stone & Clay",
+      "price": 84,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-VASE-EDITION",
+      "images": [
+        "/assets/3d/vase_granite.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/vase_granite.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-teardrop-edition",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Striped Teardrop Vase",
+      "description": "Ribbed terracotta and white slip-banded teardrop bud vase.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 38.5,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-TEARDROP-EDITION",
+      "images": [
+        "/assets/3d/teardrop.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/teardrop.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "art-vessel-edition",
+      "vendorId": "vendor_oaxaca_earth",
+      "title": "Terracotta Incense Vessel",
+      "description": "Handcrafted ceramic vessel with four scented wax compartments.",
+      "category": "sculptures-candles",
+      "brand": "Oaxaca Earth Studio",
+      "price": 34,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-ART-VESSEL-EDITION",
+      "images": [
+        "/assets/3d/vessel_v3.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/vessel_v3.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "cat-soy-wax-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Soy Wax Candles",
+      "description": "Trio of fluted soy wax pillar candles on a travertine dish.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 28,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-CAT-SOY-WAX-CANDLES",
+      "images": [
+        "/assets/3d/soy_wax_candles.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/soy_wax_candles.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "cat-scented-jar-candles",
+      "vendorId": "vendor_lumiere_botanique",
+      "title": "Scented Jar Candles",
+      "description": "Glazed apothecary jar candle with walnut dust lid.",
+      "category": "sculptures-candles",
+      "brand": "Lumière Botanique",
+      "price": 34.5,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-CAT-SCENTED-JAR-CANDLES",
+      "images": [
+        "/assets/3d/scented_jar_candle.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/scented_jar_candle.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "cat-handmade-coffee-mugs",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Handmade Coffee Mugs",
+      "description": "Wheel-thrown speckled stoneware coffee mug.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 22,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-CAT-HANDMADE-COFFEE-MUGS",
+      "images": [
+        "/assets/3d/handmade_coffee_mug.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/handmade_coffee_mug.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "cat-ceramic-tea-sets",
+      "vendorId": "vendor_kyoto_kiln",
+      "title": "Ceramic Tea Sets",
+      "description": "Kyusu stoneware teapot and two Yunomi cups on a slate tray.",
+      "category": "ceramics-pottery",
+      "brand": "Kyoto Kiln Works",
+      "price": 64,
+      "discount": 0,
+      "stock": 25,
+      "sku": "SKU-CAT-CERAMIC-TEA-SETS",
+      "images": [
+        "/assets/3d/ceramic_tea_set.glb"
+      ],
+      "variants": [],
+      "specifications": {
+        "Craftsmanship": "100% Handcrafted in Studio",
+        "Interactive3D": "/assets/3d/ceramic_tea_set.glb"
+      },
+      "rating": 4.9,
+      "reviewCount": 48,
+      "isFeatured": false,
+      "status": "active",
+      "createdAt": "2026-11-08T05:23:49.344Z",
+      "updatedAt": "2026-11-18T05:23:49.344Z"
     }
   ],
   "carts": {
     "user_consumer_1": {
       "cartId": "cart_user_consumer_1",
       "consumerId": "user_consumer_1",
-      "items": [],
-      "updatedAt": "2026-11-14T10:48:25.363Z"
+      "items": [
+        {
+          "productId": "art-13-handmade-coffee-mugs",
+          "vendorId": "vendor_kyoto_kiln",
+          "title": "Handmade Coffee Mugs",
+          "price": 22,
+          "discount": 0,
+          "image": "/assets/3d/handmade_coffee_mug.glb",
+          "quantity": 2,
+          "maxStock": 25
+        }
+      ],
+      "updatedAt": "2026-11-18T05:27:11.189Z"
     },
     "user_vendor_1": {
       "cartId": "cart_user_vendor_1",
@@ -761,6 +2841,23 @@
       "consumerId": "3maoBhU7jJW37ppzT1Eb8LuwWji1",
       "items": [],
       "updatedAt": "2026-11-14T12:56:23.744Z"
+    },
+    "I50RqVKss5f8rX9HD2OjJ7S6fdl2": {
+      "cartId": "cart_I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "consumerId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "items": [
+        {
+          "productId": "art-01-abstract-ceramic-sculptures",
+          "vendorId": "vendor_atelier_terra",
+          "title": "Abstract Ceramic Sculptures",
+          "price": 49,
+          "discount": 0,
+          "image": "/assets/3d/sculpture_v3.glb",
+          "quantity": 1,
+          "maxStock": 25
+        }
+      ],
+      "updatedAt": "2026-11-18T14:53:54.032Z"
     }
   },
   "orders": [
@@ -871,12 +2968,12 @@
       "status": "escalated",
       "aiHandlingEnabled": false,
       "unreadCount": {
-        "user_consumer_1": 1,
+        "user_consumer_1": 0,
         "user_vendor_3": 3,
         "user_support_1": 1
       },
       "createdAt": "2026-11-14T10:48:35.640Z",
-      "updatedAt": "2026-11-14T13:17:45.196Z",
+      "updatedAt": "2026-11-18T05:51:09.601Z",
       "lastMessage": {
         "text": "Hi Alex! Sarah Connor here from Human Dispatch (Ticket #tkt_1794653372754_0dq). I see you mentioned earlier that you don't want / wish to return Order #ord_1794653305179_48rt. Would you like me to process a full cancellation & refund right away?",
         "senderId": "user_support_1",
@@ -1009,6 +3106,127 @@
       },
       "consumerEmail": "buyer.priya.live@convocart.com",
       "consumerPhone": "+91-9811122233"
+    },
+    {
+      "conversationId": "conv_1794764749879_03qr",
+      "consumerId": "user_consumer_1",
+      "consumerName": "Alex Johnson",
+      "consumerAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "vendorId": "vendor_1794660712280_26v",
+      "vendorBusinessName": "Aura Sound Studio",
+      "vendorLogo": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "en",
+      "productId": "prod_1794660748965_iyud",
+      "productTitle": "Aura Studio Pro Wireless Headphones",
+      "productImage": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "user_consumer_1": 0,
+        "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": 1
+      },
+      "createdAt": "2026-11-15T17:45:49.879Z",
+      "updatedAt": "2026-11-18T05:51:09.601Z",
+      "lastMessage": {
+        "text": "🔒 RSA-2048 Encrypted Message",
+        "senderId": "user_consumer_1",
+        "timestamp": "2026-11-15T17:45:56.195Z",
+        "type": "text"
+      },
+      "consumerEmail": "customer@convocart.com",
+      "consumerPhone": "+1-555-0199"
+    },
+    {
+      "conversationId": "conv_1794981195086_3g1f",
+      "consumerId": "user_consumer_1",
+      "consumerName": "Alex Johnson",
+      "consumerAvatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+      "vendorId": "vendor_nordic_timber",
+      "vendorBusinessName": "Nordic Timber Craft",
+      "vendorLogo": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "en",
+      "productId": "art-07-wooden-sculptures",
+      "productTitle": "Wooden Sculptures",
+      "productImage": "/assets/3d/wooden_sculpture.glb",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "user_consumer_1": 0,
+        "user_vendor_nordic_timber": 0
+      },
+      "createdAt": "2026-11-18T05:53:15.086Z",
+      "updatedAt": "2026-11-18T05:53:15.307Z",
+      "lastMessage": {
+        "text": "Welcome to Nordic Timber Craft in Copenhagen, Denmark! I'm Freja Lindqvist. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+        "senderId": "agent_vendor_nordic_timber",
+        "timestamp": "2026-11-18T05:53:15.089Z",
+        "type": "text"
+      }
+    },
+    {
+      "conversationId": "conv_1795014908675_4ozi",
+      "consumerId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "consumerName": "Hello World",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Hello%20World",
+      "vendorId": "vendor_atelier_terra",
+      "vendorBusinessName": "Atelier Terra",
+      "vendorLogo": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "online",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "en",
+      "productId": "art-01-abstract-ceramic-sculptures",
+      "productTitle": "Abstract Ceramic Sculptures",
+      "productImage": "/assets/3d/sculpture_v3.glb",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "I50RqVKss5f8rX9HD2OjJ7S6fdl2": 0,
+        "user_vendor_atelier_terra": 7,
+        "vendor_1794981493676_lfc": 0
+      },
+      "createdAt": "2026-11-18T15:15:08.675Z",
+      "updatedAt": "2026-11-18T16:03:29.693Z",
+      "lastMessage": {
+        "text": "Hello are you there?",
+        "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "timestamp": "2026-11-18T15:48:08.497Z",
+        "type": "text"
+      },
+      "consumerEmail": "gend@masti.mc",
+      "consumerPhone": "7890654321"
+    },
+    {
+      "conversationId": "conv_1795016689008_l07k",
+      "consumerId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "consumerName": "Hello World",
+      "consumerAvatar": "https://api.dicebear.com/7.x/initials/svg?seed=Hello%20World",
+      "vendorId": "vendor_ubuy_express",
+      "vendorBusinessName": "Ubuy Global Express Marketplace",
+      "vendorLogo": "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=200&auto=format&fit=crop&q=80",
+      "vendorAvailability": "away",
+      "consumerPreferredLanguage": "en",
+      "vendorPreferredLanguage": "en",
+      "status": "active",
+      "aiHandlingEnabled": true,
+      "unreadCount": {
+        "I50RqVKss5f8rX9HD2OjJ7S6fdl2": 0,
+        "user_vendor_2": 3,
+        "vendor_1794981493676_lfc": 0
+      },
+      "createdAt": "2026-11-18T15:44:49.008Z",
+      "updatedAt": "2026-11-18T16:03:29.693Z",
+      "lastMessage": {
+        "text": "I am Artis AI of Ubuy Global Express Marketplace. We ship worldwide via express door‑to‑door DHL with pre‑cleared customs, delivering in 3‑5 business days and providing full tracking. Returns are accepted within 14 days through our domestic partner hubs, and all items carry a 1‑year global authentic‑item warranty.",
+        "senderId": "agent_vendor_ubuy_express",
+        "timestamp": "2026-11-18T15:48:19.262Z",
+        "type": "text"
+      },
+      "consumerEmail": "gend@masti.mc",
+      "consumerPhone": "7890654321"
     }
   ],
   "messages": [
@@ -1569,6 +3787,469 @@
       "isAiGenerated": false,
       "status": "delivered",
       "createdAt": "2026-11-14T14:10:13.059Z"
+    },
+    {
+      "id": "msg_1794764749881",
+      "conversationId": "conv_1794764749879_03qr",
+      "senderId": "agent_vendor_1794660712280_26v",
+      "senderName": "Aura Sound Studio AI Concierge",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "Welcome to Aura Sound Studio! Ask about products, shipping, or live quotes in any language.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Welcome to Aura Sound Studio! Ask about products, shipping, or live quotes in any language."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-15T17:45:49.881Z"
+    },
+    {
+      "id": "msg_1794764756195_mwts",
+      "conversationId": "conv_1794764749879_03qr",
+      "senderId": "user_consumer_1",
+      "senderName": "Alex Johnson",
+      "senderRole": "consumer",
+      "recipientId": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoieGdsa2ZzbFBjSkJRTDVRWjBMajV4KzZaZ1F3NmhUUkkzVXJUQWpwTVc1SzM3bjF4QUxLZm1IM1NneEwyVmVhRFBoakJra2grQjV2Z1JrVC9YdGdqWGYrQnFuTU1GRUJIdTZGOUxMVm1uNGFtaWRjMTVVN3ZrOWZSMFF1M2VTVTYvVXNjY0lCMmNmQWVRWk1PZlVXenJ6eStnemFBY0paYlJobnhkcW5uVG81eHc4TjFMVW1kbGp1Sm5lQUd1cEF4elJYMnN3ZHBqbDlkcHlrM3JiMzF0d3UxTnR1aGNadzcyaENaTjVlRmxOL2I3WDBWOGhyUTk1bVFScUVmQ2MyYm9qQkNTdTliZ2JaQTBjaHJpWEZoZnhKdWdkWEY4R1NscytYeWRsbmpaVUxoOXNIb3p5aFhXQ3NOczdpR2tQSEpPWUhRT2RBM3FkRlJtc3pWdnVRS2FBPT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IkFFRDc6QzFCOTpBRjAwOjk4NjgiLCJjIjoieGdsa2ZzbFBjSkJRTDVRWjBMajV4KzZaZ1F3NmhUUkkzVXJUQWpwTVc1SzM3bjF4QUxLZm1IM1NneEwyVmVhRFBoakJra2grQjV2Z1JrVC9YdGdqWGYrQnFuTU1GRUJIdTZGOUxMVm1uNGFtaWRjMTVVN3ZrOWZSMFF1M2VTVTYvVXNjY0lCMmNmQWVRWk1PZlVXenJ6eStnemFBY0paYlJobnhkcW5uVG81eHc4TjFMVW1kbGp1Sm5lQUd1cEF4elJYMnN3ZHBqbDlkcHlrM3JiMzF0d3UxTnR1aGNadzcyaENaTjVlRmxOL2I3WDBWOGhyUTk1bVFScUVmQ2MyYm9qQkNTdTliZ2JaQTBjaHJpWEZoZnhKdWdkWEY4R1NscytYeWRsbmpaVUxoOXNIb3p5aFhXQ3NOczdpR2tQSEpPWUhRT2RBM3FkRlJtc3pWdnVRS2FBPT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjZDMjU6NDRCQjo2NEZDOjJGQUIiLCJjIjoiWGRIZ2lHdEI4ZHJNcm5VbjUvRDQreWdRTG1pZDgvaWVJVE5JL1Z2Z0FvOTRNbmRMRTg0YWpSK0pESFlvN2dENUNhcVBkOUc4a2M4R0xDWS9WZVFtYnpRaGk1cHhWWUlqZWx5NFM4Qi85TmRPY3RmOENMejZiekhpcVFpVUhtaC9RRVNFN0ZHR0RScnZBSlptZmY2ZWFXRFRJZ2V3bi9BSXBOUFp6TDhJUmtYcDRYcXFUcDBBaGVVcU4zYWtsMHlWRlI3bmlYT2tOMVQ1S2dDbGdtdzluOFBqeVA4TmtuYUtBTTVSUTEvUEpJUmo4SWc2YXJQYTEyWWw2eHc4QVFPSjNHeUFpTjNzMy94RE9LSVZwNXA3RzFtV2k4NGh4MHdkNG1zbis2YU9MRmpIUG81RVVZYjQvYVErendGcThtVTJqUWovdklEV2ZzbS9YNmVlbWZPZkZ3PT0ifQ==",
+        "rsaRecipientUid": "n8vNU9HpMCfsBYLGxf3Lg5mOrii2",
+        "rsaSenderUid": "user_consumer_1",
+        "rsaKeyFingerprint": "AED7:C1B9:AF00:9868",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-15T17:45:56.195Z"
+    },
+    {
+      "id": "msg_1794981195089",
+      "conversationId": "conv_1794981195086_3g1f",
+      "senderId": "agent_vendor_nordic_timber",
+      "senderName": "Freja Lindqvist (Nordic Timber Craft)",
+      "senderRole": "vendor",
+      "recipientId": "user_consumer_1",
+      "text": "Welcome to Nordic Timber Craft in Copenhagen, Denmark! I'm Freja Lindqvist. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Welcome to Nordic Timber Craft in Copenhagen, Denmark! I'm Freja Lindqvist. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "sent",
+      "createdAt": "2026-11-18T05:53:15.089Z"
+    },
+    {
+      "id": "msg_1795014971424_gl2d",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiQVFYSFVhcHFoNFl0WVZMS0xCeDdwWmVTRmd4a2R3clQ2VlpPR1A4aXhTRUp1NnhuWXZPMGttK04zRXJ2Rld4Mm5LTXBMTnBWaWhQZzdEdDd3QTV6eGtoeDJvUVlZUXZ4bGFwa2lRTzNuZ0RkaFdOZnA1WnIyS1JPVU0rbllBaWlZbHdzb0J6MTlsRjhGT1NxTmZ4Y1lWbitQVkdRd05JaEg4M3UxTUVzUG1oNGswMjFWOVdiVjRvUUNWODNCRkdiOStkYVU3RVdsTkVjOGFxaFBGQW1Ca3BSVTR2NFBSbDBlK2ZURlc0MGFER09QMFd6VDFlWFFUMDFEU1ZMbzlycW80Rjhza1M2SnVDaGZuMS9kUVJGdXQzQkVSY2V1dTdLYlF6Vnh3c0ViK2kzV0JmVnRlZndyMkN0QVRUSjVIYjMraGdBaUNaSTIvVk1lQ0tVdXBFaDJ3PT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiQVFYSFVhcHFoNFl0WVZMS0xCeDdwWmVTRmd4a2R3clQ2VlpPR1A4aXhTRUp1NnhuWXZPMGttK04zRXJ2Rld4Mm5LTXBMTnBWaWhQZzdEdDd3QTV6eGtoeDJvUVlZUXZ4bGFwa2lRTzNuZ0RkaFdOZnA1WnIyS1JPVU0rbllBaWlZbHdzb0J6MTlsRjhGT1NxTmZ4Y1lWbitQVkdRd05JaEg4M3UxTUVzUG1oNGswMjFWOVdiVjRvUUNWODNCRkdiOStkYVU3RVdsTkVjOGFxaFBGQW1Ca3BSVTR2NFBSbDBlK2ZURlc0MGFER09QMFd6VDFlWFFUMDFEU1ZMbzlycW80Rjhza1M2SnVDaGZuMS9kUVJGdXQzQkVSY2V1dTdLYlF6Vnh3c0ViK2kzV0JmVnRlZndyMkN0QVRUSjVIYjMraGdBaUNaSTIvVk1lQ0tVdXBFaDJ3PT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiajJDM2NMbEszL0h6eWNPQmRIRkFKQXVydStQS1MxNThmclIwZTVPM3dmc2M2WnlkNzQ1dWE1bkRvL2I5ZWVDY3FQZk9yZFl5QWxnakxoV0hZWGE2Zzg0dkd4cUE5NVRaZkxFVHdSZU9hYW1iMlNDTkdhMUVQRzF5djJHTUlRYmxGTWZzZjJ6NGRLTWZSWU9WcUt6Q0Rla0JUKzFmS1Y3d2IwSlZFajd5eENkUzdkdUgyVUtPOWlpK09WTE9oc3BaZ0lpakFaOG0yalV2M0dsVnphTWo2Mk1jWURWallWTm53MDNQcDNOVUV3YXorZy8rbXd2NkdOakhiTFV0TkZGbXdUWm5FcG1HS0ZiUjRwUFJGM3FSQmRqZmI2eUM2SWRYbXlqZHlzVjJQallVVGI3b3NXRnVlQTZ5M3VwRkltUnFsczlzOEh5alh5eWozQTErZEQ1ZS9BPT0ifQ==",
+        "rsaRecipientUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaSenderUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaKeyFingerprint": "12B9:E4FD:9B82:822F",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:16:11.424Z"
+    },
+    {
+      "id": "msg_1795015532298_j5ac",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiR2VVUGFhMEhWY1JFelVtdDRxa0xJcmdleXQrRCs4UVVsYlp0a0ozMmRXRW9TOGNTVnJlYWN5bVljY0dPNERFVm5aalhYRlo5RG9qWVdUQTlqbUFpelZMc20vK2lmRktaQ25JbUg0SlR4aHpWdVNrYWNTWkZ1UkRMV2Qra3BSS3pWaHh0Y0hUbm1uSEk0YXBabHpvaDVWaytsYm1xbzl0YzBva05VQjJTdEdQQVludU9wUE5nVkR5azJUSUEyQjdtQXZRZVRjQktkMkhsaEM3b1Bxd1RLdmNoZDlmOUR2UGFSRFh1R2Zyd2hmRU1PZldtYzdDM2xXNHBzTnFyMk12d0l0bit1L3ZQRGZrTXcwRDVZN1pTSVNqOXhyK3Zxcml2VEpnejI2dXpzNUdjZW44N2RVSy8wSEQyR1VjS1VJeWJtVlN5MUdycTAwYmd4OFp4b0ZHSGNRPT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiR2VVUGFhMEhWY1JFelVtdDRxa0xJcmdleXQrRCs4UVVsYlp0a0ozMmRXRW9TOGNTVnJlYWN5bVljY0dPNERFVm5aalhYRlo5RG9qWVdUQTlqbUFpelZMc20vK2lmRktaQ25JbUg0SlR4aHpWdVNrYWNTWkZ1UkRMV2Qra3BSS3pWaHh0Y0hUbm1uSEk0YXBabHpvaDVWaytsYm1xbzl0YzBva05VQjJTdEdQQVludU9wUE5nVkR5azJUSUEyQjdtQXZRZVRjQktkMkhsaEM3b1Bxd1RLdmNoZDlmOUR2UGFSRFh1R2Zyd2hmRU1PZldtYzdDM2xXNHBzTnFyMk12d0l0bit1L3ZQRGZrTXcwRDVZN1pTSVNqOXhyK3Zxcml2VEpnejI2dXpzNUdjZW44N2RVSy8wSEQyR1VjS1VJeWJtVlN5MUdycTAwYmd4OFp4b0ZHSGNRPT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoibmFVc2lBQmJoZWRGVEF3T0Vjd2QvVVBWM1YrNnZNVE9NWkJwU3cwNzJLUVA0RWk4SVd4ajhKcG1HUXU2VjB3UWN3VVUzcTRLbjFIQ25PYnk2S3VSbHp3azA0bGFmKzVqV3dPTUtuZ21Xb1dMOStnMzNCKzVXQy95TUtqM3RJOVNVSzgvY1o5UGl0RUQ4eHZTcnZRb01LeWd2azlPVGhBc0xJeVNvNUdnN2lrY015WVd3N1pOWHIzYnJjb1A3SERXeE5iSEdFRXJjZjh1dEJnNGxFekM4Zm1wOEozNm9oU21Oa0RDSmJUaHhHZXQ2eUFJUzI0TGxaQmJzV25nZXYzYUdGUVg1MGVWREVualhKcnRkQTRuK1pOTHp0S242OVVmbjB3ckpCVDBuSDFIUW12WU5wYlpYY2tacmM4dHNLaG5PbkRtRXdISHRaNC9wM1BFMjhMcVBBPT0ifQ==",
+        "rsaRecipientUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaSenderUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaKeyFingerprint": "12B9:E4FD:9B82:822F",
+        "plainPrompt": "hello",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:25:32.298Z"
+    },
+    {
+      "id": "msg_1795015987142_xrds",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "hello testing",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "hello",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hello testing"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:33:07.142Z"
+    },
+    {
+      "id": "msg_1795016170039_nl53",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "hello",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "hello",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hello"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:10.039Z"
+    },
+    {
+      "id": "msg_1795016170746_jfp",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "agent_vendor_atelier_terra",
+      "senderName": "Artis AI of Atelier Terra",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Atelier Terra. Hello! How can I assist you with our handcrafted ceramic sculptures or any other artisan creations today?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Atelier Terra. Hello! How can I assist you with our handcrafted ceramic sculptures or any other artisan creations today?"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:10.746Z"
+    },
+    {
+      "id": "msg_1795016178365_0v5f",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "What are the dimensions and price of this sculpture?",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "What are the dimensions and price of this sculpture?",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "What are the dimensions and price of this sculpture?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:18.365Z"
+    },
+    {
+      "id": "msg_1795016179248_quo",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "agent_vendor_atelier_terra",
+      "senderName": "Artis AI of Atelier Terra",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Atelier Terra. The Abstract Ceramic Sculpture is priced at $49.00. Specific dimensions are not listed in our current details; please let me know if you’d like me to connect you with Master Lorenzo for exact measurements.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Atelier Terra. The Abstract Ceramic Sculpture is priced at $49.00. Specific dimensions are not listed in our current details; please let me know if you’d like me to connect you with Master Lorenzo for exact measurements."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:19.248Z"
+    },
+    {
+      "id": "msg_1795016188573_y5ry",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "RSA2048:fakeCiphertextHere",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "plainPrompt": "What is your shipping policy?",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "RSA2048:fakeCiphertextHere"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:28.573Z",
+      "updatedAt": "2026-11-18T15:37:03.278Z"
+    },
+    {
+      "id": "msg_1795016189235_abt",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "agent_vendor_atelier_terra",
+      "senderName": "Artis AI of Atelier Terra",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Atelier Terra. All orders are hand‑packed in our Florence studio, and we provide free carbon‑neutral express shipping for purchases over $75; otherwise standard international shipping applies.\u0003",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Atelier Terra. All orders are hand‑packed in our Florence studio, and we provide free carbon‑neutral express shipping for purchases over $75; otherwise standard international shipping applies.\u0003"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:36:29.235Z"
+    },
+    {
+      "id": "msg_1795016576643_xfx8",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiSjNHbUhYYnU2VFg2RHQzcGVoS3pHUzRLRlBYcVVUQ2ltUVlCa0ptaXgybG84Nmx5VUhlU3hqYTFkTldXL3VmL1dubndtdjNqVWRNNlVaa0R6MVFDdFM4ZHdhVWFRVnVMb29BMVpnWDZxU2NDcW9FMzhUaW1udWYzazdNV0JMQTE2cmx1VjhUZlJ2MlhPWUp2eDRUUVFhbU44amdZbjkwank3NlVKdjZ2c3owTXJVaGt6UTNLNlFwTnQxRlFUNTlMNHk2S2xkZ2g2TUJJZTlMQzVCaUxWVWFoaU1aVksvM2pGdmNNSEFZaFNueUlaMVAzd0ZRdS95dWh6YjRuOTdVYktJZGI5cU5Fek1LcGFxTDNyUTlaanB1a20vYWhhS3ZtTXlNUkdEcTFPUEt4UUFqNmtrRHhSSXR1ckl3S1JKREFaU0xnZWl0cThOaVR6MVduTERpSzNBPT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiSjNHbUhYYnU2VFg2RHQzcGVoS3pHUzRLRlBYcVVUQ2ltUVlCa0ptaXgybG84Nmx5VUhlU3hqYTFkTldXL3VmL1dubndtdjNqVWRNNlVaa0R6MVFDdFM4ZHdhVWFRVnVMb29BMVpnWDZxU2NDcW9FMzhUaW1udWYzazdNV0JMQTE2cmx1VjhUZlJ2MlhPWUp2eDRUUVFhbU44amdZbjkwank3NlVKdjZ2c3owTXJVaGt6UTNLNlFwTnQxRlFUNTlMNHk2S2xkZ2g2TUJJZTlMQzVCaUxWVWFoaU1aVksvM2pGdmNNSEFZaFNueUlaMVAzd0ZRdS95dWh6YjRuOTdVYktJZGI5cU5Fek1LcGFxTDNyUTlaanB1a20vYWhhS3ZtTXlNUkdEcTFPUEt4UUFqNmtrRHhSSXR1ckl3S1JKREFaU0xnZWl0cThOaVR6MVduTERpSzNBPT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoidnR6TUhIS1JuQ0VVekVzcmRXbWFZT0d2dUdvOFkxSDZmZ1lTT3RCNmpCbUNFa2ZTcWNrczZDOTBXRXBHRkJTc2o2Z0VMYnpRYm5pcUd4dkFNamVVM2JhN0RVOUc4V3pjNEYrZVdiOThGMm5jaHZXRElMWnkxMUhHWEE5RkNabVlJeTJ4cS9UVU93b3dZdzJFNkVoUVNrZzN0RW5JZC9QS0owcW1jMmo2dmpGNCtqLzJPakFNZnpyTWV6aXY0VnJmQ0szdlNiRmlpMGFGaFJGcE9GaDlxWFY4MnYxcmdTSUNkaUY0R1UwbXVuRU5FWVkyRmIyemdtYmhiSHcyZithVDVDSkt0cFlLQkprZ2lVT2JKM0hRVnhSMFFPdTIvamhJZ3FKNlRScTdWcGQ4RFo4L3oxMjlHQmRpVTBCYlg0a3lSdkh2bXRSRUlIVGsrT3IwY1llZy9nPT0ifQ==",
+        "rsaRecipientUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaSenderUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaKeyFingerprint": "12B9:E4FD:9B82:822F",
+        "plainPrompt": "give me the payment link",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:42:56.643Z"
+    },
+    {
+      "id": "msg_1795016679068_3gtl",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "is vendor online test",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "is vendor online test",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "is vendor online test"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:44:39.068Z"
+    },
+    {
+      "id": "msg_1795016689019_n9gs",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_2",
+      "text": "hello",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "hello",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hello"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:44:49.019Z"
+    },
+    {
+      "id": "msg_1795016689721_ez1",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "agent_vendor_ubuy_express",
+      "senderName": "Artis AI of Ubuy Global Express Marketplace",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Ubuy Global Express Marketplace. How may I assist you with our artisan electronics, gaming keyboards, or designer accessories today?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Ubuy Global Express Marketplace. How may I assist you with our artisan electronics, gaming keyboards, or designer accessories today?"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:44:49.721Z"
+    },
+    {
+      "id": "msg_1795016887672_itzv",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiYjVHLytGcDBobWNablB2VVpHTHhkalA4bTV1cWd0TWdNUytzcXNUSlJ3QUM3NzRRY0syL1RFUUxHeE5zRE8xRzlFYmtieG53THJzVWdrT2lVWjhOb1ExNlRHc0hlcE42cU9XRlRjcGp1Q0VaZzQ2VDFLMGZYc1dqbTYvVjdRZ2pPTWI5SEZ6VlBhZzhTY2ErRU01d3pnM0dvbm1BZ1IrblFHbERmaHpEYk9jNHl5RXFVTmJlZ3B1akRXWGM0WVl0RGNtbE9WVkhrUDVPTjRqL2V1NUFCdXVYalFRa2lad3h0amNnS0U4MVhsd0F3QnVZNUxoWWhHVHhxK1FWRkRxWjFGSEEyR2lyMU5OTUpDSjBNUzk1MkZIdk5NN3J4aDJreEl2U1M2VkYrU2RaaXNVMy9NRFA0ZDNvOW9mS0lIYU9VM1lZSHhQU2Fla2owRUd6djJrVzF3PT0ifQ==",
+      "type": "text",
+      "metadata": {
+        "encrypted": true,
+        "rsaEncrypted": true,
+        "encryptionAlgorithm": "RSA-OAEP-256",
+        "rsaForRecipient": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoiYjVHLytGcDBobWNablB2VVpHTHhkalA4bTV1cWd0TWdNUytzcXNUSlJ3QUM3NzRRY0syL1RFUUxHeE5zRE8xRzlFYmtieG53THJzVWdrT2lVWjhOb1ExNlRHc0hlcE42cU9XRlRjcGp1Q0VaZzQ2VDFLMGZYc1dqbTYvVjdRZ2pPTWI5SEZ6VlBhZzhTY2ErRU01d3pnM0dvbm1BZ1IrblFHbERmaHpEYk9jNHl5RXFVTmJlZ3B1akRXWGM0WVl0RGNtbE9WVkhrUDVPTjRqL2V1NUFCdXVYalFRa2lad3h0amNnS0U4MVhsd0F3QnVZNUxoWWhHVHhxK1FWRkRxWjFGSEEyR2lyMU5OTUpDSjBNUzk1MkZIdk5NN3J4aDJreEl2U1M2VkYrU2RaaXNVMy9NRFA0ZDNvOW9mS0lIYU9VM1lZSHhQU2Fla2owRUd6djJrVzF3PT0ifQ==",
+        "rsaForSender": "RSA2048:eyJ2IjoxLCJhbGciOiJSU0EtT0FFUC0yNTYiLCJmcCI6IjEyQjk6RTRGRDo5QjgyOjgyMkYiLCJjIjoibjc2VThhakRtRDFSdzNkbERWZWtKOUk4cFdPZkhIdzBiazR4TTBUejNSdUhaUGpxQnpWY01xNXZYQkJ1K2pRa3NERjcxeFBCb1dqbk50czhKTUx4Y1Y3VExrVFB5Z3UwSk9wQ3YzSkIrNlh1RHo0YkFqeFZMQ0xDMm5sRm5ZZ1F4c29yMVg5YUpEZEJJa25aaDhlenFJMUpUSEovOWl1VExjWUtiODI4VHJYOXZwcEtBMTJucENYMUl6bDhsQmQyb09iekFIeUpTTGN5UVdIemRnNVlGY3B4bXgwUTdXRU1BaFBiQ0FDcTJxTmRjemo5ay9QU2xvcG14OHI3S0RZR3cyamVJQ0FXcXJXbFZBbzZTWS9JaXY1dlZ4cWk0NVFaSXlHd3hkZnpQZFU4OGF3Vmc1ZTNGSHZrTXRKQVVsdkFkZ3d5R2taMzk3RW1HVnBZTGVSdHNBPT0ifQ==",
+        "rsaRecipientUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaSenderUid": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+        "rsaKeyFingerprint": "12B9:E4FD:9B82:822F",
+        "plainPrompt": "😊",
+        "detectedLanguage": "en",
+        "translatedText": {}
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:07.672Z"
+    },
+    {
+      "id": "msg_1795016888497_717v",
+      "conversationId": "conv_1795014908675_4ozi",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_atelier_terra",
+      "text": "Hello are you there?",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "Hello are you there?",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "Hello are you there?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:08.497Z"
+    },
+    {
+      "id": "msg_1795016888515_ilcp",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_2",
+      "text": "hello",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "hello",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "hello"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:08.515Z"
+    },
+    {
+      "id": "msg_1795016888621_763",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "agent_vendor_ubuy_express",
+      "senderName": "Artis AI of Ubuy Global Express Marketplace",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Ubuy Global Express Marketplace. Hello! Welcome to Ubuy Global Express Marketplace. How can I assist you with product specs, dimensions, materials, or shipping today?",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Ubuy Global Express Marketplace. Hello! Welcome to Ubuy Global Express Marketplace. How can I assist you with product specs, dimensions, materials, or shipping today?"
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:08.621Z"
+    },
+    {
+      "id": "msg_1795016898632_w8k2",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "senderName": "Hello World",
+      "senderRole": "vendor",
+      "recipientId": "user_vendor_2",
+      "text": "What is your shipping policy and return policy?",
+      "type": "text",
+      "metadata": {
+        "plainPrompt": "What is your shipping policy and return policy?",
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "What is your shipping policy and return policy?"
+        }
+      },
+      "isAiGenerated": false,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:18.632Z"
+    },
+    {
+      "id": "msg_1795016899262_6yl",
+      "conversationId": "conv_1795016689008_l07k",
+      "senderId": "agent_vendor_ubuy_express",
+      "senderName": "Artis AI of Ubuy Global Express Marketplace",
+      "senderRole": "vendor",
+      "recipientId": "I50RqVKss5f8rX9HD2OjJ7S6fdl2",
+      "text": "I am Artis AI of Ubuy Global Express Marketplace. We ship worldwide via express door‑to‑door DHL with pre‑cleared customs, delivering in 3‑5 business days and providing full tracking. Returns are accepted within 14 days through our domestic partner hubs, and all items carry a 1‑year global authentic‑item warranty.",
+      "type": "text",
+      "metadata": {
+        "detectedLanguage": "en",
+        "translatedText": {
+          "en": "I am Artis AI of Ubuy Global Express Marketplace. We ship worldwide via express door‑to‑door DHL with pre‑cleared customs, delivering in 3‑5 business days and providing full tracking. Returns are accepted within 14 days through our domestic partner hubs, and all items carry a 1‑year global authentic‑item warranty."
+        }
+      },
+      "isAiGenerated": true,
+      "status": "delivered",
+      "createdAt": "2026-11-18T15:48:19.262Z"
     }
   ],
   "supportTickets": [
@@ -1671,7 +4352,7 @@
       "question": "How does Multi-Language Translated Chat work between Buyers, Sellers, and Support Agents?",
       "answer": "Every message sent in 1-on-1 or Support Dispatch chat is automatically detected and translated into each participant’s preferred language (English, Hindi, Japanese, Spanish, French, German, Chinese, Arabic) via Nexconn TranslateModule & our backend translation engine.",
       "category": "Translated Chat",
-      "helpful": 155,
+      "helpful": 156,
       "notHelpful": 3
     },
     {
@@ -2079,6 +4760,348 @@
       },
       "humanTakeoverActive": false,
       "updatedAt": "2026-11-14T12:51:52.280Z"
+    },
+    "vendor_atelier_terra": {
+      "vendorId": "vendor_atelier_terra",
+      "enabled": true,
+      "agentName": "Lorenzo Moretti (Atelier Terra)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Atelier Terra in Florence, Italy! I'm Lorenzo Moretti. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Lorenzo Moretti, master artisan at Atelier Terra in Florence, Italy. Florentine sculptural stoneware & raw architectural earth ceramics handcrafted by Master Lorenzo Moretti.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_lumiere_botanique": {
+      "vendorId": "vendor_lumiere_botanique",
+      "enabled": true,
+      "agentName": "Camille Laurent (Lumière Botanique)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Lumière Botanique in Grasse, France! I'm Camille Laurent. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Camille Laurent, master artisan at Lumière Botanique in Grasse, France. Small-batch organic botanical soy wax candles, beeswax tapers, and cold-process apothecary soaps from Grasse.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_kyoto_kiln": {
+      "vendorId": "vendor_kyoto_kiln",
+      "enabled": true,
+      "agentName": "Kenji Takahashi (Kyoto Kiln Works)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Kyoto Kiln Works in Kyoto, Japan! I'm Kenji Takahashi. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Kenji Takahashi, master artisan at Kyoto Kiln Works in Kyoto, Japan. Traditional anagama wood-fired Japanese stoneware tea sets, Yunomi mugs, and celadon vessels.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_oaxaca_earth": {
+      "vendorId": "vendor_oaxaca_earth",
+      "enabled": true,
+      "agentName": "Mateo & Sofia Reyes (Oaxaca Earth Studio)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Oaxaca Earth Studio in Oaxaca, Mexico! I'm Mateo & Sofia Reyes. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Mateo & Sofia Reyes, master artisan at Oaxaca Earth Studio in Oaxaca, Mexico. Generational Zapotec burnished red clay terracotta planters, woven palm baskets, and folk clay figurines.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_nordic_timber": {
+      "vendorId": "vendor_nordic_timber",
+      "enabled": true,
+      "agentName": "Freja Lindqvist (Nordic Timber Craft)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Nordic Timber Craft in Copenhagen, Denmark! I'm Freja Lindqvist. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Freja Lindqvist, master artisan at Nordic Timber Craft in Copenhagen, Denmark. Danish steam-bent black walnut sculptures, spline-joined gallery frames, and carved serving trays.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_soleil_orfevre": {
+      "vendorId": "vendor_soleil_orfevre",
+      "enabled": true,
+      "agentName": "Claire Beaumont (Soleil Orfèvre)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Soleil Orfèvre in Lyon, France! I'm Claire Beaumont. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Claire Beaumont, master artisan at Soleil Orfèvre in Lyon, France. Hand-forged recycled brass necklaces, 925 sterling silver cuffs, and natural emerald cabochon rings.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_atlas_loom": {
+      "vendorId": "vendor_atlas_loom",
+      "enabled": true,
+      "agentName": "Amina Mansouri (Atlas Loom Collective)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Atlas Loom Collective in Marrakech, Morocco! I'm Amina Mansouri. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Amina Mansouri, master artisan at Atlas Loom Collective in Marrakech, Morocco. Cooperative of High Atlas master weavers crafting Berber kilim rugs, alpaca throws, and macramé tapestries.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_scriptorium_carta": {
+      "vendorId": "vendor_scriptorium_carta",
+      "enabled": true,
+      "agentName": "Julian Vance (Scriptorium Carta)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Scriptorium Carta in Bath, United Kingdom! I'm Julian Vance. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Julian Vance, master artisan at Scriptorium Carta in Bath, United Kingdom. Coptic-stitched cotton rag sketchbooks, hand-pulled linocut botanical prints, and brass wax-seal stationery.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_bottega_cuoio": {
+      "vendorId": "vendor_bottega_cuoio",
+      "enabled": true,
+      "agentName": "Marco Bellini (Bottega Cuoio)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Bottega Cuoio in Siena, Italy! I'm Marco Bellini. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Marco Bellini, master artisan at Bottega Cuoio in Siena, Italy. Saddle-stitched Tuscan vegetable-tanned leather journals, bifold wallets, and solid brass key fobs.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_porto_argila": {
+      "vendorId": "vendor_porto_argila",
+      "enabled": true,
+      "agentName": "Inês Ferreira (Porto Argila Atelier)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Porto Argila Atelier in Porto, Portugal! I'm Inês Ferreira. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Inês Ferreira, master artisan at Porto Argila Atelier in Porto, Portugal. Hand-painted Portuguese majolica plates, fluted centerpiece bowls, and vitrified stoneware dinnerware.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_jaipur_handloom": {
+      "vendorId": "vendor_jaipur_handloom",
+      "enabled": true,
+      "agentName": "Aarav Sharma (Jaipur Handloom Guild)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Jaipur Handloom Guild in Jaipur, India! I'm Aarav Sharma. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Aarav Sharma, master artisan at Jaipur Handloom Guild in Jaipur, India. Organic flax linen tablecloths, punch-needle embroidered cushions, and natural indigo canvas market bags.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_aegean_stone": {
+      "vendorId": "vendor_aegean_stone",
+      "enabled": true,
+      "agentName": "Nikos Papadopoulos (Aegean Stone & Clay)",
+      "tone": "friendly",
+      "greetingMessage": "Welcome to Aegean Stone & Clay in Naxos, Greece! I'm Nikos Papadopoulos. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
+      "systemPrompt": "You are Nikos Papadopoulos, master artisan at Aegean Stone & Clay in Naxos, Greece. Cycladic marble & travertine coasters, granite-textured amphora vases, and pinched stoneware pitchers.",
+      "autoOfferDiscounts": true,
+      "maxDiscountPercent": 10,
+      "escalateKeywords": [
+        "human",
+        "manager",
+        "refund",
+        "damaged"
+      ],
+      "supportedLanguages": [
+        "en",
+        "hi",
+        "ja",
+        "es",
+        "fr",
+        "de"
+      ],
+      "updatedAt": "2026-11-18T05:23:49.343Z"
+    },
+    "vendor_1794981493676_lfc": {
+      "vendorId": "vendor_1794981493676_lfc",
+      "enabled": true,
+      "agentName": "Gend Masti AI Concierge",
+      "avatarUrl": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=200&auto=format&fit=crop&q=80",
+      "greetingMessage": "Welcome to Gend Masti! Ask about products, shipping, or live quotes in any language.",
+      "personality": "friendly",
+      "supportedLanguages": [
+        "en",
+        "es",
+        "fr",
+        "de",
+        "ja",
+        "hi",
+        "zh",
+        "ar"
+      ],
+      "responseStyle": "friendly",
+      "escalationRules": [
+        "refund",
+        "cancel",
+        "damaged",
+        "defective"
+      ],
+      "faqs": [
+        {
+          "question": "What is your shipping time?",
+          "answer": "Standard insured shipping arrives in 3-5 business days."
+        }
+      ],
+      "shippingPolicy": "Standard delivery in 3-5 business days.",
+      "returnPolicy": "7-day replacement guarantee.",
+      "warrantyInfo": "1-year standard warranty.",
+      "businessHours": {
+        "enabled": true,
+        "start": "09:00",
+        "end": "18:00",
+        "timezone": "UTC"
+      },
+      "humanTakeoverActive": false,
+      "updatedAt": "2026-11-18T05:58:13.676Z"
     }
   },
   "payments": []

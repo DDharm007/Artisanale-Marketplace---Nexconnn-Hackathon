@@ -1,301 +1,216 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSearchParams, Link, useNavigate } from 'react-router-dom';
-import { Product, Vendor, DEFAULT_CATEGORIES } from '@convocart/shared';
-import { apiRequest } from '../lib/api';
-import { ProductCard } from '../features/products/ProductCard';
-import { Skeleton } from '../components/ui/Skeleton';
+import { useSearchParams } from 'react-router-dom';
 import { usePreferencesStore } from '../stores/usePreferencesStore';
-import { useWishlistStore } from '../stores/useWishlistStore';
 import { useCartStore } from '../stores/useCartStore';
 import { useChatStore } from '../stores/useChatStore';
+import ModelViewer from '../components/ui/ModelViewer';
+import { ArtisanalProductModal } from '../components/ui/ArtisanalProductModal';
+import { StarRatingDisplay } from '../components/ui/StarRating';
+import { useReviewStore } from '../stores/useReviewStore';
+import {
+  ARTISANAL_50_CATALOG,
+  ARTISANAL_CATEGORIES,
+  ArtisanalCatalogItem,
+} from '../data/artisanalCatalog';
 import {
   SlidersHorizontal,
-  Star,
-  ChevronRight,
   LayoutGrid,
   List,
-  Heart,
-  Sparkles,
-  Tag,
-  Eye,
-  Store,
+  Search,
   MessageSquare,
-  Phone,
-  Video,
-  ShoppingBag,
-  ShieldCheck,
-  MapPin,
-  X,
-  User,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 export const ProductListingPage: React.FC = () => {
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialCategory = searchParams.get('categoryId') || '';
   const initialSearch = searchParams.get('search') || '';
 
   const { formatPrice } = usePreferencesStore();
-  const { items: wishlistItems, isInWishlist, toggleWishlist } = useWishlistStore();
   const { addItem } = useCartStore();
-  const { startConversationWithVendor, startCall } = useChatStore();
+  const { startConversationWithVendor } = useChatStore();
+  const { reviews, getProductRatingStats } = useReviewStore();
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [vendorsMap, setVendorsMap] = useState<Record<string, Vendor>>({});
-  const [total, setTotal] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-
-  // Filters & view controls
   const [selectedCategory, setSelectedCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState(initialSearch);
-  const [selectedBrand, setSelectedBrand] = useState('');
-  const [maxPrice, setMaxPrice] = useState<number>(1000);
+  const [selectedStudio, setSelectedStudio] = useState('');
+  const [maxPrice, setMaxPrice] = useState<number>(200);
   const [minRating, setMinRating] = useState<number>(0);
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('featured');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [wishlistOnly, setWishlistOnly] = useState(false);
-  const [featuredOnly, setFeaturedOnly] = useState(false);
-  const [onSaleOnly, setOnSaleOnly] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<ArtisanalCatalogItem | null>(null);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
-  // Quick-view & Seller modals
-  const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
-  const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
-
-  // Synchronize when URL searchParams change
   useEffect(() => {
     setSelectedCategory(searchParams.get('categoryId') || '');
     setSearchQuery(searchParams.get('search') || '');
   }, [searchParams]);
 
-  const fetchProductsAndVendors = async () => {
-    setIsLoading(true);
-    const params = new URLSearchParams();
-    if (selectedCategory) params.set('categoryId', selectedCategory);
-    if (searchQuery) params.set('search', searchQuery);
-    if (selectedBrand) params.set('brand', selectedBrand);
-    if (maxPrice < 1000) params.set('maxPrice', maxPrice.toString());
-    if (sortBy) params.set('sort', sortBy);
-    params.set('page', '1');
-    params.set('limit', '40');
+  const availableStudios = useMemo(
+    () => Array.from(new Set(ARTISANAL_50_CATALOG.map((p) => p.studio))),
+    []
+  );
 
-    try {
-      const [data, vendorList] = await Promise.all([
-        apiRequest<{ products: Product[]; total: number }>(`/products?${params.toString()}`),
-        apiRequest<Vendor[]>('/vendors').catch(() => [] as Vendor[]),
-      ]);
-      setProducts(data.products || []);
-      setTotal(data.total || 0);
-      const map: Record<string, Vendor> = {};
-      for (const v of vendorList || []) map[v.vendorId] = v;
-      setVendorsMap(map);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
+  const filteredItems = useMemo(() => {
+    let list = ARTISANAL_50_CATALOG.slice();
+    if (selectedCategory) {
+      list = list.filter((p) => p.category === selectedCategory);
     }
-  };
-
-  useEffect(() => {
-    void fetchProductsAndVendors();
-  }, [selectedCategory, searchQuery, selectedBrand, maxPrice, sortBy]);
-
-  const filteredProducts = useMemo(() => {
-    let list = products.slice();
-    if (minRating > 0) list = list.filter((p) => p.rating >= minRating);
-    if (wishlistOnly) list = list.filter((p) => isInWishlist(p.productId));
-    if (featuredOnly) list = list.filter((p) => p.isFeatured);
-    if (onSaleOnly) list = list.filter((p) => (p.discount || 0) > 0);
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      list = list.filter(
+        (p) =>
+          p.title.toLowerCase().includes(q) ||
+          p.studio.toLowerCase().includes(q) ||
+          p.artisanName.toLowerCase().includes(q) ||
+          p.categoryLabel.toLowerCase().includes(q)
+      );
+    }
+    if (selectedStudio) {
+      list = list.filter((p) => p.studio === selectedStudio);
+    }
+    if (maxPrice < 200) {
+      list = list.filter((p) => p.price <= maxPrice);
+    }
+    if (minRating > 0) {
+      list = list.filter((p) => getProductRatingStats(p.id).rating >= minRating);
+    }
+    if (sortBy === 'price_asc') {
+      list.sort((a, b) => a.price - b.price);
+    } else if (sortBy === 'price_desc') {
+      list.sort((a, b) => b.price - a.price);
+    } else if (sortBy === 'rating') {
+      list.sort(
+        (a, b) =>
+          getProductRatingStats(b.id).rating - getProductRatingStats(a.id).rating
+      );
+    }
     return list;
-  }, [products, minRating, wishlistOnly, featuredOnly, onSaleOnly, wishlistItems]);
-
-  const availableBrands = Array.from(new Set(products.map((p) => p.brand).filter(Boolean)));
+  }, [selectedCategory, searchQuery, selectedStudio, maxPrice, minRating, sortBy, reviews]);
 
   const handleClearFilters = () => {
     setSelectedCategory('');
     setSearchQuery('');
-    setSelectedBrand('');
-    setMaxPrice(1000);
+    setSelectedStudio('');
+    setMaxPrice(200);
     setMinRating(0);
-    setWishlistOnly(false);
-    setFeaturedOnly(false);
-    setOnSaleOnly(false);
-    setSortBy('newest');
+    setSortBy('featured');
     setSearchParams({});
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 pb-20">
-      {/* BREADCRUMB STRIP */}
-      <div className="bg-[#0c0c0e] border-b border-zinc-800/80 px-4 py-2.5 text-xs text-zinc-400">
-        <div className="mx-auto max-w-7xl flex items-center justify-between gap-2">
-          <div className="flex items-center gap-1.5">
-            <Link to="/shop" className="hover:text-white">
-              Home
-            </Link>
-            <ChevronRight className="h-3 w-3" />
-            <span className="font-semibold text-zinc-200">Marketplace Catalog</span>
-            {selectedCategory && (
-              <>
-                <ChevronRight className="h-3 w-3" />
-                <span className="text-white font-bold capitalize">
-                  {DEFAULT_CATEGORIES.find((c) => c.id === selectedCategory)?.name || selectedCategory}
-                </span>
-              </>
-            )}
-          </div>
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-[11px] text-emerald-400 font-semibold">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Nexconn 1-on-1 Seller Chat & Call Enabled
-          </span>
-        </div>
-      </div>
-
-      {/* HORIZONTAL DEPARTMENT PILLS */}
-      <div className="border-b border-zinc-800/60 bg-[#0d0d11] px-4 py-3">
-        <div className="mx-auto max-w-7xl flex items-center gap-2 overflow-x-auto no-scrollbar">
-          <button
-            onClick={() => {
-              setSelectedCategory('');
-              setSearchParams({});
-            }}
-            className={cn(
-              'shrink-0 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors',
-              selectedCategory === ''
-                ? 'bg-white text-black'
-                : 'border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white'
-            )}
-          >
-            All Categories
-          </button>
-          {DEFAULT_CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setSelectedCategory(cat.id);
-                setSearchParams({ categoryId: cat.id });
-              }}
-              className={cn(
-                'shrink-0 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors',
-                selectedCategory === cat.id
-                  ? 'bg-white text-black'
-                  : 'border border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white'
-              )}
-            >
-              {cat.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        {/* TOP BAR */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-zinc-800">
+    <div className="min-h-screen bg-[#ECEAE4] text-[#171717]">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
+        {/* ── TOP BAR ──────────────────────────────────────────────── */}
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-[#E4DEC8]">
           <div>
-            <h1 className="text-xl sm:text-2xl font-black text-white">
-              {searchQuery ? `Search Results for "${searchQuery}"` : 'Verified Multi-Vendor Marketplace'}
+            <h1
+              className="text-3xl sm:text-4xl font-normal text-[#171717]"
+              style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+            >
+              {searchQuery ? `Results for "${searchQuery}"` : 'Curated Marketplace'}
             </h1>
-            <p className="text-xs text-zinc-400 mt-0.5">
-              Showing {filteredProducts.length} of {total} curated items with instant translated seller chat & calls
+            <p className="text-xs text-[#686359] mt-1">
+              Showing {filteredItems.length} of {ARTISANAL_50_CATALOG.length} handcrafted creations · Click any piece to inspect details, chat with the artisan, or purchase
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
-            {/* Quick Highlight Toggles */}
+            {/* Mobile Filter Toggle */}
             <button
-              onClick={() => setFeaturedOnly((v) => !v)}
-              className={cn(
-                'inline-flex items-center gap-1 rounded-xl border px-3 py-1.5 text-xs font-bold transition-colors',
-                featuredOnly
-                  ? 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300'
-                  : 'border-zinc-800 bg-[#121215] text-zinc-400 hover:text-white'
-              )}
+              onClick={() => setShowMobileFilters(!showMobileFilters)}
+              className="lg:hidden flex items-center gap-1.5 rounded-full border border-[#E4DEC8] bg-white px-3.5 py-1.5 text-xs font-medium text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
             >
-              <Sparkles className="h-3.5 w-3.5" /> Featured
-            </button>
-            <button
-              onClick={() => setOnSaleOnly((v) => !v)}
-              className={cn(
-                'inline-flex items-center gap-1 rounded-xl border px-3 py-1.5 text-xs font-bold transition-colors',
-                onSaleOnly
-                  ? 'border-amber-500/40 bg-amber-500/15 text-amber-300'
-                  : 'border-zinc-800 bg-[#121215] text-zinc-400 hover:text-white'
-              )}
-            >
-              <Tag className="h-3.5 w-3.5" /> On Sale
-            </button>
-            <button
-              onClick={() => setWishlistOnly((v) => !v)}
-              className={cn(
-                'inline-flex items-center gap-1 rounded-xl border px-3 py-1.5 text-xs font-bold transition-colors',
-                wishlistOnly
-                  ? 'border-rose-500/40 bg-rose-500/15 text-rose-300'
-                  : 'border-zinc-800 bg-[#121215] text-zinc-400 hover:text-white'
-              )}
-            >
-              <Heart className="h-3.5 w-3.5" /> Wishlist ({wishlistItems.length})
+              <SlidersHorizontal className="h-3.5 w-3.5 text-[#D6B875]" />
+              <span>
+                Filters
+                {(selectedCategory ? 1 : 0) +
+                  (selectedStudio ? 1 : 0) +
+                  (maxPrice < 200 ? 1 : 0) +
+                  (minRating > 0 ? 1 : 0) >
+                0
+                  ? ` (${
+                      (selectedCategory ? 1 : 0) +
+                      (selectedStudio ? 1 : 0) +
+                      (maxPrice < 200 ? 1 : 0) +
+                      (minRating > 0 ? 1 : 0)
+                    })`
+                  : ''}
+              </span>
             </button>
 
-            {/* View Mode Toggle (Grid / List) */}
-            <div className="flex items-center rounded-xl border border-zinc-800 bg-[#121215] p-0.5">
+            {/* Search input */}
+            <div className="relative">
+              <Search className="h-3.5 w-3.5 text-[#8C867A] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search creations or studios..."
+                className="rounded-full border border-[#E4DEC8] bg-white pl-8 pr-3.5 py-1.5 text-xs text-[#171717] placeholder:text-[#8C867A] focus:border-[#171717] focus:outline-none w-44 xs:w-52 sm:w-60"
+              />
+            </div>
+
+            {/* View toggle */}
+            <div className="flex items-center rounded-full border border-[#E4DEC8] bg-white p-0.5">
               <button
                 onClick={() => setViewMode('grid')}
                 className={cn(
-                  'rounded-lg p-1.5 transition-colors',
-                  viewMode === 'grid' ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'
+                  'rounded-full p-1.5 transition-colors cursor-pointer',
+                  viewMode === 'grid'
+                    ? 'bg-[#171717] text-white'
+                    : 'text-[#8C867A] hover:text-[#171717]'
                 )}
-                title="Grid View"
               >
                 <LayoutGrid className="h-4 w-4" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
                 className={cn(
-                  'rounded-lg p-1.5 transition-colors',
-                  viewMode === 'list' ? 'bg-zinc-800 text-white' : 'text-zinc-500 hover:text-zinc-300'
+                  'rounded-full p-1.5 transition-colors cursor-pointer',
+                  viewMode === 'list'
+                    ? 'bg-[#171717] text-white'
+                    : 'text-[#8C867A] hover:text-[#171717]'
                 )}
-                title="List View"
               >
                 <List className="h-4 w-4" />
               </button>
             </div>
 
-            <div className="flex items-center gap-2">
-              <label className="text-xs font-semibold text-zinc-400">Sort:</label>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="rounded-xl border border-zinc-800 bg-[#121215] px-3 py-1.5 text-xs font-bold text-zinc-200 focus:border-zinc-700 focus:outline-none"
-              >
-                <option value="newest">Featured & Newest</option>
-                <option value="price_asc">Price: Low to High</option>
-                <option value="price_desc">Price: High to Low</option>
-                <option value="rating">Customer Rating</option>
-              </select>
-            </div>
+            {/* Sort */}
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="rounded-full border border-[#E4DEC8] bg-white px-3.5 py-1.5 text-xs font-medium text-[#171717] focus:border-[#171717] focus:outline-none"
+            >
+              <option value="featured">Featured Collection</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+              <option value="rating">Top Rated</option>
+            </select>
           </div>
         </div>
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* LEFT: FILTERS SIDEBAR */}
-          <div className="lg:col-span-1 space-y-5">
-            <div className="bg-[#121215] p-5 rounded-2xl border border-zinc-800/80 shadow-xs space-y-5">
-              <div className="flex items-center justify-between border-b border-zinc-800 pb-3">
-                <h3 className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white">
-                  <SlidersHorizontal className="h-4 w-4 text-zinc-400" /> Filters
+          {/* ── FILTERS SIDEBAR ──────────────────────────────────────── */}
+          <div className={cn('lg:col-span-1 space-y-5', showMobileFilters ? 'block' : 'hidden lg:block')}>
+            <div className="rounded-2xl border border-[#E4DEC8] bg-white p-5 shadow-xs space-y-5 sticky top-20">
+              <div className="flex items-center justify-between border-b border-[#E4DEC8] pb-3">
+                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#171717]">
+                  <SlidersHorizontal className="h-4 w-4 text-[#D6B875]" /> Filters
                 </h3>
                 <button
                   onClick={handleClearFilters}
-                  className="text-xs font-bold text-zinc-400 hover:text-white"
+                  className="text-xs font-semibold text-[#8C867A] hover:text-[#171717] transition-colors cursor-pointer"
                 >
-                  Clear All
+                  Clear all
                 </button>
               </div>
 
-              {/* Department Categories */}
+              {/* Categories */}
               <div>
-                <label className="text-xs font-black uppercase tracking-wider text-zinc-300 mb-2 block">
-                  Department
+                <label className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-2 block">
+                  Craft Department
                 </label>
                 <div className="space-y-1">
                   <button
@@ -304,15 +219,15 @@ export const ProductListingPage: React.FC = () => {
                       setSearchParams({});
                     }}
                     className={cn(
-                      'w-full text-left rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors',
+                      'w-full text-left rounded-xl px-3 py-2 text-xs font-medium transition-colors cursor-pointer',
                       selectedCategory === ''
-                        ? 'bg-zinc-800 text-white font-bold'
-                        : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200'
+                        ? 'bg-[#F5F1E8] text-[#171717] font-semibold'
+                        : 'text-[#686359] hover:bg-[#FAF8F3]'
                     )}
                   >
-                    All Departments
+                    All 50 Creations
                   </button>
-                  {DEFAULT_CATEGORIES.map((cat) => (
+                  {ARTISANAL_CATEGORIES.map((cat) => (
                     <button
                       key={cat.id}
                       onClick={() => {
@@ -320,10 +235,10 @@ export const ProductListingPage: React.FC = () => {
                         setSearchParams({ categoryId: cat.id });
                       }}
                       className={cn(
-                        'w-full text-left rounded-lg px-2.5 py-1.5 text-xs font-medium transition-colors',
+                        'w-full text-left rounded-xl px-3 py-2 text-xs font-medium transition-colors cursor-pointer',
                         selectedCategory === cat.id
-                          ? 'bg-zinc-800 text-white font-bold'
-                          : 'text-zinc-400 hover:bg-zinc-800/50 hover:text-zinc-200'
+                          ? 'bg-[#F5F1E8] text-[#171717] font-semibold'
+                          : 'text-[#686359] hover:bg-[#FAF8F3]'
                       )}
                     >
                       {cat.name}
@@ -332,413 +247,270 @@ export const ProductListingPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Price Filter */}
-              <div className="border-t border-zinc-800 pt-4">
-                <div className="flex items-center justify-between text-xs font-black text-zinc-300 mb-2">
+              {/* Price */}
+              <div className="border-t border-[#E4DEC8] pt-4">
+                <div className="flex items-center justify-between text-xs font-bold text-[#8C867A] mb-2">
                   <span className="uppercase tracking-wider">Max Price</span>
-                  <span className="text-white">{formatPrice(maxPrice)}</span>
+                  <span className="font-semibold text-[#171717]">{formatPrice(maxPrice)}</span>
                 </div>
                 <input
                   type="range"
-                  min="50"
-                  max="1000"
-                  step="25"
+                  min="20"
+                  max="200"
+                  step="5"
                   value={maxPrice}
                   onChange={(e) => setMaxPrice(Number(e.target.value))}
-                  className="w-full accent-white cursor-pointer"
+                  className="w-full cursor-pointer accent-[#D6B875]"
                 />
               </div>
 
               {/* Ratings */}
-              <div className="border-t border-zinc-800 pt-4">
-                <label className="text-xs font-black uppercase tracking-wider text-zinc-300 mb-2 block">
-                  Customer Ratings
+              <div className="border-t border-[#E4DEC8] pt-4">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-2 block">
+                  Star Rating
                 </label>
-                <div className="space-y-1.5">
-                  {[4, 3, 2].map((r) => (
+                <div className="space-y-1">
+                  {[5.0, 4.5, 4.0, 3.5].map((r) => (
                     <button
                       key={r}
                       onClick={() => setMinRating(minRating === r ? 0 : r)}
                       className={cn(
-                        'flex items-center gap-1.5 w-full text-left rounded-lg px-2 py-1 text-xs transition-colors',
-                        minRating === r ? 'bg-zinc-800 font-bold text-white' : 'text-zinc-400 hover:bg-zinc-800/50'
+                        'flex items-center justify-between w-full text-left rounded-xl px-2.5 py-1.5 text-xs transition-colors cursor-pointer',
+                        minRating === r
+                          ? 'bg-[#F5F1E8] text-[#171717] font-semibold'
+                          : 'text-[#686359] hover:bg-[#FAF8F3]'
                       )}
                     >
-                      <div className="flex items-center text-amber-400">
-                        {Array.from({ length: 5 }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className={cn('h-3.5 w-3.5', i < r ? 'fill-amber-400' : 'text-zinc-700')}
-                          />
-                        ))}
-                      </div>
-                      <span className="text-zinc-300 font-semibold">& Up</span>
+                      <StarRatingDisplay rating={r} showNumeric={false} size="xs" />
+                      <span>{r === 5.0 ? '5.0 ★ Only' : `${r.toFixed(1)} ★ & Up`}</span>
                     </button>
                   ))}
                 </div>
               </div>
 
-              {/* Brands */}
-              {availableBrands.length > 0 && (
-                <div className="border-t border-zinc-800 pt-4">
-                  <label className="text-xs font-black uppercase tracking-wider text-zinc-300 mb-2 block">
-                    Brands & Studios
-                  </label>
-                  <div className="space-y-1">
-                    {availableBrands.map((brand) => (
-                      <label key={brand} className="flex items-center gap-2 text-xs text-zinc-300 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={selectedBrand === brand}
-                          onChange={() => setSelectedBrand(selectedBrand === brand ? '' : brand)}
-                          className="accent-white rounded"
-                        />
-                        <span>{brand}</span>
-                      </label>
-                    ))}
-                  </div>
+              {/* Studios */}
+              <div className="border-t border-[#E4DEC8] pt-4">
+                <label className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-2 block">
+                  Artisan Studio
+                </label>
+                <div className="space-y-1.5 max-h-48 overflow-y-auto">
+                  {availableStudios.map((studio) => (
+                    <label
+                      key={studio}
+                      className="flex items-center gap-2 text-xs text-[#686359] cursor-pointer hover:text-[#171717]"
+                    >
+                      <input
+                        type="checkbox"
+                        checked={selectedStudio === studio}
+                        onChange={() =>
+                          setSelectedStudio(selectedStudio === studio ? '' : studio)
+                        }
+                        className="rounded border-[#E4DEC8] accent-[#171717]"
+                      />
+                      <span>{studio}</span>
+                    </label>
+                  ))}
                 </div>
-              )}
+              </div>
             </div>
           </div>
 
-          {/* RIGHT: PRODUCTS GRID OR LIST */}
+          {/* ── MINIMAL CLICKABLE 3D PRODUCTS GRID OR LIST ────────────── */}
           <div className="lg:col-span-3">
-            {isLoading ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                {Array.from({ length: 6 }).map((_, i) => (
-                  <div key={i} className="rounded-2xl border border-zinc-800 bg-[#121215] p-4 space-y-3">
-                    <Skeleton className="aspect-square w-full rounded-xl bg-zinc-800" />
-                    <Skeleton className="h-4 w-3/4 bg-zinc-800" />
-                    <Skeleton className="h-4 w-1/2 bg-zinc-800" />
-                    <Skeleton className="h-9 w-full rounded-xl bg-zinc-800" />
-                  </div>
-                ))}
-              </div>
-            ) : filteredProducts.length === 0 ? (
-              <div className="flex flex-col items-center justify-center rounded-2xl border border-zinc-800 bg-[#121215] p-12 text-center">
-                <h3 className="text-base font-bold text-white">
-                  {products.length === 0 ? 'No Seller Products Uploaded Yet' : 'No products match your filters'}
+            {filteredItems.length === 0 ? (
+              <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#E4DEC8] bg-white p-12 text-center">
+                <h3
+                  className="text-xl font-normal text-[#171717]"
+                  style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                >
+                  No creations match your criteria
                 </h3>
-                <p className="text-xs text-zinc-400 max-w-sm mt-1 mb-4">
-                  {products.length === 0
-                    ? 'Only verified seller-uploaded products are listed here. Sign in as a Seller to publish your first product.'
-                    : 'Try adjusting your search criteria, widening price limits, or clearing applied filters.'}
+                <p className="text-xs text-[#686359] max-w-sm mt-1 mb-4">
+                  Try adjusting your search criteria, price range, or clearing active filters.
                 </p>
-                {products.length === 0 ? (
-                  <Link
-                    to="/auth"
-                    className="rounded-full bg-[#00a884] px-5 py-2 text-xs font-bold text-[#111b21] hover:bg-[#029676]"
-                  >
-                    Seller Sign In / Upload Product
-                  </Link>
-                ) : (
-                  <button
-                    onClick={handleClearFilters}
-                    className="rounded-full bg-white px-5 py-2 text-xs font-bold text-black hover:bg-zinc-200"
-                  >
-                    Reset All Filters
-                  </button>
-                )}
+                <button
+                  onClick={handleClearFilters}
+                  className="rounded-full bg-[#171717] px-6 py-2.5 text-xs font-semibold text-white hover:bg-black transition-colors cursor-pointer"
+                >
+                  Reset Filters
+                </button>
               </div>
             ) : viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-                {filteredProducts.map((p) => (
-                  <div key={p.productId} className="flex flex-col">
-                    <ProductCard product={p} />
-                    <div className="mt-1.5 flex items-center justify-between px-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8">
+                {filteredItems.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedItem(item)}
+                    className="flex flex-col w-full cursor-pointer group"
+                  >
+                    {/* 3D Model Box — pointer-events-none so cursor is always a click pointer, never a grabber */}
+                    <div className="w-full h-[248px] xl:h-[264px] bg-white overflow-hidden relative transition-shadow duration-300 group-hover:shadow-md">
+                      <div className="w-full h-full pointer-events-none">
+                        <ModelViewer
+                          url={item.modelUrl}
+                          textureUrl={item.textureUrl}
+                          textureRepeat={item.textureRepeat}
+                          bumpScale={item.bumpScale}
+                          width="100%"
+                          height="100%"
+                          environment="studio"
+                          environmentIntensity={0.45}
+                          exposure={0.85}
+                          autoRotate
+                          autoRotateSpeed={0.28}
+                          dragRotate={false}
+                          turntable={false}
+                          hoverTilt={0}
+                          float={0.16}
+                          zoom={false}
+                          shadow
+                          shadowOpacity={0.38}
+                          intro="fade"
+                          startAngle={item.startAngle}
+                          tilt={item.tilt}
+                          fit={item.fit}
+                          offsetY={item.offsetY ?? 0}
+                          className="w-full h-full"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Minimal Title + Price Row */}
+                    <div className="mt-2.5 flex items-center justify-between text-[13px]">
+                      <span className="font-normal text-[#2B2B2B] group-hover:text-black transition-colors truncate pr-2">
+                        {item.title}
+                      </span>
+                      <span className="font-semibold text-[#171717] shrink-0">
+                        {item.priceFormatted}
+                      </span>
+                    </div>
+
+                    {/* Star Rating + Studio Name + Quick Chat Trigger */}
+                    <div className="mt-1 flex items-center justify-between text-[11px] text-[#7A7872]">
+                      <div className="flex items-center gap-2 min-w-0">
+                        <StarRatingDisplay
+                          rating={getProductRatingStats(item.id).rating}
+                          size="xs"
+                        />
+                        <span className="truncate">· {item.studio}</span>
+                      </div>
                       <button
-                        onClick={() => setQuickViewProduct(p)}
-                        className="inline-flex items-center gap-1 text-[11px] font-semibold text-zinc-400 hover:text-white"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          void startConversationWithVendor(
+                            item.vendorId,
+                            item.id,
+                            undefined,
+                            item.title,
+                            item.textureUrl || item.vendorAvatar
+                          );
+                        }}
+                        className="inline-flex items-center gap-1 text-[#171717] hover:text-[#D6B875] font-medium transition-colors shrink-0 cursor-pointer ml-1"
+                        title={`Chat with ${item.artisanName}`}
                       >
-                        <Eye className="h-3 w-3 text-emerald-400" /> Quick View
+                        <MessageSquare className="h-3 w-3" /> Chat
                       </button>
-                      {vendorsMap[p.vendorId] && (
-                        <button
-                          onClick={() => setSelectedVendor(vendorsMap[p.vendorId])}
-                          className="inline-flex items-center gap-1 text-[11px] font-semibold text-sky-400 hover:text-sky-300"
-                        >
-                          <Store className="h-3 w-3" /> {vendorsMap[p.vendorId].businessName.split(' ')[0]}
-                        </button>
-                      )}
                     </div>
                   </div>
                 ))}
               </div>
             ) : (
-              /* LIST VIEW */
               <div className="space-y-4">
-                {filteredProducts.map((p) => {
-                  const discounted = p.price * (1 - (p.discount || 0) / 100);
-                  const seller = vendorsMap[p.vendorId];
-                  const faved = isInWishlist(p.productId);
-                  return (
-                    <div
-                      key={p.productId}
-                      className="rounded-2xl border border-zinc-800 bg-[#121215] p-4 flex flex-col sm:flex-row gap-4 hover:border-zinc-700 transition-colors"
-                    >
-                      <Link
-                        to={`/shop/products/${p.productId}`}
-                        className="sm:w-44 aspect-square rounded-xl bg-black border border-zinc-800 overflow-hidden shrink-0 flex items-center justify-center"
-                      >
-                        <img src={p.images[0]} alt={p.title} className="h-full w-full object-contain p-3" />
-                      </Link>
-                      <div className="flex-1 flex flex-col justify-between gap-3">
-                        <div>
-                          <div className="flex items-center justify-between gap-2">
-                            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-400">
-                              {p.brand} · {p.categoryName}
-                            </span>
-                            <div className="flex items-center gap-1 text-xs text-amber-400 font-bold">
-                              <Star className="h-3.5 w-3.5 fill-amber-400" /> {p.rating}
-                              <span className="text-zinc-500 font-normal">({p.reviewCount})</span>
-                            </div>
-                          </div>
-                          <Link
-                            to={`/shop/products/${p.productId}`}
-                            className="text-base font-bold text-white hover:underline mt-1 block"
-                          >
-                            {p.title}
-                          </Link>
-                          <p className="text-xs text-zinc-400 mt-1 line-clamp-2">{p.description}</p>
+                {filteredItems.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => setSelectedItem(item)}
+                    className="bg-white p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-5 cursor-pointer group hover:shadow-md transition-shadow rounded-2xl border border-[#E4DEC8]"
+                  >
+                    <div className="flex flex-col xs:flex-row items-start xs:items-center gap-4 min-w-0 flex-1">
+                      <div className="w-28 h-28 xs:w-32 xs:h-32 bg-white overflow-hidden shrink-0 relative pointer-events-none rounded-xl">
+                        <ModelViewer
+                          url={item.modelUrl}
+                          textureUrl={item.textureUrl}
+                          textureRepeat={item.textureRepeat}
+                          bumpScale={item.bumpScale}
+                          width="100%"
+                          height="100%"
+                          environment="studio"
+                          environmentIntensity={0.45}
+                          exposure={0.85}
+                          autoRotate
+                          autoRotateSpeed={0.28}
+                          dragRotate={false}
+                          zoom={false}
+                          shadow
+                          shadowOpacity={0.35}
+                          intro="fade"
+                          startAngle={item.startAngle}
+                          tilt={item.tilt}
+                          fit={item.fit}
+                          offsetY={item.offsetY ?? 0}
+                          className="w-full h-full"
+                        />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-[11px] font-semibold uppercase tracking-wider text-[#8C867A]">
+                            {item.studio} · {item.artisanName}
+                          </span>
+                          <StarRatingDisplay
+                            rating={getProductRatingStats(item.id).rating}
+                            count={getProductRatingStats(item.id).count}
+                            size="xs"
+                          />
                         </div>
-
-                        <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-zinc-800/80">
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-lg font-black text-white">{formatPrice(discounted)}</span>
-                            {p.discount > 0 && (
-                              <span className="text-xs text-zinc-500 line-through">{formatPrice(p.price)}</span>
-                            )}
-                          </div>
-
-                          <div className="flex flex-wrap items-center gap-2">
-                            <button
-                              onClick={() => toggleWishlist(p)}
-                              className={cn(
-                                'rounded-xl border p-2 transition-colors',
-                                faved
-                                  ? 'border-rose-500/40 bg-rose-500/15 text-rose-400'
-                                  : 'border-zinc-800 bg-zinc-900 text-zinc-400 hover:text-white'
-                              )}
-                              title="Toggle Wishlist"
-                            >
-                              <Heart className={cn('h-3.5 w-3.5', faved && 'fill-rose-400')} />
-                            </button>
-                            <button
-                              onClick={() => setQuickViewProduct(p)}
-                              className="rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-zinc-200 hover:bg-zinc-800 inline-flex items-center gap-1"
-                            >
-                              <Eye className="h-3.5 w-3.5 text-emerald-400" /> Quick View
-                            </button>
-                            {seller && (
-                              <button
-                                onClick={() => setSelectedVendor(seller)}
-                                className="rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-1.5 text-xs font-semibold text-sky-300 hover:bg-zinc-800 inline-flex items-center gap-1"
-                              >
-                                <Store className="h-3.5 w-3.5" /> Seller
-                              </button>
-                            )}
-                            <button
-                              onClick={() => void startConversationWithVendor(p.vendorId, p.productId)}
-                              className="rounded-xl bg-[#00a884] px-3 py-1.5 text-xs font-bold text-[#111b21] hover:bg-[#029676] inline-flex items-center gap-1"
-                            >
-                              <MessageSquare className="h-3.5 w-3.5" /> Chat
-                            </button>
-                            <button
-                              onClick={() => void addItem(p.productId, 1)}
-                              className="rounded-xl bg-white px-3.5 py-1.5 text-xs font-extrabold text-black hover:bg-zinc-200 inline-flex items-center gap-1"
-                            >
-                              <ShoppingBag className="h-3.5 w-3.5" /> Add
-                            </button>
-                          </div>
-                        </div>
+                        <h3 className="text-base font-medium text-[#171717] group-hover:text-[#D6B875] transition-colors mt-0.5">
+                          {item.title}
+                        </h3>
+                        <p className="text-xs text-[#686359] mt-1 line-clamp-2 max-w-xl">
+                          {item.description}
+                        </p>
                       </div>
                     </div>
-                  );
-                })}
+                    <div className="flex sm:flex-col items-end justify-between gap-2 shrink-0">
+                      <span className="text-base font-semibold text-[#171717]">
+                        {item.priceFormatted}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            void startConversationWithVendor(
+                              item.vendorId,
+                              item.id,
+                              undefined,
+                              item.title,
+                              item.textureUrl || item.vendorAvatar
+                            );
+                          }}
+                          className="rounded-full border border-[#E4DEC8] px-3 py-1 text-xs font-medium text-[#171717] hover:border-[#171717] inline-flex items-center gap-1 cursor-pointer"
+                        >
+                          <MessageSquare className="h-3 w-3 text-[#D6B875]" /> Chat
+                        </button>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            void addItem(item.id, 1);
+                          }}
+                          className="rounded-full bg-[#171717] px-3.5 py-1 text-xs font-semibold text-white hover:bg-black cursor-pointer"
+                        >
+                          + Add
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* QUICK-VIEW MODAL */}
-      {quickViewProduct && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-2xl rounded-3xl border border-zinc-800 bg-[#141418] p-6 text-zinc-100 shadow-2xl">
-            <div className="flex items-start justify-between gap-4 mb-4">
-              <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">
-                  {quickViewProduct.brand} · {quickViewProduct.categoryName || 'Featured'}
-                </span>
-                <h3 className="text-xl font-bold text-white mt-0.5">{quickViewProduct.title}</h3>
-              </div>
-              <button
-                onClick={() => setQuickViewProduct(null)}
-                className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="aspect-square overflow-hidden rounded-2xl border border-zinc-800 bg-black flex items-center justify-center">
-                <img
-                  src={quickViewProduct.images[0]}
-                  alt={quickViewProduct.title}
-                  className="h-full w-full object-contain p-4"
-                />
-              </div>
-              <div className="flex flex-col justify-between space-y-4">
-                <div className="space-y-3">
-                  <div className="flex items-baseline gap-2.5">
-                    <span className="text-2xl font-black text-white">
-                      {formatPrice(
-                        quickViewProduct.price * (1 - (quickViewProduct.discount || 0) / 100)
-                      )}
-                    </span>
-                    {quickViewProduct.discount > 0 && (
-                      <span className="text-xs text-zinc-500 line-through">
-                        {formatPrice(quickViewProduct.price)}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-zinc-400 leading-relaxed">
-                    {quickViewProduct.description}
-                  </p>
-                  <div className="space-y-1 rounded-xl border border-zinc-800 bg-zinc-900/70 p-3 text-[11px]">
-                    {Object.entries(quickViewProduct.specifications || {})
-                      .slice(0, 4)
-                      .map(([k, v]) => (
-                        <div key={k} className="flex justify-between gap-2">
-                          <span className="text-zinc-500">{k}</span>
-                          <span className="text-zinc-200 font-medium text-right">{String(v)}</span>
-                        </div>
-                      ))}
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="grid grid-cols-2 gap-2">
-                    <button
-                      onClick={async () => {
-                        await addItem(quickViewProduct.productId, 1);
-                        setQuickViewProduct(null);
-                      }}
-                      className="rounded-xl bg-white px-4 py-2.5 text-xs font-extrabold text-black hover:bg-zinc-200 flex items-center justify-center gap-1.5"
-                    >
-                      <ShoppingBag className="h-3.5 w-3.5" /> Add to Cart
-                    </button>
-                    <button
-                      onClick={() => {
-                        const prod = quickViewProduct;
-                        setQuickViewProduct(null);
-                        void startConversationWithVendor(prod.vendorId, prod.productId);
-                      }}
-                      className="rounded-xl bg-[#00a884] px-4 py-2.5 text-xs font-bold text-[#111b21] hover:bg-[#029676] flex items-center justify-center gap-1.5"
-                    >
-                      <MessageSquare className="h-3.5 w-3.5" /> Ask Seller
-                    </button>
-                  </div>
-                  <button
-                    onClick={() => {
-                      const id = quickViewProduct.productId;
-                      setQuickViewProduct(null);
-                      navigate(`/shop/products/${id}`);
-                    }}
-                    className="w-full rounded-xl border border-zinc-700 py-2 text-xs font-semibold text-zinc-300 hover:bg-zinc-800"
-                  >
-                    Open Full Product Page
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* VERIFIED SELLER PROFILE MODAL */}
-      {selectedVendor && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-lg rounded-3xl border border-zinc-800 bg-[#141418] p-6 text-zinc-100 shadow-2xl space-y-5">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-center gap-3.5">
-                <img
-                  src={selectedVendor.logo}
-                  alt={selectedVendor.businessName}
-                  className="h-14 w-14 rounded-2xl object-cover ring-2 ring-emerald-500/40"
-                />
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <h3 className="text-lg font-bold text-white">{selectedVendor.businessName}</h3>
-                    <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                  </div>
-                  <p className="text-xs text-zinc-400">
-                    ★ {selectedVendor.rating} ({selectedVendor.reviewCount} verified reviews) ·{' '}
-                    <span className="text-emerald-400 capitalize">{selectedVendor.availability}</span>
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => setSelectedVendor(null)}
-                className="rounded-lg p-1.5 text-zinc-400 hover:bg-zinc-800 hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            <p className="text-xs text-zinc-300 leading-relaxed">{selectedVendor.description}</p>
-
-            <div className="space-y-2 rounded-2xl border border-zinc-800 bg-zinc-900/70 p-4 text-xs">
-              <div>
-                <span className="font-bold text-white">Shipping Policy:</span>{' '}
-                <span className="text-zinc-400">{selectedVendor.businessPolicies?.shipping}</span>
-              </div>
-              <div>
-                <span className="font-bold text-white">Returns:</span>{' '}
-                <span className="text-zinc-400">{selectedVendor.businessPolicies?.returns}</span>
-              </div>
-              <div>
-                <span className="font-bold text-white">Warranty:</span>{' '}
-                <span className="text-zinc-400">{selectedVendor.businessPolicies?.warranty}</span>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={() => {
-                  const v = selectedVendor;
-                  setSelectedVendor(null);
-                  void startConversationWithVendor(v.vendorId);
-                }}
-                className="rounded-xl bg-[#00a884] px-3 py-2.5 text-xs font-bold text-[#111b21] hover:bg-[#029676] flex items-center justify-center gap-1.5"
-              >
-                <MessageSquare className="h-3.5 w-3.5" /> 1-on-1 Chat
-              </button>
-              <button
-                onClick={() => {
-                  const v = selectedVendor;
-                  setSelectedVendor(null);
-                  startCall(v.businessName, v.logo, false);
-                }}
-                className="rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-xs font-bold text-emerald-300 hover:bg-zinc-800 flex items-center justify-center gap-1.5"
-              >
-                <Phone className="h-3.5 w-3.5" /> Voice Call
-              </button>
-              <button
-                onClick={() => {
-                  const v = selectedVendor;
-                  setSelectedVendor(null);
-                  startCall(v.businessName, v.logo, true);
-                }}
-                className="rounded-xl border border-zinc-700 bg-zinc-900 px-3 py-2.5 text-xs font-bold text-sky-300 hover:bg-zinc-800 flex items-center justify-center gap-1.5"
-              >
-                <Video className="h-3.5 w-3.5" /> Video Call
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      {/* ── PRODUCT DETAIL POP-UP MODAL ──────────────────────────────── */}
+      <ArtisanalProductModal
+        item={selectedItem}
+        onClose={() => setSelectedItem(null)}
+      />
     </div>
   );
 };

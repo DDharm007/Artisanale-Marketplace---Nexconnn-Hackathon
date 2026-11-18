@@ -2,37 +2,152 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── BLACK + IVORY + GOLD LUXURY DESIGN SYSTEM ───────────────────────── */
+:root {
+  --primary: #171717;
+  --accent: #D6B875;
+  --accent-hover: #C5A45E;
+  --accent-light: #F7EFCF;
+  --bg-ivory: #ECEAE4;
+  --surface-card: #FFFFFF;
+  --border-ivory: #E4DEC8;
+  --text-primary: #171717;
+  --text-muted: #686359;
+  --text-soft: #8C867A;
+
+  --font-serif: "Instrument Serif", Georgia, serif;
+  --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
 @layer base {
   body {
-    @apply min-h-screen bg-[#09090b] text-zinc-100 antialiased;
-    color-scheme: dark;
-  }
-
-  /* Ensure form controls inside white/light surface cards always render dark readable text */
-  :is(.bg-white, .bg-slate-50, .bg-slate-100)
-    :is(input, select, textarea):not([class*="bg-zinc-"]):not([class*="bg-slate-8"]):not([class*="bg-slate-9"]):not([class*="bg-[#"]) {
-    color: #0f172a;
+    font-family: var(--font-sans);
+    background-color: var(--bg-ivory);
+    color: var(--text-primary);
+    @apply min-h-screen antialiased;
     color-scheme: light;
+    overflow-wrap: break-word;
+    min-inline-size: 320px;
   }
 
-  :is(.bg-white, .bg-slate-50, .bg-slate-100)
-    :is(input, textarea):not([class*="bg-zinc-"]):not([class*="bg-slate-8"]):not([class*="bg-slate-9"]):not([class*="bg-[#"])::placeholder {
-    color: #94a3b8;
+  /* Responsive media elements never exceed their container */
+  img, video, canvas {
+    max-inline-size: 100%;
+    block-size: auto;
+  }
+
+  /* Prevent long links or code from blowing out flex items or viewports */
+  :where(a, code) {
+    overflow-wrap: anywhere;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: var(--font-serif);
+    text-wrap: balance;
+  }
+
+  p, li {
+    text-wrap: pretty;
+  }
+
+  input, select, textarea {
+    color: var(--text-primary);
+    color-scheme: light;
+    font-family: var(--font-sans);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-soft);
   }
 }
 
-/* Custom subtle dark scrollbars */
+/* Override any legacy brand-* or purple utility classes to Artisanale Black + Gold + Ivory */
+.bg-brand-600,
+.bg-brand-500,
+.hover\:bg-brand-700:hover,
+.hover\:bg-brand-600:hover {
+  background-color: #171717 !important;
+  color: #D6B875 !important;
+}
+
+.bg-brand-50,
+.bg-brand-50\/70,
+.bg-brand-50\/50,
+.bg-brand-50\/40,
+.bg-brand-100 {
+  background-color: #F5F1E8 !important;
+}
+
+.text-brand-600,
+.text-brand-700,
+.text-brand-500,
+.hover\:text-brand-600:hover {
+  color: #171717 !important;
+}
+
+.border-brand-600,
+.border-brand-500 {
+  border-color: #171717 !important;
+}
+
+.border-brand-100,
+.border-brand-200,
+.ring-brand-300 {
+  border-color: #E4DEC8 !important;
+  --tw-ring-color: #D6B875 !important;
+}
+
+.bg-purple-600,
+.hover\:bg-purple-700:hover {
+  background-color: #171717 !important;
+  color: #D6B875 !important;
+}
+
+.bg-purple-100,
+.bg-purple-50,
+.bg-purple-50\/40 {
+  background-color: #FAF8F3 !important;
+}
+
+.text-purple-600,
+.text-purple-700,
+.text-purple-900 {
+  color: #171717 !important;
+}
+
+.border-purple-200,
+.border-purple-500 {
+  border-color: #E4DEC8 !important;
+}
+
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--bg-ivory);
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--accent);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--accent-hover);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+input[type="range"] { accent-color: var(--accent); }
+
+/* Mobile Safe Area Inset Helpers */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+}
+.pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+}
+.safe-h-screen {
+  min-height: 100dvh;
 }

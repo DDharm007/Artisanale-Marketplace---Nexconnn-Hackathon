@@ -16,6 +16,10 @@ export const ENV = {
   RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET || 'ivWArti6cljuZEN01bhrQxVz',
   RAZORPAY_WEBHOOK_SECRET: process.env.RAZORPAY_WEBHOOK_SECRET || 'webhook_secret_convocart_321',
 
+  // Groq Cloud LLM Configuration (Secure environment variable)
+  GROQ_API_KEY: process.env.GROQ_API_KEY || '',
+  GROQ_MODEL: process.env.GROQ_MODEL || 'openai/gpt-oss-120b',
+
   // Gemini / AI Provider Configuration
   GEMINI_API_KEY: process.env.GEMINI_API_KEY || process.env.AI_PROVIDER_API_KEY || '',
 

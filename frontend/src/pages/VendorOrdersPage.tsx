@@ -182,7 +182,7 @@ export const VendorOrdersPage: React.FC = () => {
                       {order.orderStatus === 'confirmed' && (
                         <button
                           onClick={() => handleUpdateStatus(order.orderId, 'processing')}
-                          className="rounded-xl bg-slate-900 px-3 py-1.5 font-bold text-white hover:bg-brand-600"
+                          className="rounded-full bg-[#171717] px-3 py-1.5 font-bold text-[#D6B875] hover:bg-black transition-colors"
                         >
                           Start Packing →
                         </button>
@@ -190,7 +190,7 @@ export const VendorOrdersPage: React.FC = () => {
                       {order.orderStatus === 'processing' && (
                         <button
                           onClick={() => handleUpdateStatus(order.orderId, 'shipped')}
-                          className="rounded-xl bg-brand-600 px-3 py-1.5 font-bold text-white hover:bg-brand-700 flex items-center gap-1"
+                          className="rounded-full bg-[#171717] px-3 py-1.5 font-bold text-[#D6B875] hover:bg-black transition-colors flex items-center gap-1"
                         >
                           <Truck className="h-3.5 w-3.5" /> Ship Order →
                         </button>

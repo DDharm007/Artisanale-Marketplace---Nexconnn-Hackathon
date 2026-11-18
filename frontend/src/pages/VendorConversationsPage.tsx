@@ -18,6 +18,7 @@ import {
   Mail,
   MapPin,
   ShoppingBag,
+  ChevronLeft,
 } from 'lucide-react';
 import { Product, SUPPORTED_CHAT_LANGUAGES } from '@convocart/shared';
 import { useChatStore } from '../stores/useChatStore';
@@ -25,6 +26,7 @@ import { useAuthStore } from '../stores/useAuthStore';
 import { apiRequest } from '../lib/api';
 import { MessageBubble } from '../features/chat/MessageBubble';
 import { MessageComposer } from '../features/chat/MessageComposer';
+import { WHATSAPP_DARK_BG_STYLE } from '../features/chat/whatsappWallpaper';
 import { cn, formatCurrency, formatDate } from '../lib/utils';
 
 type FilterTab = 'all' | 'ai' | 'human' | 'escalated';
@@ -64,6 +66,7 @@ export const VendorConversationsPage: React.FC = () => {
   const [payTitle, setPayTitle] = useState('Bespoke Store Deal');
   const [payOrderId, setPayOrderId] = useState('');
   const [isUpdatingMode, setIsUpdatingMode] = useState(false);
+  const [mobileView, setMobileView] = useState<'list' | 'chat'>('list');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -186,7 +189,7 @@ export const VendorConversationsPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 rounded-xl bg-slate-100 p-1">
+        <div className="flex items-center gap-1.5 rounded-xl bg-slate-100 p-1 overflow-x-auto max-w-full">
           {(
             [
               { id: 'all', label: `All (${conversations.length})` },
@@ -214,7 +217,7 @@ export const VendorConversationsPage: React.FC = () => {
               key={tab.id}
               onClick={() => setFilter(tab.id)}
               className={cn(
-                'rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors',
+                'rounded-lg px-2.5 py-1 text-[11px] font-bold transition-colors shrink-0',
                 filter === tab.id
                   ? 'bg-slate-900 text-white shadow-xs'
                   : 'text-slate-600 hover:bg-slate-200'
@@ -228,7 +231,12 @@ export const VendorConversationsPage: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 flex-1 min-h-0">
         {/* LEFT PANE: Filterable Conversations */}
-        <div className="lg:col-span-4 flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs min-h-0">
+        <div
+          className={cn(
+            'lg:col-span-4 flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs min-h-0',
+            mobileView === 'chat' ? 'hidden lg:flex' : 'flex'
+          )}
+        >
           <div className="p-3 border-b border-slate-100">
             <div className="relative">
               <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
@@ -259,7 +267,10 @@ export const VendorConversationsPage: React.FC = () => {
                 return (
                   <button
                     key={c.conversationId}
-                    onClick={() => void selectConversation(c.conversationId, false)}
+                    onClick={() => {
+                      void selectConversation(c.conversationId, false);
+                      setMobileView('chat');
+                    }}
                     className={cn(
                       'w-full text-left p-3.5 transition-colors flex items-start gap-3',
                       isSelected ? 'bg-brand-50/70 border-l-4 border-l-brand-600' : 'hover:bg-slate-50'
@@ -287,11 +298,11 @@ export const VendorConversationsPage: React.FC = () => {
                             {c.assignedSupportAgentName || 'Dispatch'}
                           </span>
                         ) : c.aiHandlingEnabled ? (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-purple-100 px-1.5 py-0.5 text-[9px] font-bold text-purple-700">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-[#171717] px-1.5 py-0.5 text-[9px] font-bold text-[#D6B875]">
                             <Bot className="h-2.5 w-2.5" /> AI Active
                           </span>
                         ) : (
-                          <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-700">
+                          <span className="inline-flex items-center gap-0.5 rounded-full bg-[#ECEAE4] border border-[#E4DEC8] px-1.5 py-0.5 text-[9px] font-bold text-[#171717]">
                             <User className="h-2.5 w-2.5" /> Seller Live
                           </span>
                         )}
@@ -324,16 +335,29 @@ export const VendorConversationsPage: React.FC = () => {
         </div>
 
         {/* RIGHT PANE: Full Interactive Seller Chat & Deal Workspace */}
-        <div className="lg:col-span-8 flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs min-h-0">
+        <div
+          className={cn(
+            'lg:col-span-8 flex flex-col rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-xs min-h-0',
+            mobileView === 'list' ? 'hidden lg:flex' : 'flex'
+          )}
+        >
           {activeConv ? (
             <>
               {/* Active Conversation Toolbar */}
               <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-4 py-3">
                 <div className="flex items-center gap-3 min-w-0">
+                  {/* Mobile Back Button */}
+                  <button
+                    onClick={() => setMobileView('list')}
+                    className="lg:hidden rounded-lg p-1.5 text-slate-600 hover:bg-slate-200 cursor-pointer -ml-1 mr-0.5"
+                    title="Back to conversation list"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                  </button>
                   <img
                     src={activeConv.consumerAvatar || FALLBACK_AVATAR}
                     alt={activeConv.consumerName}
-                    className="h-9 w-9 rounded-full object-cover"
+                    className="h-9 w-9 rounded-full object-cover shrink-0"
                   />
                   <div className="min-w-0">
                     <div className="flex flex-wrap items-center gap-2">
@@ -386,10 +410,10 @@ export const VendorConversationsPage: React.FC = () => {
                     onClick={handleToggleAiMode}
                     disabled={isUpdatingMode}
                     className={cn(
-                      'inline-flex items-center gap-1 rounded-xl px-2.5 py-1.5 text-[11px] font-bold border transition-colors',
+                      'inline-flex items-center gap-1 rounded-full px-2.5 py-1.5 text-[11px] font-bold border transition-colors',
                       activeConv.aiHandlingEnabled
-                        ? 'bg-purple-50 text-purple-700 border-purple-200 hover:bg-purple-100'
-                        : 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100'
+                        ? 'bg-[#171717] text-[#D6B875] border-[#171717]'
+                        : 'bg-[#ECEAE4] text-[#171717] border-[#E4DEC8] hover:bg-[#E4DEC8]'
                     )}
                     title="Switch between AI Concierge auto-reply and direct Human Seller mode"
                   >
@@ -599,7 +623,10 @@ export const VendorConversationsPage: React.FC = () => {
               )}
 
               {/* Message Thread */}
-              <div className="flex-1 overflow-y-auto p-4 space-y-1.5 bg-[#0b141a]">
+              <div
+                style={WHATSAPP_DARK_BG_STYLE}
+                className="flex-1 overflow-y-auto p-4 space-y-1.5"
+              >
                 {activeMsgs.map((m) => (
                   <MessageBubble
                     key={m.id}

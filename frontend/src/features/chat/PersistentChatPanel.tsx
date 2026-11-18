@@ -13,6 +13,7 @@ import {
   CheckCircle2,
   AlertTriangle,
   Store,
+  Sparkles,
   Loader2,
   LogIn,
 } from 'lucide-react';
@@ -26,8 +27,8 @@ import { WHATSAPP_DARK_BG_STYLE } from './whatsappWallpaper';
 import { cn } from '../../lib/utils';
 import { useNavigate } from 'react-router-dom';
 
-const FALLBACK_AVATAR =
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80';
+const DEFAULT_ARTISAN_AVATAR =
+  'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=200&auto=format&fit=crop&q=80';
 
 export const PersistentChatPanel: React.FC = () => {
   const { user } = useAuthStore();
@@ -55,6 +56,7 @@ export const PersistentChatPanel: React.FC = () => {
 
   const [search, setSearch] = useState('');
   const [isEscalating, setIsEscalating] = useState(false);
+  const [showLangMenu, setShowLangMenu] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
@@ -127,55 +129,64 @@ export const PersistentChatPanel: React.FC = () => {
   };
 
   const getCounterpartName = (c: typeof conversations[number]) => {
-    if (user?.role === 'vendor') return c.consumerName;
+    const isVendorOwner = user?.vendorId === c.vendorId || user?.uid === c.vendorOwnerUid;
+    if (isVendorOwner) return c.consumerName || 'Valued Collector';
     if (user?.role === 'support_agent' || user?.role === 'admin') {
       return `${c.consumerName} ↔ ${c.vendorBusinessName}`;
     }
-    return c.vendorBusinessName;
+    return c.vendorBusinessName || 'Artisan Studio';
   };
 
   const getCounterpartAvatar = (c: typeof conversations[number]) => {
-    if (user?.role === 'vendor') return c.consumerAvatar || FALLBACK_AVATAR;
-    return c.vendorLogo || c.consumerAvatar || FALLBACK_AVATAR;
+    const isVendorOwner = user?.vendorId === c.vendorId || user?.uid === c.vendorOwnerUid;
+    if (isVendorOwner) return c.consumerAvatar || DEFAULT_ARTISAN_AVATAR;
+    return c.vendorLogo || DEFAULT_ARTISAN_AVATAR;
   };
 
   return (
     <>
-      {/* WhatsApp Floating Toggle Button */}
-      {!isDrawerOpen && (
+      {/* Semi-transparent backdrop overlay when drawer is open */}
+      {isDrawerOpen && (
+        <div
+          onClick={() => toggleDrawer(false)}
+          className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs transition-opacity duration-300"
+          aria-hidden="true"
+        />
+      )}
+
+      {/* Floating Toggle Button (only shown when unread messages exist) */}
+      {!isDrawerOpen && unreadTotal > 0 && (
         <button
           onClick={() => toggleDrawer(true)}
-          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-[#00a884] hover:bg-[#029676] px-4 py-2.5 text-[#111b21] shadow-2xl hover:scale-105 active:scale-95 transition-all text-xs font-bold"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-[#171717] hover:bg-black px-4 py-2.5 text-white shadow-xl transition-all text-xs font-medium cursor-pointer"
         >
           <div className="relative">
-            <MessageSquare className="h-4 w-4 fill-current" />
-            {unreadTotal > 0 && (
-              <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-rose-600 text-[9px] font-bold text-white">
-                {unreadTotal}
-              </span>
-            )}
+            <MessageSquare className="h-4 w-4 text-[#D6B875]" />
+            <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-[#D6B875] text-[9px] font-bold text-[#171717]">
+              {unreadTotal}
+            </span>
           </div>
-          <span>Nexconn Chat</span>
+          <span>Messages</span>
         </button>
       )}
 
-      {/* WhatsApp Style Persistent Right-Side Drawer */}
+      {/* Artisanale Minimalist Right-Side Chat Drawer */}
       <div
         className={cn(
-          'fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-[#111b21] shadow-2xl border-l border-[#222d34] transition-transform duration-300 ease-in-out',
+          'fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-[#171717] text-[#FAF8F5] shadow-2xl border-l border-[#26221D] transition-transform duration-300 ease-in-out',
           isDrawerOpen ? 'translate-x-0' : 'translate-x-full'
         )}
       >
-        {/* Top Header Bar */}
-        <div className="flex items-center justify-between border-b border-[#222d34] px-3.5 py-3 bg-[#202c33] text-[#e9edef]">
-          <div className="flex items-center gap-2 min-w-0">
+        {/* ── 1. MINIMAL ARTISANALE HEADER ────────────────────────── */}
+        <div className="flex items-center justify-between border-b border-[#26221D] px-4 py-3 bg-[#171717] text-white">
+          <div className="flex items-center gap-2.5 min-w-0">
             {activeConversationId && (
               <button
                 onClick={() => useChatStore.setState({ activeConversationId: null })}
-                className="rounded-full p-1 text-[#aebac1] hover:text-white hover:bg-[#2a3942] transition-colors"
-                title="Back to Chats"
+                className="rounded-full p-1 text-[#A8A29E] hover:text-white hover:bg-white/5 transition-colors cursor-pointer"
+                title="Back to All Conversations"
               >
-                <ChevronLeft className="h-5 w-5" />
+                <ChevronLeft className="h-4 w-4" />
               </button>
             )}
 
@@ -184,38 +195,45 @@ export const PersistentChatPanel: React.FC = () => {
                 <div className="relative shrink-0">
                   <img
                     src={getCounterpartAvatar(activeConv)}
-                    alt="avatar"
-                    className="h-9 w-9 rounded-full object-cover"
+                    alt="Artisan Studio"
+                    className="h-9 w-9 rounded-full object-cover border border-[#D6B875]/40"
                   />
                   <span
                     className={cn(
-                      'absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full ring-2 ring-[#202c33]',
-                      activeConv.vendorAvailability === 'away' ? 'bg-amber-400' : 'bg-[#00a884]'
+                      'absolute bottom-0 right-0 h-2 w-2 rounded-full ring-2 ring-[#171717]',
+                      activeConv.vendorAvailability === 'online'
+                        ? 'bg-emerald-400'
+                        : activeConv.vendorAvailability === 'away'
+                        ? 'bg-amber-400'
+                        : 'bg-neutral-500'
                     )}
                   />
                 </div>
                 <div className="min-w-0">
-                  <h4 className="text-sm font-bold text-[#e9edef] leading-tight truncate">
+                  <h4
+                    className="text-base font-normal text-white leading-tight truncate"
+                    style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                  >
                     {getCounterpartName(activeConv)}
                   </h4>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     {activeConv.assignedSupportAgentId ||
                     activeConv.escalatedToSupport ||
                     activeConv.status === 'escalated' ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-400">
-                        <Headset className="h-3 w-3" />
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-amber-300">
+                        <Headset className="h-2.5 w-2.5" />
                         {activeConv.assignedSupportAgentName
-                          ? `Agent: ${activeConv.assignedSupportAgentName}`
-                          : 'Dispatch Queue'}
+                          ? `Agent ${activeConv.assignedSupportAgentName}`
+                          : 'Human Specialist'}
                       </span>
-                    ) : !activeConv.aiHandlingEnabled ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#00a884]">
-                        <Store className="h-3 w-3" /> Live Seller
+                    ) : activeConv.vendorAvailability === 'online' ? (
+                      <span className="inline-flex items-center gap-1.5 text-[10px] font-medium text-emerald-400">
+                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                        Maker Online
                       </span>
                     ) : (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#53bdeb]">
-                        <Bot className="h-3 w-3" /> AI Concierge •{' '}
-                        {activeConv.vendorAvailability || 'online'}
+                      <span className="inline-flex items-center gap-1 text-[10px] font-medium text-[#D6B875]">
+                        <Bot className="h-2.5 w-2.5" /> Artis AI Active · Studio {activeConv.vendorAvailability === 'away' ? 'Away' : 'Offline'}
                       </span>
                     )}
                   </div>
@@ -223,15 +241,102 @@ export const PersistentChatPanel: React.FC = () => {
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <h3 className="font-bold text-[#e9edef] text-base">1-on-1 Chat Hub</h3>
+                <h3
+                  className="text-lg font-normal text-white"
+                  style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                >
+                  Artisan Studio Concierge
+                </h3>
               </div>
             )}
           </div>
 
-          {/* Right Action Icons */}
-          <div className="flex items-center gap-1 text-[#aebac1]">
+          {/* Minimal Icon Actions (Languages, Human Agent, Call, Close) */}
+          <div className="flex items-center gap-0.5 text-[#A8A29E]">
             {activeConv && (
               <>
+                {/* Language Picker Icon Button */}
+                <div className="relative">
+                  <button
+                    onClick={() => setShowLangMenu((v) => !v)}
+                    className={cn(
+                      'rounded-full p-1.5 transition-colors cursor-pointer',
+                      showLangMenu || autoTranslate
+                        ? 'text-[#D6B875] bg-white/10'
+                        : 'text-[#A8A29E] hover:text-[#D6B875] hover:bg-white/5'
+                    )}
+                    title={`Translation: ${targetLanguage.toUpperCase()}`}
+                  >
+                    <Languages className="h-4 w-4" />
+                  </button>
+
+                  {/* Language Popover */}
+                  {showLangMenu && (
+                    <div className="absolute right-0 top-9 z-50 w-52 rounded-2xl border border-[#332D27] bg-[#1E1B18] p-2.5 shadow-2xl text-xs space-y-2">
+                      <div className="flex items-center justify-between pb-1.5 border-b border-[#2D2823] text-[11px] text-[#A8A29E]">
+                        <span>Live Translate</span>
+                        <button
+                          onClick={() => toggleAutoTranslate()}
+                          className={cn(
+                            'text-[10px] font-bold px-1.5 py-0.5 rounded cursor-pointer',
+                            autoTranslate
+                              ? 'bg-[#D6B875] text-[#171717]'
+                              : 'bg-white/10 text-[#A8A29E]'
+                          )}
+                        >
+                          Auto {autoTranslate ? 'ON' : 'OFF'}
+                        </button>
+                      </div>
+                      <div className="max-h-40 overflow-y-auto space-y-0.5">
+                        {SUPPORTED_CHAT_LANGUAGES.map((l) => (
+                          <button
+                            key={l.code}
+                            onClick={() => {
+                              void setTargetLanguage(l.code);
+                              setShowLangMenu(false);
+                            }}
+                            className={cn(
+                              'w-full text-left px-2 py-1.5 rounded-lg text-xs flex items-center justify-between cursor-pointer',
+                              targetLanguage === l.code
+                                ? 'bg-[#D6B875]/20 text-[#D6B875] font-semibold'
+                                : 'text-[#E5E0D5] hover:bg-white/5'
+                            )}
+                          >
+                            <span>
+                              {l.flag} {l.nativeName}
+                            </span>
+                            <span className="text-[10px] uppercase text-[#7A756D]">{l.code}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Human Agent Escalation Icon Button */}
+                <button
+                  onClick={
+                    activeConv.status === 'escalated' || activeConv.assignedSupportAgentId
+                      ? handleSwitchToAiMode
+                      : handleRequestHumanAgent
+                  }
+                  disabled={isEscalating}
+                  className={cn(
+                    'rounded-full p-1.5 transition-colors cursor-pointer',
+                    activeConv.status === 'escalated' || activeConv.assignedSupportAgentId
+                      ? 'text-amber-300 bg-amber-500/10'
+                      : 'text-[#A8A29E] hover:text-[#D6B875] hover:bg-white/5'
+                  )}
+                  title={
+                    activeConv.status === 'escalated'
+                      ? 'Click to switch back to Artis AI Concierge'
+                      : 'Connect with a Live Human Support Specialist'
+                  }
+                >
+                  <Headset className="h-4 w-4" />
+                </button>
+
+                {/* Voice Call */}
                 <button
                   onClick={() =>
                     startCall(
@@ -240,11 +345,13 @@ export const PersistentChatPanel: React.FC = () => {
                       false
                     )
                   }
-                  className="rounded-full p-2 hover:text-white hover:bg-[#2a3942] transition-colors"
+                  className="rounded-full p-1.5 text-[#A8A29E] hover:text-[#D6B875] hover:bg-white/5 transition-colors cursor-pointer"
                   title="Voice Call"
                 >
                   <Phone className="h-4 w-4" />
                 </button>
+
+                {/* Video Call */}
                 <button
                   onClick={() =>
                     startCall(
@@ -253,126 +360,51 @@ export const PersistentChatPanel: React.FC = () => {
                       true
                     )
                   }
-                  className="rounded-full p-2 hover:text-white hover:bg-[#2a3942] transition-colors"
+                  className="rounded-full p-1.5 text-[#A8A29E] hover:text-[#D6B875] hover:bg-white/5 transition-colors cursor-pointer"
                   title="Video Call"
                 >
                   <Video className="h-4 w-4" />
                 </button>
               </>
             )}
+
+            {/* Close Drawer */}
             <button
               onClick={() => toggleDrawer(false)}
-              className="rounded-full p-2 hover:text-white hover:bg-[#2a3942] transition-colors"
+              className="rounded-full p-1.5 text-[#A8A29E] hover:text-white hover:bg-white/5 transition-colors cursor-pointer ml-1"
               title="Close"
             >
-              <X className="h-5 w-5" />
+              <X className="h-4 w-4" />
             </button>
           </div>
         </div>
 
-        {/* Multi-Language Translation & Dispatch Bar (always accessible inside active chat or list) */}
-        <div className="flex items-center justify-between gap-2 border-b border-[#222d34] bg-[#182229] px-3 py-1.5 text-[11px] text-[#d1d7db]">
-          <div className="flex items-center gap-1.5 min-w-0">
-            <Languages className="h-3.5 w-3.5 text-[#00a884] shrink-0" />
-            <select
-              value={targetLanguage}
-              onChange={(e) => setTargetLanguage(e.target.value)}
-              className="rounded bg-[#202c33] border border-[#2a3942] px-1.5 py-0.5 text-[11px] font-medium text-[#e9edef] focus:outline-none"
-              aria-label="Target Chat Language"
-            >
-              {SUPPORTED_CHAT_LANGUAGES.map((lang) => (
-                <option key={lang.code} value={lang.code}>
-                  {lang.flag} {lang.nativeName}
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={() => toggleAutoTranslate()}
-              className={cn(
-                'inline-flex items-center gap-1 rounded px-2 py-0.5 font-semibold transition-colors',
-                autoTranslate
-                  ? 'bg-[#00a884]/20 text-[#00a884] border border-[#00a884]/40'
-                  : 'bg-[#202c33] text-[#8696a0] border border-[#2a3942] hover:text-[#d1d7db]'
-              )}
-              title="Automatically translate incoming messages via Nexconn TranslateModule"
-            >
-              {isTranslating && <Loader2 className="h-2.5 w-2.5 animate-spin" />}
-              Auto-Translate {autoTranslate ? 'ON' : 'OFF'}
-            </button>
-          </div>
-
-          {activeConv &&
-            ((user?.role === 'support_agent' || user?.role === 'admin') &&
-            (activeConv.status === 'escalated' ||
-              Boolean(activeConv.assignedSupportAgentId) ||
-              activeConv.escalatedToSupport) ? (
-              <button
-                onClick={handleResolveDispatch}
-                disabled={isEscalating}
-                className="inline-flex items-center gap-1 rounded bg-emerald-600/20 border border-emerald-500/40 px-2 py-0.5 text-[10px] font-bold text-emerald-300 hover:bg-emerald-600/30 shrink-0"
-              >
-                <CheckCircle2 className="h-3 w-3" /> Resolve
-              </button>
-            ) : !activeConv.escalatedToSupport && !activeConv.assignedSupportAgentId ? (
-              <button
-                onClick={handleRequestHumanAgent}
-                disabled={isEscalating}
-                className="inline-flex items-center gap-1 rounded bg-amber-500/15 border border-amber-500/40 px-2 py-0.5 text-[10px] font-bold text-amber-300 hover:bg-amber-500/25 shrink-0"
-                title="Escalate chat to Human Agent Dispatch Center"
-              >
-                <Headset className="h-3 w-3" /> Human Agent
-              </button>
-            ) : (
-              <button
-                onClick={handleSwitchToAiMode}
-                disabled={isEscalating}
-                className="inline-flex items-center gap-1 rounded bg-[#53bdeb]/15 border border-[#53bdeb]/40 px-2 py-0.5 text-[10px] font-bold text-[#53bdeb] hover:bg-[#53bdeb]/25 shrink-0"
-                title="Resume AI Concierge mode for instant product & policy Q&A"
-              >
-                <Bot className="h-3 w-3" /> AI Mode
-              </button>
-            ))}
-        </div>
-
-        {/* Panel Body */}
+        {/* ── 2. ACTIVE CONVERSATION BODY ──────────────────────────── */}
         {activeConversationId ? (
-          <div className="flex flex-1 flex-col overflow-hidden">
-            {/* Escalation / Dispatch Status Banner */}
-            {activeConv &&
-              (activeConv.status === 'escalated' ||
-                activeConv.escalatedToSupport ||
-                Boolean(activeConv.assignedSupportAgentId)) && (
-              <div className="flex items-center justify-between gap-2 border-b border-amber-500/30 bg-amber-500/10 px-3.5 py-2 text-[11px] text-amber-200">
-                <div className="flex items-center gap-2 min-w-0">
-                  <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
-                  <span className="truncate">
-                    {activeConv.assignedSupportAgentName
-                      ? `Live Specialist: ${activeConv.assignedSupportAgentName}`
-                      : `Assigned to Dispatch Specialist • ${activeConv.escalationReason || 'Escalated'}`}
-                  </span>
-                </div>
-                <button
-                  onClick={handleSwitchToAiMode}
-                  disabled={isEscalating}
-                  className="rounded bg-[#202c33] border border-amber-500/30 px-2 py-0.5 text-[10px] font-bold text-[#53bdeb] hover:bg-[#2a3942] shrink-0"
-                >
-                  AI Concierge
-                </button>
-              </div>
-            )}
-
-            {/* Linked Product Bar */}
+          <div className="flex flex-1 flex-col overflow-hidden bg-[#171717]">
+            {/* Linked Product Bar (Clean & Minimal) */}
             {activeConv?.productTitle && (
-              <div className="flex items-center justify-between border-b border-[#222d34] bg-[#182229] px-3.5 py-2 text-xs">
-                <div className="flex items-center gap-2 truncate text-[#d1d7db]">
-                  {activeConv.productImage && (
+              <div className="flex items-center justify-between border-b border-[#26221D] bg-[#1E1B18]/95 px-4 py-2 text-xs">
+                <div className="flex items-center gap-2.5 truncate text-[#E5E0D5]">
+                  {activeConv.productImage &&
+                  !activeConv.productImage.endsWith('.glb') &&
+                  !activeConv.productImage.endsWith('.gltf') ? (
                     <img
                       src={activeConv.productImage}
                       alt=""
-                      className="h-7 w-7 rounded object-cover"
+                      className="h-8 w-8 rounded-lg object-cover border border-[#D6B875]/30 shrink-0"
                     />
+                  ) : (
+                    <div className="h-8 w-8 rounded-lg bg-[#2A241F] border border-[#D6B875]/30 flex items-center justify-center shrink-0">
+                      <Sparkles className="h-4 w-4 text-[#D6B875]" />
+                    </div>
                   )}
-                  <span className="truncate font-medium">{activeConv.productTitle}</span>
+                  <span
+                    className="truncate font-normal text-white text-[13px]"
+                    style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                  >
+                    {activeConv.productTitle}
+                  </span>
                 </div>
                 {activeConv.productId && (
                   <button
@@ -380,34 +412,49 @@ export const PersistentChatPanel: React.FC = () => {
                       navigate(`/shop/products/${activeConv.productId}`);
                       toggleDrawer(false);
                     }}
-                    className="flex items-center gap-1 font-bold text-[#53bdeb] hover:underline shrink-0 text-[11px] ml-2"
+                    className="flex items-center gap-1 font-medium text-[#D6B875] hover:text-white shrink-0 text-[11px] ml-2 transition-colors cursor-pointer"
                   >
-                    View <ExternalLink className="h-3 w-3" />
+                    <span>View</span> <ExternalLink className="h-3 w-3" />
                   </button>
                 )}
               </div>
             )}
 
-            {/* Messages Scroll Area */}
+            {/* Messages Scroll Area with Chat Background Wallpaper */}
             <div
               style={WHATSAPP_DARK_BG_STYLE}
               className="flex-1 overflow-y-auto p-4 space-y-1"
             >
-              <div className="text-center my-2">
-                <span className="inline-block rounded-md bg-[#182229]/90 border border-[#222d34] px-3 py-1 text-[11px] text-[#8696a0] shadow-xs">
-                  🔒 End-to-end Nexconn Chat SDK • Auto-translation ready
-                </span>
-              </div>
-
               {activeMsgs.length === 0 ? (
-                <div className="flex h-3/4 flex-col items-center justify-center text-center p-6 text-[#8696a0]">
-                  <MessageSquare className="h-10 w-10 text-[#00a884] mb-2 opacity-60" />
-                  <p className="text-sm font-semibold text-[#e9edef]">
-                    Start chatting in any language
-                  </p>
-                  <p className="text-xs text-[#8696a0] mt-1">
-                    Ask about specs, stock, bulk quotes, or escalate anytime to a human support specialist.
-                  </p>
+                <div className="flex h-3/4 flex-col items-center justify-center text-center p-6">
+                  <div className="rounded-3xl bg-[#171717]/92 backdrop-blur-md border border-[#D6B875]/30 p-6 shadow-xl max-w-[280px] text-center space-y-2">
+                    <div className="h-10 w-10 rounded-2xl bg-[#D6B875]/15 border border-[#D6B875]/30 flex items-center justify-center mx-auto text-[#D6B875]">
+                      {activeConv.vendorAvailability === 'online' ? (
+                        <Store className="h-5 w-5" />
+                      ) : (
+                        <Bot className="h-5 w-5" />
+                      )}
+                    </div>
+                    <h4
+                      className="text-lg font-normal text-white pt-1"
+                      style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                    >
+                      {activeConv.vendorAvailability === 'online'
+                        ? 'Artisan Studio Direct'
+                        : 'Artis AI Concierge'}
+                    </h4>
+                    <p className="text-xs text-[#A8A29E] leading-relaxed">
+                      {activeConv.vendorAvailability === 'online'
+                        ? `Direct dialogue with ${activeConv?.vendorBusinessName || 'the studio'}. The maker is currently live on the website.`
+                        : `The maker is away from the studio. Artis AI is active to assist with specs, craftsmanship, and policies.`}
+                    </p>
+                    <div className="pt-2 text-[10px] text-[#D6B875] flex items-center justify-center gap-1 font-medium">
+                      <CheckCircle2 className="h-3 w-3" />{' '}
+                      {activeConv.vendorAvailability === 'online'
+                        ? 'Verified Master Artisan'
+                        : 'Grounded in Studio Policies'}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 activeMsgs.map((m) => (
@@ -427,6 +474,11 @@ export const PersistentChatPanel: React.FC = () => {
             <MessageComposer
               onSendMessage={sendMessage}
               targetLanguage={targetLanguage}
+              placeholder={
+                activeConv.vendorAvailability === 'online'
+                  ? 'Message the artisan directly...'
+                  : 'Ask Artis AI about dimensions, shipping...'
+              }
               quickActions={
                 activeConv?.productId
                   ? [
@@ -450,28 +502,33 @@ export const PersistentChatPanel: React.FC = () => {
             />
           </div>
         ) : (
-          /* Conversations List View */
-          <div className="flex flex-1 flex-col overflow-hidden bg-[#111b21]">
-            <div className="p-2.5 border-b border-[#222d34] bg-[#111b21]">
+          /* ── 3. CONVERSATIONS LIST VIEW (CLEAN & MINIMAL) ───────── */
+          <div className="flex flex-1 flex-col overflow-hidden bg-[#171717]">
+            <div className="p-3 border-b border-[#26221D] bg-[#171717]">
               <div className="relative">
-                <Search className="absolute left-3 top-2.5 h-4 w-4 text-[#8696a0]" />
+                <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#7A756D]" />
                 <input
                   type="text"
-                  placeholder="Search chats, sellers, or agents"
+                  placeholder="Search studios or creations..."
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  className="w-full rounded-lg bg-[#202c33] pl-9 pr-3 py-1.5 text-xs text-[#d1d7db] placeholder:text-[#8696a0] border-none focus:outline-none"
+                  className="w-full rounded-full bg-[#24201C] border border-[#332D27] pl-8 pr-3 py-1.5 text-xs text-white placeholder:text-[#7A756D] focus:border-[#D6B875] focus:outline-none"
                 />
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto divide-y divide-[#222d34]">
+            <div className="flex-1 overflow-y-auto divide-y divide-[#26221D]">
               {!user ? (
-                <div className="p-8 text-center text-[#8696a0] space-y-3">
-                  <LogIn className="h-10 w-10 mx-auto text-[#00a884] opacity-80" />
-                  <p className="text-sm font-bold text-[#e9edef]">Sign in to chat with sellers</p>
-                  <p className="text-xs text-[#8696a0]">
-                    Use your customer account to message sellers, translate live chats, and track order updates.
+                <div className="p-8 text-center text-[#A8A29E] space-y-3">
+                  <LogIn className="h-10 w-10 mx-auto text-[#D6B875] opacity-80" />
+                  <p
+                    className="text-base text-white font-normal"
+                    style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                  >
+                    Sign in to message master artisans
+                  </p>
+                  <p className="text-xs text-[#A8A29E]">
+                    Connect directly with verified studios worldwide, ask questions, and request bespoke quotes.
                   </p>
                   <button
                     type="button"
@@ -479,18 +536,22 @@ export const PersistentChatPanel: React.FC = () => {
                       toggleDrawer(false);
                       navigate('/auth');
                     }}
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-[#00a884] px-4 py-2 text-xs font-bold text-[#111b21] hover:bg-[#029676] transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-[#D6B875] px-5 py-2 text-xs font-bold text-[#171717] hover:bg-[#C5A45E] transition-colors cursor-pointer"
                   >
-                    <LogIn className="h-3.5 w-3.5" />
-                    Sign In or Create Account
+                    <LogIn className="h-3.5 w-3.5" /> Sign In / Register
                   </button>
                 </div>
               ) : filteredConversations.length === 0 ? (
-                <div className="p-8 text-center text-[#8696a0]">
-                  <MessageSquare className="h-10 w-10 mx-auto text-[#00a884] mb-2 opacity-60" />
-                  <p className="text-sm font-bold text-[#e9edef]">No chats yet</p>
-                  <p className="text-xs text-[#8696a0] mt-1">
-                    Click &quot;Chat Seller&quot; on any product card to start a 1-on-1 conversation.
+                <div className="p-8 text-center text-[#A8A29E]">
+                  <MessageSquare className="h-10 w-10 mx-auto text-[#D6B875] mb-2 opacity-60" />
+                  <p
+                    className="text-base text-white font-normal"
+                    style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                  >
+                    No studio chats yet
+                  </p>
+                  <p className="text-xs text-[#A8A29E] mt-1">
+                    Click &quot;Chat&quot; on any creation to open an instant dialogue with the artisan.
                   </p>
                 </div>
               ) : (
@@ -505,29 +566,32 @@ export const PersistentChatPanel: React.FC = () => {
                     <button
                       key={c.conversationId}
                       onClick={() => selectConversation(c.conversationId)}
-                      className="flex w-full items-center gap-3 p-3.5 text-left bg-[#111b21] hover:bg-[#202c33] transition-colors"
+                      className="flex w-full items-center gap-3 p-3.5 text-left bg-[#171717] hover:bg-[#201C18] transition-colors cursor-pointer"
                     >
                       <div className="relative shrink-0">
                         <img
                           src={getCounterpartAvatar(c)}
                           alt=""
-                          className="h-11 w-11 rounded-full object-cover"
+                          className="h-10 w-10 rounded-full object-cover border border-[#D6B875]/30"
                         />
                         <span
                           className={cn(
-                            'absolute bottom-0 right-0 h-3 w-3 rounded-full ring-2 ring-[#111b21]',
-                            c.status === 'escalated' ? 'bg-amber-400' : 'bg-[#00a884]'
+                            'absolute bottom-0 right-0 h-2 w-2 rounded-full ring-2 ring-[#171717]',
+                            c.status === 'escalated' ? 'bg-amber-400' : 'bg-[#D6B875]'
                           )}
                         />
                       </div>
 
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <h4 className="font-bold text-sm text-[#e9edef] truncate">
+                          <h4
+                            className="font-normal text-sm text-white truncate"
+                            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+                          >
                             {getCounterpartName(c)}
                           </h4>
                           {c.lastMessage && (
-                            <span className="text-[11px] text-[#8696a0] shrink-0">
+                            <span className="text-[10px] text-[#7A756D] shrink-0">
                               {new Date(c.lastMessage.timestamp).toLocaleTimeString([], {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -537,31 +601,20 @@ export const PersistentChatPanel: React.FC = () => {
                         </div>
 
                         <div className="flex items-center gap-1.5 mt-0.5">
-                          {c.status === 'escalated' && (
-                            <span className="rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold uppercase text-amber-300">
-                              {c.assignedSupportAgentName ? 'Agent Active' : 'Dispatch'}
-                            </span>
-                          )}
-                          {c.consumerPreferredLanguage &&
-                            c.consumerPreferredLanguage !== 'en' && (
-                              <span className="rounded bg-[#2a3942] px-1.5 py-0.5 text-[9px] font-bold uppercase text-[#53bdeb]">
-                                {c.consumerPreferredLanguage}
-                              </span>
-                            )}
                           {c.productTitle && (
-                            <span className="text-[11px] font-semibold text-[#00a884] truncate">
+                            <span className="text-[11px] font-medium text-[#D6B875] truncate">
                               {c.productTitle}
                             </span>
                           )}
                         </div>
 
-                        <p className="text-xs text-[#8696a0] truncate mt-0.5">
+                        <p className="text-xs text-[#A8A29E] truncate mt-0.5">
                           {c.lastMessage?.text || 'No messages yet'}
                         </p>
                       </div>
 
                       {unread > 0 && (
-                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#00a884] text-[10px] font-bold text-[#111b21] shrink-0">
+                        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#D6B875] text-[10px] font-bold text-[#171717] shrink-0">
                           {unread}
                         </span>
                       )}

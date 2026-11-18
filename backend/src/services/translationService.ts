@@ -303,6 +303,50 @@ export class TranslationService {
       };
     }
 
+    // 0. Try Groq Cloud LLM for ultra-fast high-accuracy translation
+    if (ENV.GROQ_API_KEY) {
+      try {
+        const langName = LANGUAGE_LABELS[normalizedTarget] || normalizedTarget;
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 4000);
+        const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${ENV.GROQ_API_KEY}`,
+            'Content-Type': 'application/json',
+          },
+          signal: controller.signal,
+          body: JSON.stringify({
+            model: 'openai/gpt-oss-20b',
+            messages: [
+              {
+                role: 'system',
+                content: `Translate the following e-commerce chat message into ${langName} (${normalizedTarget}). Preserve all product names, order IDs, tracking numbers, URLs, and pricing accurately. Output ONLY the translated message text without explanations or quotation marks.`
+              },
+              { role: 'user', content: cleanText },
+            ],
+            temperature: 0.2,
+            max_tokens: 300,
+          }),
+        });
+        clearTimeout(timeoutId);
+
+        if (groqRes.ok) {
+          const data = (await groqRes.json()) as any;
+          const translated = data?.choices?.[0]?.message?.content?.trim();
+          if (translated) {
+            return {
+              translatedText: translated,
+              detectedSourceLanguage: detectedSource,
+              provider: 'groq',
+            };
+          }
+        }
+      } catch {
+        // Fall through to Gemini / Google Translate
+      }
+    }
+
     // 1. Try Gemini API if configured
     if (ENV.GEMINI_API_KEY) {
       try {

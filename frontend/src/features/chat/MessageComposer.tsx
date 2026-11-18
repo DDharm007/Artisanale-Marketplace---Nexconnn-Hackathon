@@ -39,6 +39,7 @@ interface MessageComposerProps {
   ) => Promise<{ translatedText: string; detectedLanguage: string }>;
   quickActions?: QuickActionItem[];
   conversationId?: string;
+  placeholder?: string;
 }
 
 // Synthesize a valid short WAV tone data URL if browser microphone is unavailable
@@ -86,6 +87,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
   onTranslateDraft,
   quickActions,
   conversationId: propConversationId,
+  placeholder,
 }) => {
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
@@ -399,19 +401,21 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
   };
 
   return (
-    <div className="relative border-t border-[#222d34] bg-[#202c33] px-3 py-2.5">
+    <div className="relative border-t border-[#26221D] bg-[#171717] px-3.5 py-2.5">
       {/* Live Webcam Capture Modal */}
       {showWebcam && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-xs">
-          <div className="w-full max-w-md rounded-2xl border border-[#2a3942] bg-[#111b21] p-4 text-[#e9edef] shadow-2xl">
+          <div className="w-full max-w-md rounded-2xl border border-[#332D27] bg-[#1E1B18] p-4 text-[#FAF8F5] shadow-2xl">
             <div className="mb-3 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Camera className="h-4 w-4 text-[#00a884]" />
-                <span className="text-sm font-bold">Capture Photo for Chat</span>
+                <Camera className="h-4 w-4 text-[#D6B875]" />
+                <span className="text-sm font-normal" style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}>
+                  Capture Photo for Artisan Chat
+                </span>
               </div>
               <button
                 onClick={stopWebcam}
-                className="rounded-lg p-1 text-[#8696a0] hover:bg-[#202c33] hover:text-white"
+                className="rounded-lg p-1 text-[#8C867A] hover:bg-white/5 hover:text-white"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -422,7 +426,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
                 {webcamError}
               </div>
             ) : (
-              <div className="relative overflow-hidden rounded-xl bg-black aspect-video">
+              <div className="relative overflow-hidden rounded-xl bg-black aspect-video border border-[#332D27]">
                 <video
                   ref={videoRef}
                   autoPlay
@@ -438,7 +442,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
               <button
                 type="button"
                 onClick={flipCamera}
-                className="flex items-center gap-1.5 rounded-lg bg-[#202c33] px-3 py-2 text-xs font-semibold text-[#d1d7db] hover:bg-[#2a3942]"
+                className="flex items-center gap-1.5 rounded-full bg-[#24201C] border border-[#332D27] px-3.5 py-1.5 text-xs font-semibold text-[#E5E0D5] hover:bg-white/5"
               >
                 <RefreshCw className="h-3.5 w-3.5" /> Flip Camera
               </button>
@@ -446,18 +450,18 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
                 type="button"
                 onClick={capturePhoto}
                 disabled={Boolean(webcamError)}
-                className="flex items-center gap-1.5 rounded-lg bg-[#00a884] px-4 py-2 text-xs font-bold text-[#111b21] hover:bg-[#029676] disabled:opacity-50"
+                className="flex items-center gap-1.5 rounded-full bg-[#D6B875] px-4 py-1.5 text-xs font-bold text-[#171717] hover:bg-[#C5A45E] disabled:opacity-50"
               >
-                <Camera className="h-3.5 w-3.5" /> Capture &amp; Upload Photo
+                <Camera className="h-3.5 w-3.5" /> Capture &amp; Send
               </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* WhatsApp Emoji Picker Dropdown */}
+      {/* Emoji Picker Dropdown */}
       {showEmojiPicker && (
-        <div className="absolute bottom-14 left-3 z-30 flex gap-2 rounded-xl border border-[#2a3942] bg-[#202c33] p-2 shadow-2xl">
+        <div className="absolute bottom-14 left-3 z-30 flex gap-2 rounded-2xl border border-[#332D27] bg-[#1E1B18] p-2 shadow-2xl">
           {emojis.map((emoji) => (
             <button
               key={emoji}
@@ -465,7 +469,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
                 setText((prev) => prev + emoji);
                 setShowEmojiPicker(false);
               }}
-              className="text-lg hover:scale-125 transition-transform p-1"
+              className="text-lg hover:scale-125 transition-transform p-1 cursor-pointer"
             >
               {emoji}
             </button>
@@ -473,26 +477,26 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
         </div>
       )}
 
-      {/* Attachment Menu (with Webcam & Firebase Storage options) */}
+      {/* Attachment Menu */}
       {showAttachMenu && (
-        <div className="absolute bottom-14 left-10 z-30 flex flex-col gap-1 rounded-xl border border-[#2a3942] bg-[#202c33] p-2 shadow-2xl text-xs text-[#d1d7db] min-w-[205px]">
+        <div className="absolute bottom-14 left-10 z-30 flex flex-col gap-1 rounded-2xl border border-[#332D27] bg-[#1E1B18] p-2 shadow-2xl text-xs text-[#E5E0D5] min-w-[205px]">
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-[#2a3942] text-left"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-left cursor-pointer"
           >
-            <Image className="h-4 w-4 text-[#00a884]" /> Photos & Screenshots
+            <Image className="h-4 w-4 text-[#D6B875]" /> Photos &amp; Screenshots
           </button>
           <button
             onClick={() => void startWebcam('user')}
-            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-[#2a3942] text-left"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-left cursor-pointer"
           >
-            <Camera className="h-4 w-4 text-amber-400" /> Snap Photo (Webcam)
+            <Camera className="h-4 w-4 text-[#D6B875]" /> Snap Photo (Webcam)
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
-            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-[#2a3942] text-left"
+            className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-left cursor-pointer"
           >
-            <Paperclip className="h-4 w-4 text-[#53bdeb]" /> Document / Invoice
+            <Paperclip className="h-4 w-4 text-[#D6B875]" /> Document / Specs
           </button>
           {quickActions?.map((qa, idx) => (
             <button
@@ -501,7 +505,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
                 setShowAttachMenu(false);
                 qa.onClick();
               }}
-              className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-[#2a3942] text-left text-[#00a884] font-semibold border-t border-[#2a3942] pt-2 mt-0.5"
+              className="flex items-center gap-2 rounded-lg px-3 py-2 hover:bg-white/5 text-left text-[#D6B875] font-semibold border-t border-[#332D27] pt-2 mt-0.5 cursor-pointer"
             >
               <Package className="h-4 w-4" /> {qa.label}
             </button>
@@ -518,14 +522,14 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
       />
 
       {isUploadingMedia && (
-        <div className="mb-2 flex items-center gap-2 rounded-lg bg-[#182229] px-3 py-1.5 text-[11px] font-medium text-[#00a884]">
-          <UploadCloud className="h-3.5 w-3.5 animate-bounce" /> Uploading encrypted media to cloud storage...
+        <div className="mb-2 flex items-center gap-2 rounded-lg bg-[#24201C] border border-[#332D27] px-3 py-1.5 text-[11px] font-medium text-[#D6B875]">
+          <UploadCloud className="h-3.5 w-3.5 animate-bounce" /> Uploading media...
         </div>
       )}
 
-      {/* Voice Recording Active Bar with 20-bar AnalyserNode Waveform */}
+      {/* Voice Recording Bar */}
       {isRecording ? (
-        <div className="flex items-center justify-between gap-3 rounded-lg bg-[#2a3942] px-3 py-2">
+        <div className="flex items-center justify-between gap-3 rounded-full bg-[#24201C] border border-[#332D27] px-4 py-2">
           <div className="flex items-center gap-2 text-rose-400 font-bold text-xs">
             <span className="h-2 w-2 rounded-full bg-rose-500 animate-pulse" />
             <span className="font-mono">0:{String(recordingSeconds).padStart(2, '0')}</span>
@@ -536,7 +540,7 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
               <span
                 key={idx}
                 style={{ height: `${Math.max(18, lvl)}%` }}
-                className="w-1 rounded-full bg-[#00a884] transition-all duration-75"
+                className="w-1 rounded-full bg-[#D6B875] transition-all duration-75"
               />
             ))}
           </div>
@@ -544,14 +548,14 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
           <div className="flex items-center gap-2">
             <button
               onClick={cancelVoice}
-              className="p-1 rounded text-[#8696a0] hover:text-rose-400"
-              title="Cancel Recording"
+              className="p-1 rounded text-[#8C867A] hover:text-rose-400 cursor-pointer"
+              title="Cancel"
             >
               <Trash2 className="h-4 w-4" />
             </button>
             <button
               onClick={() => void stopAndSendVoice()}
-              className="flex items-center gap-1 rounded bg-[#00a884] px-3 py-1 text-xs font-bold text-[#111b21] hover:bg-[#029676]"
+              className="flex items-center gap-1 rounded-full bg-[#D6B875] px-3 py-1 text-xs font-bold text-[#171717] hover:bg-[#C5A45E] cursor-pointer"
             >
               <Square className="h-3 w-3 fill-current" /> Send Voice
             </button>
@@ -565,10 +569,10 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
               setShowEmojiPicker(!showEmojiPicker);
               setShowAttachMenu(false);
             }}
-            className="text-[#8696a0] hover:text-[#d1d7db] p-1.5 transition-colors"
+            className="text-[#A8A29E] hover:text-[#D6B875] p-1.5 transition-colors cursor-pointer"
             title="Emojis"
           >
-            <Smile className="h-5 w-5" />
+            <Smile className="h-4 w-4" />
           </button>
 
           {/* Attachment toggle */}
@@ -577,31 +581,31 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
               setShowAttachMenu(!showAttachMenu);
               setShowEmojiPicker(false);
             }}
-            className="text-[#8696a0] hover:text-[#d1d7db] p-1.5 transition-colors"
-            title="Attach file, image or webcam"
+            className="text-[#A8A29E] hover:text-[#D6B875] p-1.5 transition-colors cursor-pointer"
+            title="Attach file, photo or webcam"
           >
-            <Paperclip className="h-5 w-5" />
+            <Paperclip className="h-4 w-4" />
           </button>
 
-          {/* Quick Webcam Photo Button */}
+          {/* Quick Webcam Photo */}
           <button
             onClick={() => void startWebcam('user')}
-            className="text-[#8696a0] hover:text-amber-400 p-1.5 transition-colors hidden sm:inline-flex"
-            title="Capture Webcam Photo"
+            className="text-[#A8A29E] hover:text-[#D6B875] p-1.5 transition-colors hidden sm:inline-flex cursor-pointer"
+            title="Capture Photo"
           >
-            <Camera className="h-5 w-5" />
+            <Camera className="h-4 w-4" />
           </button>
 
           {/* Text Input */}
           <div className="flex-1 relative">
             <input
               type="text"
-              placeholder={`Message (${targetLangMeta?.flag || '🌐'} ${activeTargetLang.toUpperCase()})...`}
+              placeholder={placeholder || 'Ask about dimensions, materials, shipping...'}
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={handleKeyDown}
               onPaste={handlePaste}
-              className="w-full rounded-lg bg-[#2a3942] pl-3.5 pr-9 py-2 text-sm text-[#d1d7db] placeholder:text-[#8696a0] border-none focus:outline-none"
+              className="w-full rounded-full bg-[#24201C] border border-[#332D27] pl-3.5 pr-8 py-1.5 text-xs text-white placeholder:text-[#7A756D] focus:border-[#D6B875] focus:outline-none"
             />
             {text.trim() && (
               <button
@@ -609,34 +613,34 @@ export const MessageComposer: React.FC<MessageComposerProps> = ({
                 onClick={handleTranslateDraft}
                 disabled={isTranslatingDraft}
                 title={`Translate draft to ${targetLangMeta?.nativeName || activeTargetLang}`}
-                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-[#53bdeb] hover:bg-[#202c33] transition-colors"
+                className="absolute right-2 top-1/2 -translate-y-1/2 rounded p-1 text-[#D6B875] hover:text-white transition-colors cursor-pointer"
               >
                 {isTranslatingDraft ? (
-                  <Loader2 className="h-4 w-4 animate-spin" />
+                  <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 ) : (
-                  <Languages className="h-4 w-4" />
+                  <Languages className="h-3.5 w-3.5" />
                 )}
               </button>
             )}
           </div>
 
-          {/* Send or Voice Note Button */}
+          {/* Send Button */}
           {text.trim() ? (
             <button
               onClick={() => void handleSend()}
               disabled={isLoading || isUploadingMedia}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-[#00a884] text-[#111b21] hover:bg-[#029676] transition-transform active:scale-90 shrink-0"
+              className="flex h-8 w-8 items-center justify-center rounded-full bg-[#D6B875] text-[#171717] hover:bg-[#C5A45E] transition-transform active:scale-95 shrink-0 cursor-pointer shadow-xs"
               title="Send"
             >
-              <Send className="h-4 w-4 ml-0.5 fill-current" />
+              <Send className="h-3.5 w-3.5 ml-0.5 fill-current" />
             </button>
           ) : (
             <button
               onClick={() => void startVoiceRecording()}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-transparent text-[#8696a0] hover:text-[#00a884] transition-colors shrink-0"
+              className="flex h-8 w-8 items-center justify-center rounded-full text-[#A8A29E] hover:text-[#D6B875] transition-colors shrink-0 cursor-pointer"
               title="Record Voice Note"
             >
-              <Mic className="h-5 w-5" />
+              <Mic className="h-4 w-4" />
             </button>
           )}
         </div>

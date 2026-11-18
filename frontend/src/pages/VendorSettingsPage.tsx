@@ -52,15 +52,15 @@ export const VendorSettingsPage: React.FC = () => {
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
             {[
-              { id: 'online', label: 'Online', desc: 'Direct chat enabled', color: 'border-emerald-500 bg-emerald-50 text-emerald-700' },
-              { id: 'busy', label: 'Busy', desc: 'Slower human replies', color: 'border-amber-500 bg-amber-50 text-amber-700' },
-              { id: 'away', label: 'Away', desc: 'AI assistant active', color: 'border-purple-500 bg-purple-50 text-purple-700' },
+              { id: 'online', label: 'Online', desc: 'Direct chat enabled', color: 'border-emerald-600 bg-emerald-50 text-emerald-800' },
+              { id: 'busy', label: 'Busy', desc: 'Slower human replies', color: 'border-amber-600 bg-amber-50 text-amber-800' },
+              { id: 'away', label: 'Away', desc: 'AI assistant active', color: 'border-[#D6B875] bg-[#FAF8F3] text-[#171717]' },
               { id: 'offline', label: 'Offline', desc: '100% AI auto-response', color: 'border-slate-500 bg-slate-50 text-slate-700' },
             ].map((opt) => (
               <label
                 key={opt.id}
                 className={`rounded-2xl border-2 p-3.5 cursor-pointer transition-all ${
-                  availability === opt.id ? opt.color : 'border-slate-200 bg-white hover:bg-slate-50'
+                  availability === opt.id ? opt.color : 'border-[#E4DEC8] bg-[#FAF8F3] hover:bg-[#ECEAE4]'
                 }`}
               >
                 <input
@@ -80,13 +80,13 @@ export const VendorSettingsPage: React.FC = () => {
 
         <div className="flex justify-end gap-3">
           {isSaved && (
-            <span className="flex items-center gap-1 font-bold text-emerald-600">
+            <span className="flex items-center gap-1 font-bold text-emerald-700 text-xs">
               <Check className="h-4 w-4" /> Settings saved!
             </span>
           )}
           <button
             type="submit"
-            className="rounded-2xl bg-brand-600 px-6 py-2.5 font-bold text-white shadow-md hover:bg-brand-700"
+            className="rounded-full bg-[#171717] px-6 py-2.5 font-bold text-[#D6B875] hover:bg-black transition-colors text-xs"
           >
             Save Settings
           </button>

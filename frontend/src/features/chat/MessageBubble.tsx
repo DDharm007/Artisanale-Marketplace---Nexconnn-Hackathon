@@ -278,22 +278,22 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
   const renderRoleBadge = () => {
     if (message.isAiGenerated) {
       return (
-        <span className="inline-flex items-center gap-0.5 rounded bg-indigo-500/20 px-1.5 py-0.5 text-[9px] font-bold text-indigo-300">
-          <Bot className="h-2.5 w-2.5" /> AI
+        <span className="inline-flex items-center gap-0.5 rounded-full bg-[#D6B875]/25 border border-[#D6B875]/50 px-2 py-0.5 text-[9px] font-bold text-[#7A5B1E]">
+          <Bot className="h-2.5 w-2.5" /> Artis AI
         </span>
       );
     }
     if (message.senderRole === 'support_agent' || message.senderRole === 'admin') {
       return (
-        <span className="inline-flex items-center gap-0.5 rounded bg-emerald-500/20 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
-          <Headset className="h-2.5 w-2.5" /> Human Agent
+        <span className="inline-flex items-center gap-0.5 rounded-full bg-emerald-500/20 px-2 py-0.5 text-[9px] font-bold text-emerald-800">
+          <Headset className="h-2.5 w-2.5" /> Human Specialist
         </span>
       );
     }
     if (message.senderRole === 'vendor') {
       return (
-        <span className="inline-flex items-center gap-0.5 rounded bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-bold text-amber-300">
-          <Store className="h-2.5 w-2.5" /> Seller
+        <span className="inline-flex items-center gap-0.5 rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] font-bold text-amber-900">
+          <Store className="h-2.5 w-2.5" /> Maker
         </span>
       );
     }
@@ -308,23 +308,23 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
       {/* Sender Name & Role Pill */}
       {!isMe && (
         <div className="flex items-center gap-1.5 px-1 mb-0.5">
-          <span className="text-[11px] font-bold text-[#00a884]">{message.senderName}</span>
+          <span className="text-[11px] font-bold text-[#171717]">{message.senderName}</span>
           {renderRoleBadge()}
           {detectedLangObj && (
-            <span className="text-[9px] font-medium text-[#8696a0]">
+            <span className="text-[9px] font-medium text-[#7A756D]">
               {detectedLangObj.flag} {detectedLangObj.code.toUpperCase()}
             </span>
           )}
         </div>
       )}
 
-      {/* WhatsApp Message Bubble Container */}
+      {/* Artisanale Luxury Message Bubble Container */}
       <div
         className={cn(
-          'relative max-w-[85%] px-3.5 py-2 text-sm shadow-xs transition-all',
+          'relative max-w-[85%] px-4 py-2.5 text-xs shadow-md transition-all',
           isMe
-            ? 'rounded-lg rounded-tr-none bg-[#005c4b] text-[#e9edef]'
-            : 'rounded-lg rounded-tl-none bg-[#202c33] text-[#e9edef]'
+            ? 'rounded-2xl rounded-tr-xs bg-[#171717] text-[#FAF8F5] border border-[#2E2824]'
+            : 'rounded-2xl rounded-tl-xs bg-[#FAF8F3] text-[#171717] border border-[#E4DEC8]'
         )}
       >
         {/* Text Body or Inline Editor */}
@@ -508,7 +508,7 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
         )}
 
         {/* Footer row: Translate action + Edit/Recall + Timestamp & Double-Ticks */}
-        <div className="mt-1.5 flex items-center justify-between gap-2 text-[10px] text-[#8696a0] select-none">
+        <div className={cn('mt-1.5 flex items-center justify-between gap-2 text-[10px] select-none', isMe ? 'text-[#A8A29E]' : 'text-[#7A756D]')}>
           <div className="flex items-center gap-2">
             {message.text && message.type === 'text' && (
               <button
@@ -589,9 +589,9 @@ export const MessageBubble: React.FC<MessageBubbleProps> = ({
             {isMe && (
               <span>
                 {message.status === 'read' ? (
-                  <CheckCheck className="h-3.5 w-3.5 text-[#53bdeb]" />
+                  <CheckCheck className="h-3.5 w-3.5 text-[#D6B875]" />
                 ) : (
-                  <Check className="h-3.5 w-3.5 text-[#8696a0]" />
+                  <Check className="h-3.5 w-3.5 text-[#A8A29E]" />
                 )}
               </span>
             )}

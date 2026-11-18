@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { apiRequest } from '../lib/api';
 import { AIAgentConfig } from '@convocart/shared';
+import { cn } from '../lib/utils';
 import {
   Bot,
   Save,
@@ -25,7 +26,9 @@ export const VendorAIAgentPage: React.FC = () => {
   const [newAnswer, setNewAnswer] = useState('');
 
   // AI Response Simulator / Tester
-  const [testQuery, setTestQuery] = useState('Do the headphones support Bluetooth multi-point?');
+  const [testQuery, setTestQuery] = useState(
+    'What materials and glazes are used for your ceramic tea sets, and how fast do you ship?'
+  );
   const [simulatedReply, setSimulatedReply] = useState<string | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
 
@@ -117,16 +120,21 @@ export const VendorAIAgentPage: React.FC = () => {
   return (
     <div className="max-w-5xl mx-auto space-y-8">
       {/* Page Title */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-[#E4DEC8]">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="rounded-full bg-purple-100 p-1.5 text-purple-700">
+            <span className="rounded-full bg-[#171717] p-1.5 text-[#D6B875]">
               <Bot className="h-5 w-5" />
             </span>
-            <h1 className="text-2xl font-black text-slate-900">AI Vendor Commerce Assistant</h1>
+            <h1
+              className="text-3xl font-normal text-[#171717]"
+              style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+            >
+              AI Vendor Commerce Assistant
+            </h1>
           </div>
-          <p className="text-xs text-slate-500">
-            Ground your store's autonomous agent in verified policies, specifications, and FAQs.
+          <p className="text-xs text-[#686359]">
+            Grounded in verified studio policies, product inventory, specifications, and FAQs via Groq Cloud LLM.
           </p>
         </div>
 
@@ -134,19 +142,20 @@ export const VendorAIAgentPage: React.FC = () => {
         <div className="flex items-center gap-3">
           <button
             onClick={handleToggleTakeover}
-            className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs font-bold transition-all shadow-sm ${
+            className={cn(
+              'flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all border shadow-xs',
               config.humanTakeoverActive
-                ? 'bg-amber-500 text-white shadow-amber-500/25 ring-4 ring-amber-100'
-                : 'bg-emerald-600 text-white shadow-emerald-600/25 ring-4 ring-emerald-100'
-            }`}
+                ? 'bg-[#FAF8F3] text-[#171717] border-[#E4DEC8] hover:bg-[#ECEAE4]'
+                : 'bg-[#171717] text-[#D6B875] border-[#171717] hover:bg-black'
+            )}
           >
             {config.humanTakeoverActive ? (
               <>
-                <UserCheck className="h-4 w-4" /> Human Seller Handling Active (AI Paused)
+                <UserCheck className="h-3.5 w-3.5 text-[#8C867A]" /> Human Seller Active (AI Paused)
               </>
             ) : (
               <>
-                <Bot className="h-4 w-4" /> AI Auto-Answering Active
+                <Bot className="h-3.5 w-3.5 text-[#D6B875]" /> AI Auto-Answering Active
               </>
             )}
           </button>
@@ -155,17 +164,17 @@ export const VendorAIAgentPage: React.FC = () => {
 
       <form onSubmit={handleSaveConfig} className="space-y-8 text-xs">
         {/* 1. General Agent Identity */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
+        <div className="rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C867A]">
               1. Agent Identity & Persona
             </h3>
-            <label className="flex items-center gap-2 cursor-pointer font-bold text-slate-700">
+            <label className="flex items-center gap-2 cursor-pointer font-bold text-[#171717]">
               <input
                 type="checkbox"
                 checked={config.enabled}
                 onChange={(e) => setConfig({ ...config, enabled: e.target.checked })}
-                className="h-4 w-4 accent-brand-600 rounded"
+                className="h-4 w-4 accent-[#171717] rounded"
               />
               <span>Enable AI Assistant for Customers</span>
             </label>
@@ -173,22 +182,22 @@ export const VendorAIAgentPage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Agent Name</label>
+              <label className="font-bold text-[#171717] block mb-1">Agent Name</label>
               <input
                 type="text"
                 required
                 value={config.agentName}
                 onChange={(e) => setConfig({ ...config, agentName: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] bg-white p-2.5 font-medium text-[#171717] focus:border-[#D6B875] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Tone & Personality</label>
+              <label className="font-bold text-[#171717] block mb-1">Tone & Personality</label>
               <select
                 value={config.personality}
                 onChange={(e: any) => setConfig({ ...config, personality: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium bg-white focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] p-2.5 font-medium bg-white text-[#171717] focus:border-[#D6B875] focus:outline-none"
               >
                 <option value="friendly">Friendly & Helpful (Recommended)</option>
                 <option value="professional">Professional & Direct</option>
@@ -198,7 +207,7 @@ export const VendorAIAgentPage: React.FC = () => {
             </div>
 
             <div className="sm:col-span-2">
-              <label className="font-bold text-slate-700 block mb-1">
+              <label className="font-bold text-[#171717] block mb-1">
                 Greeting Message (Sent when customer initiates inquiry)
               </label>
               <textarea
@@ -206,57 +215,57 @@ export const VendorAIAgentPage: React.FC = () => {
                 required
                 value={config.greetingMessage}
                 onChange={(e) => setConfig({ ...config, greetingMessage: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] bg-white p-2.5 font-medium text-[#171717] focus:border-[#D6B875] focus:outline-none"
               />
             </div>
           </div>
         </div>
 
         {/* 2. Grounded Policies & Knowledge */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+        <div className="rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] p-6 shadow-xs space-y-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C867A]">
             2. Grounded Business Policies (Strict Source of Truth)
           </h3>
-          <p className="text-[11px] text-slate-500">
-            The AI engine references these verbatim to prevent hallucinations or unauthorized promises.
+          <p className="text-[11px] text-[#686359]">
+            The Groq Cloud AI engine references these verbatim to ground answers and prevent unauthorized promises.
           </p>
 
           <div className="space-y-3">
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Shipping & Dispatch Policy</label>
+              <label className="font-bold text-[#171717] block mb-1">Shipping & Dispatch Policy</label>
               <textarea
                 rows={2}
                 value={config.shippingPolicy}
                 onChange={(e) => setConfig({ ...config, shippingPolicy: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] bg-white p-2.5 font-medium text-[#171717] focus:border-[#D6B875] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Returns & Replacement Policy</label>
+              <label className="font-bold text-[#171717] block mb-1">Returns & Replacement Policy</label>
               <textarea
                 rows={2}
                 value={config.returnPolicy}
                 onChange={(e) => setConfig({ ...config, returnPolicy: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] bg-white p-2.5 font-medium text-[#171717] focus:border-[#D6B875] focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="font-bold text-slate-700 block mb-1">Warranty Information</label>
+              <label className="font-bold text-[#171717] block mb-1">Warranty Information</label>
               <textarea
                 rows={2}
                 value={config.warrantyInfo}
                 onChange={(e) => setConfig({ ...config, warrantyInfo: e.target.value })}
-                className="w-full rounded-xl border border-slate-300 p-2.5 font-medium focus:border-brand-500 focus:outline-none"
+                className="w-full rounded-xl border border-[#E4DEC8] bg-white p-2.5 font-medium text-[#171717] focus:border-[#D6B875] focus:outline-none"
               />
             </div>
           </div>
         </div>
 
         {/* 3. Knowledge Base FAQs */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm space-y-4">
-          <h3 className="text-sm font-bold uppercase tracking-wider text-slate-800">
+        <div className="rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] p-6 shadow-xs space-y-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-[#8C867A]">
             3. Frequently Asked Questions (Store Knowledge Base)
           </h3>
 
@@ -264,16 +273,16 @@ export const VendorAIAgentPage: React.FC = () => {
             {config.faqs.map((faq, idx) => (
               <div
                 key={idx}
-                className="flex items-start justify-between rounded-2xl bg-slate-50 p-3.5 border border-slate-200/80"
+                className="flex items-start justify-between rounded-2xl bg-white p-3.5 border border-[#E4DEC8]"
               >
                 <div className="space-y-1 pr-4">
-                  <h4 className="font-bold text-slate-900">Q: {faq.question}</h4>
-                  <p className="text-slate-600">A: {faq.answer}</p>
+                  <h4 className="font-bold text-[#171717]">Q: {faq.question}</h4>
+                  <p className="text-[#555047]">A: {faq.answer}</p>
                 </div>
                 <button
                   type="button"
                   onClick={() => handleRemoveFaq(idx)}
-                  className="rounded-lg p-1.5 text-slate-400 hover:text-rose-600 hover:bg-white"
+                  className="rounded-lg p-1.5 text-[#8C867A] hover:text-rose-600 hover:bg-[#ECEAE4]"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -282,26 +291,26 @@ export const VendorAIAgentPage: React.FC = () => {
           </div>
 
           {/* Add FAQ inputs */}
-          <div className="rounded-2xl border border-brand-200 bg-brand-50/30 p-4 space-y-2.5">
-            <h4 className="font-bold text-brand-900">Add New FAQ</h4>
+          <div className="rounded-2xl border border-[#E4DEC8] bg-[#ECEAE4]/60 p-4 space-y-2.5">
+            <h4 className="font-bold text-[#171717]">Add New FAQ</h4>
             <input
               type="text"
               placeholder="Question (e.g. Do you ship to Australia?)"
               value={newQuestion}
               onChange={(e) => setNewQuestion(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 p-2 bg-white"
+              className="w-full rounded-xl border border-[#E4DEC8] p-2 bg-white text-[#171717] focus:border-[#D6B875] focus:outline-none"
             />
             <input
               type="text"
               placeholder="Answer (e.g. Yes, via DHL Express Worldwide in 4-6 business days.)"
               value={newAnswer}
               onChange={(e) => setNewAnswer(e.target.value)}
-              className="w-full rounded-xl border border-slate-300 p-2 bg-white"
+              className="w-full rounded-xl border border-[#E4DEC8] p-2 bg-white text-[#171717] focus:border-[#D6B875] focus:outline-none"
             />
             <button
               type="button"
               onClick={handleAddFaq}
-              className="rounded-xl bg-slate-900 px-4 py-2 font-bold text-white hover:bg-brand-600"
+              className="rounded-full bg-[#171717] px-4 py-2 font-bold text-[#D6B875] hover:bg-black transition-colors"
             >
               Add to Knowledge Base
             </button>
@@ -309,13 +318,13 @@ export const VendorAIAgentPage: React.FC = () => {
         </div>
 
         {/* 4. Live Grounded Response Tester */}
-        <div className="rounded-3xl border border-purple-200 bg-purple-50/40 p-6 shadow-sm space-y-4">
-          <div className="flex items-center gap-2 text-purple-900 font-bold text-sm">
-            <Sparkles className="h-4 w-4 text-purple-600" />
-            <span>AI Response Grounding Test Simulator</span>
+        <div className="rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] p-6 shadow-xs space-y-4">
+          <div className="flex items-center gap-2 text-[#171717] font-bold text-sm">
+            <Sparkles className="h-4 w-4 text-[#D6B875]" />
+            <span>AI Response Grounding Test Simulator (Groq Cloud)</span>
           </div>
-          <p className="text-slate-600">
-            Type any question to simulate how Aria or your configured AI agent responds to customers using verified data.
+          <p className="text-[#686359] text-xs">
+            Type any question to test live AI responses powered by Groq Cloud and grounded in your studio facts.
           </p>
 
           <div className="flex gap-2">
@@ -324,38 +333,38 @@ export const VendorAIAgentPage: React.FC = () => {
               value={testQuery}
               onChange={(e) => setTestQuery(e.target.value)}
               placeholder="Test query..."
-              className="flex-1 rounded-xl border border-purple-200 bg-white p-2.5"
+              className="flex-1 rounded-xl border border-[#E4DEC8] bg-white p-2.5 text-xs text-[#171717] focus:outline-none focus:border-[#D6B875]"
             />
             <button
               type="button"
               onClick={handleRunSimulation}
               disabled={isSimulating}
-              className="rounded-xl bg-purple-600 px-5 py-2.5 font-bold text-white shadow-sm hover:bg-purple-700 flex items-center gap-1.5"
+              className="rounded-full bg-[#171717] px-5 py-2.5 font-bold text-[#D6B875] shadow-xs hover:bg-black flex items-center gap-1.5 transition-colors text-xs"
             >
               <Play className="h-3.5 w-3.5" /> {isSimulating ? 'Evaluating...' : 'Simulate'}
             </button>
           </div>
 
           {simulatedReply && (
-            <div className="rounded-2xl border border-purple-200 bg-white p-4 text-slate-800 space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700 block">
+            <div className="rounded-2xl border border-[#E4DEC8] bg-white p-4 text-[#171717] space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#D6B875] block">
                 Simulated AI Output:
               </span>
-              <p className="leading-relaxed font-medium">{simulatedReply}</p>
+              <p className="leading-relaxed font-medium text-xs">{simulatedReply}</p>
             </div>
           )}
         </div>
 
         {/* Save Bar */}
-        <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200">
+        <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#E4DEC8]">
           {isSaved && (
-            <span className="flex items-center gap-1 text-xs font-bold text-emerald-600">
+            <span className="flex items-center gap-1 text-xs font-bold text-emerald-700">
               <Check className="h-4 w-4" /> AI configuration saved successfully!
             </span>
           )}
           <button
             type="submit"
-            className="flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-3 font-bold text-white shadow-md hover:bg-brand-700 active:scale-95 transition-all"
+            className="flex items-center gap-2 rounded-full bg-[#171717] px-6 py-3 font-bold text-[#D6B875] shadow-xs hover:bg-black active:scale-95 transition-all text-xs"
           >
             <Save className="h-4 w-4" /> Save Configuration
           </button>

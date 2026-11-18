@@ -132,7 +132,7 @@ export const VendorProfilePage: React.FC = () => {
           <button
             type="submit"
             disabled={isSaving}
-            className="rounded-2xl bg-brand-600 px-6 py-2.5 font-bold text-white shadow-md hover:bg-brand-700 flex items-center gap-1.5"
+            className="rounded-full bg-[#171717] px-6 py-2.5 font-bold text-[#D6B875] hover:bg-black transition-colors flex items-center gap-1.5"
           >
             <Save className="h-4 w-4" /> Save Profile
           </button>

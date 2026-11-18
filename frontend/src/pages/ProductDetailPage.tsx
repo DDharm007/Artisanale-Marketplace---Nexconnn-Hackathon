@@ -21,6 +21,8 @@ import {
   Tag,
   Share2,
   ChevronRight,
+  ArrowRight,
+  Sparkles,
 } from 'lucide-react';
 
 export const ProductDetailPage: React.FC = () => {
@@ -63,20 +65,28 @@ export const ProductDetailPage: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto max-w-7xl px-4 py-20 text-center text-zinc-500">
-        <div className="h-10 w-10 mx-auto rounded-full border-2 border-white border-t-transparent animate-spin mb-4" />
-        <p className="text-sm font-semibold text-zinc-400">Loading product details...</p>
+      <div className="mx-auto max-w-7xl px-4 py-20 text-center text-[#686359]">
+        <div className="h-10 w-10 mx-auto rounded-full border-2 border-[#171717] border-t-transparent animate-spin mb-4" />
+        <p className="text-sm font-semibold text-[#171717]">Loading artisanal creation...</p>
       </div>
     );
   }
 
   if (!product) {
     return (
-      <div className="mx-auto max-w-7xl px-4 py-20 text-center text-zinc-100">
-        <h2 className="text-2xl font-black mb-2">Product Not Found</h2>
+      <div className="mx-auto max-w-7xl px-4 py-20 text-center text-[#171717]">
+        <h2
+          className="text-3xl font-normal mb-2"
+          style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+        >
+          Creation Not Found
+        </h2>
+        <p className="text-xs text-[#686359] max-w-sm mx-auto mb-6">
+          The requested studio piece may have been acquired or moved.
+        </p>
         <button
           onClick={() => navigate('/shop/products')}
-          className="rounded-full bg-white px-6 py-2.5 text-xs font-bold text-black hover:bg-zinc-200 mt-4"
+          className="rounded-full bg-[#171717] px-7 py-3 text-xs font-bold text-[#D6B875] hover:bg-black transition-colors"
         >
           Return to Marketplace
         </button>
@@ -86,9 +96,8 @@ export const ProductDetailPage: React.FC = () => {
 
   const isFavorited = isInWishlist(product.productId);
 
-  const finalPrice = product.discount > 0
-    ? product.price * (1 - product.discount / 100)
-    : product.price;
+  const finalPrice =
+    product.discount > 0 ? product.price * (1 - product.discount / 100) : product.price;
 
   const handleAddToCart = async () => {
     await addItem(product.productId, quantity, selectedVariants);
@@ -112,25 +121,31 @@ export const ProductDetailPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-zinc-100 pb-20">
+    <div className="min-h-screen bg-[#ECEAE4] text-[#171717] pb-20">
       {/* 1. BREADCRUMBS STRIP */}
-      <div className="bg-[#0c0c0e] border-b border-zinc-800/80 px-4 py-2.5 text-xs text-zinc-400">
+      <div className="bg-[#FAF8F3] border-b border-[#E4DEC8] px-4 py-3 text-xs text-[#686359]">
         <div className="mx-auto max-w-7xl flex items-center gap-1.5 flex-wrap">
-          <Link to="/shop" className="hover:text-white">Home</Link>
-          <ChevronRight className="h-3 w-3" />
-          <Link to="/shop/products" className="hover:text-white">Products</Link>
-          <ChevronRight className="h-3 w-3" />
-          <span className="text-zinc-500">{product.categoryName}</span>
-          <ChevronRight className="h-3 w-3" />
-          <span className="font-semibold text-zinc-200 truncate max-w-[200px]">{product.title}</span>
+          <Link to="/shop" className="hover:text-[#171717] transition-colors">
+            Home
+          </Link>
+          <ChevronRight className="h-3 w-3 text-[#A8A29E]" />
+          <Link to="/shop/products" className="hover:text-[#171717] transition-colors">
+            Creations
+          </Link>
+          <ChevronRight className="h-3 w-3 text-[#A8A29E]" />
+          <span className="text-[#8C867A]">{product.categoryName}</span>
+          <ChevronRight className="h-3 w-3 text-[#A8A29E]" />
+          <span className="font-semibold text-[#171717] truncate max-w-[200px]">
+            {product.title}
+          </span>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* LEFT: Gallery (5 Cols) */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-[#121215] border border-zinc-800 p-6 flex items-center justify-center shadow-xl">
+            <div className="relative aspect-square w-full overflow-hidden rounded-3xl bg-white border border-[#E4DEC8] p-6 flex items-center justify-center shadow-xs">
               <img
                 src={product.images[activeImageIndex] || product.images[0]}
                 alt={product.title}
@@ -138,7 +153,7 @@ export const ProductDetailPage: React.FC = () => {
               />
 
               {product.discount > 0 && (
-                <span className="absolute top-4 left-4 rounded-full bg-white text-black px-2.5 py-1 text-xs font-black shadow-md">
+                <span className="absolute top-4 left-4 rounded-full bg-[#171717] text-[#D6B875] px-3 py-1 text-xs font-bold shadow-xs">
                   {product.discount}% OFF
                 </span>
               )}
@@ -147,25 +162,27 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   onClick={() => toggleWishlist(product)}
                   className={cn(
-                    'flex h-9 w-9 items-center justify-center rounded-full bg-black/60 border border-zinc-800 backdrop-blur-sm transition-all active:scale-90',
-                    isFavorited ? 'text-rose-500' : 'text-zinc-400 hover:text-white'
+                    'flex h-10 w-10 items-center justify-center rounded-full bg-white/90 border border-[#E4DEC8] shadow-xs transition-all active:scale-95 cursor-pointer',
+                    isFavorited ? 'text-rose-600' : 'text-[#686359] hover:text-[#171717]'
                   )}
                   title="Save to Wishlist"
+                  aria-label="Save to Wishlist"
                 >
-                  <Heart className={cn('h-4 w-4', isFavorited && 'fill-rose-500')} />
+                  <Heart className={cn('h-4 w-4', isFavorited && 'fill-rose-600')} />
                 </button>
 
                 <button
                   onClick={handleShare}
-                  className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 border border-zinc-800 backdrop-blur-sm text-zinc-400 hover:text-white transition-all active:scale-90"
+                  className="flex h-10 w-10 items-center justify-center rounded-full bg-white/90 border border-[#E4DEC8] shadow-xs text-[#686359] hover:text-[#171717] transition-all active:scale-95 cursor-pointer"
                   title="Share link"
+                  aria-label="Share link"
                 >
                   <Share2 className="h-4 w-4" />
                 </button>
               </div>
 
               {copiedLink && (
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white text-black text-[11px] px-3 py-1 rounded-full shadow-lg font-bold">
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-[#171717] text-[#D6B875] text-[11px] px-3 py-1 rounded-full shadow-lg font-bold">
                   Link copied!
                 </div>
               )}
@@ -179,10 +196,10 @@ export const ProductDetailPage: React.FC = () => {
                     key={idx}
                     onClick={() => setActiveImageIndex(idx)}
                     className={cn(
-                      'h-16 w-16 shrink-0 overflow-hidden rounded-xl border-2 bg-[#121215] p-1 transition-all',
+                      'h-16 w-16 shrink-0 overflow-hidden rounded-2xl border-2 bg-white p-1 transition-all cursor-pointer',
                       activeImageIndex === idx
-                        ? 'border-white'
-                        : 'border-zinc-800 hover:border-zinc-700'
+                        ? 'border-[#171717]'
+                        : 'border-[#E4DEC8] hover:border-[#8C867A]'
                     )}
                   >
                     <img src={img} alt="" className="h-full w-full object-contain" />
@@ -192,61 +209,64 @@ export const ProductDetailPage: React.FC = () => {
             )}
           </div>
 
-          {/* CENTER: Specifications (4 Cols) */}
+          {/* CENTER: Specifications & Overview (4 Cols) */}
           <div className="lg:col-span-4 space-y-5">
             <div>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className="text-xs font-black uppercase tracking-wider text-zinc-400">
-                  {product.brand}
+                <span className="text-xs font-bold uppercase tracking-wider text-[#8C867A]">
+                  {vendor?.businessName || product.brand || 'Artisan Studio'}
                 </span>
                 {product.categoryId === 'cat-global' && (
-                  <span className="rounded bg-sky-950 text-sky-400 border border-sky-800 px-1.5 py-0.5 text-[10px] font-bold">
-                    Tokyo Import
+                  <span className="rounded-full bg-[#171717] text-[#D6B875] px-2 py-0.5 text-[10px] font-bold">
+                    Kyoto Atelier
                   </span>
                 )}
               </div>
 
-              <h1 className="text-xl sm:text-2xl font-black text-white leading-snug">
+              <h1
+                className="text-2xl sm:text-3xl font-normal text-[#171717] leading-tight"
+                style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+              >
                 {product.title}
               </h1>
 
               <div className="flex items-center gap-2 mt-2">
-                <div className="flex items-center gap-1 rounded bg-zinc-800 px-2 py-0.5 text-xs font-bold text-white">
-                  <Star className="h-3 w-3 fill-amber-400 text-amber-400" />
+                <div className="flex items-center gap-1 rounded-full bg-[#FAF8F3] border border-[#E4DEC8] px-2.5 py-0.5 text-xs font-semibold text-[#171717]">
+                  <Star className="h-3 w-3 fill-[#D6B875] text-[#D6B875]" />
                   <span>{product.rating.toFixed(1)}</span>
                 </div>
-                <span className="text-xs text-zinc-400">
-                  {product.reviewCount} Ratings & Verified Reviews
+                <span className="text-xs text-[#686359]">
+                  ({product.reviewCount} verified collector critiques)
                 </span>
               </div>
             </div>
 
             {/* Price Box */}
-            <div className="border-t border-b border-zinc-800 py-3">
-              <div className="flex items-baseline gap-3">
-                <span className="text-2xl sm:text-3xl font-black text-white">
+            <div className="border-t border-b border-[#E4DEC8] py-3.5">
+              <div className="flex items-baseline gap-3 flex-wrap">
+                <span className="text-2xl sm:text-3xl font-bold text-[#171717]">
                   {formatPrice(finalPrice)}
                 </span>
                 {product.discount > 0 && (
                   <>
-                    <span className="text-sm text-zinc-500 line-through">
+                    <span className="text-sm text-[#8C867A] line-through">
                       {formatPrice(product.price)}
                     </span>
-                    <span className="text-xs font-extrabold text-emerald-400">
-                      {product.discount}% off
+                    <span className="text-xs font-bold text-emerald-700">
+                      {product.discount}% privilege savings
                     </span>
                   </>
                 )}
               </div>
             </div>
 
-            {/* Bank Offers Pill Box */}
-            <div className="rounded-xl bg-[#141418] border border-zinc-800 p-3 space-y-1 text-xs text-zinc-300">
-              <span className="font-bold text-zinc-200 flex items-center gap-1 text-[11px] uppercase tracking-wider">
-                <Tag className="h-3.5 w-3.5 text-zinc-400" /> Promotional Discount
+            {/* Privilege Code Pill Box */}
+            <div className="rounded-2xl bg-[#FAF8F3] border border-[#E4DEC8] p-3.5 space-y-1 text-xs text-[#686359]">
+              <span className="font-bold text-[#171717] flex items-center gap-1 text-[11px] uppercase tracking-wider">
+                <Tag className="h-3.5 w-3.5 text-[#D6B875]" /> Collector Privilege Code
               </span>
-              <p className="text-zinc-400">
-                Use code <strong className="text-white">CONVO10</strong> at checkout for 10% instant discount.
+              <p>
+                Use code <strong className="text-[#171717]">CONVO10</strong> at checkout for 10% instant discount.
               </p>
             </div>
 
@@ -255,8 +275,8 @@ export const ProductDetailPage: React.FC = () => {
               <div className="space-y-3 pt-2">
                 {product.variants.map((v) => (
                   <div key={v.id}>
-                    <label className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-1.5 block">
-                      {v.name}: <span className="text-white">{selectedVariants[v.name]}</span>
+                    <label className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-1.5 block">
+                      {v.name}: <span className="text-[#171717]">{selectedVariants[v.name]}</span>
                     </label>
                     <div className="flex flex-wrap gap-2">
                       {v.options.map((opt) => (
@@ -266,10 +286,10 @@ export const ProductDetailPage: React.FC = () => {
                             setSelectedVariants((prev) => ({ ...prev, [v.name]: opt }))
                           }
                           className={cn(
-                            'rounded-xl px-3 py-1.5 text-xs font-bold border transition-all',
+                            'rounded-xl px-3.5 py-1.5 text-xs font-semibold border transition-all cursor-pointer',
                             selectedVariants[v.name] === opt
-                              ? 'border-white bg-zinc-800 text-white'
-                              : 'border-zinc-800 text-zinc-400 hover:border-zinc-700 hover:text-white bg-[#121215]'
+                              ? 'border-[#171717] bg-[#171717] text-white'
+                              : 'border-[#E4DEC8] text-[#686359] hover:border-[#171717] hover:text-[#171717] bg-white'
                           )}
                         >
                           {opt}
@@ -283,10 +303,10 @@ export const ProductDetailPage: React.FC = () => {
 
             {/* Description */}
             <div className="pt-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-1">
-                Overview
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-1.5">
+                Provenance &amp; Overview
               </h3>
-              <p className="text-xs text-zinc-400 leading-relaxed font-normal">
+              <p className="text-xs sm:text-sm text-[#4A463F] leading-relaxed font-normal">
                 {product.description}
               </p>
             </div>
@@ -294,14 +314,14 @@ export const ProductDetailPage: React.FC = () => {
             {/* Technical Specifications */}
             {product.specifications && Object.keys(product.specifications).length > 0 && (
               <div className="pt-2">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
-                  Specifications
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#8C867A] mb-2">
+                  Atelier Specifications
                 </h3>
-                <div className="rounded-xl border border-zinc-800 bg-[#121215] divide-y divide-zinc-800/80 text-xs">
+                <div className="rounded-2xl border border-[#E4DEC8] bg-white divide-y divide-[#F0EBE0] text-xs">
                   {Object.entries(product.specifications).map(([key, val]) => (
-                    <div key={key} className="flex justify-between p-2.5">
-                      <span className="text-zinc-500 font-medium">{key}</span>
-                      <span className="text-zinc-200 font-bold text-right">{val}</span>
+                    <div key={key} className="flex justify-between p-3">
+                      <span className="text-[#686359] font-medium">{key}</span>
+                      <span className="text-[#171717] font-semibold text-right">{val}</span>
                     </div>
                   ))}
                 </div>
@@ -310,44 +330,48 @@ export const ProductDetailPage: React.FC = () => {
           </div>
 
           {/* RIGHT: Buy Box (3 Cols) */}
-          <div className="lg:col-span-3">
-            <div className="sticky top-28 rounded-2xl border border-zinc-800 bg-[#121215] p-5 shadow-2xl space-y-4">
+          <div className="lg:col-span-3 w-full">
+            <div className="rounded-3xl border border-[#E4DEC8] bg-white p-6 shadow-xs space-y-4">
               <div>
-                <span className="text-2xl font-black text-white block">
+                <span className="text-2xl font-bold text-[#171717] block">
                   {formatPrice(finalPrice)}
                 </span>
-                <p className="text-xs text-zinc-400 mt-1 flex items-center gap-1">
-                  <Truck className="h-3.5 w-3.5 text-zinc-400" />
-                  <span>Free delivery to <strong className="text-white">{location.city}</strong></span>
+                <p className="text-xs text-[#686359] mt-1 flex items-center gap-1">
+                  <Truck className="h-3.5 w-3.5 text-[#D6B875]" />
+                  <span>
+                    Direct delivery to <strong className="text-[#171717]">{location.city}</strong>
+                  </span>
                 </p>
               </div>
 
               <div>
                 {product.stock > 0 ? (
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-400">
-                    <Check className="h-4 w-4" /> In Stock ({product.stock} units ready)
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
+                    <Check className="h-4 w-4" /> In Studio Stock ({product.stock} units ready)
                   </span>
                 ) : (
-                  <span className="text-xs font-bold text-rose-400">Out of Stock</span>
+                  <span className="text-xs font-bold text-rose-700">Studio Batch Sold Out</span>
                 )}
               </div>
 
               {/* Quantity */}
               <div>
-                <label className="text-xs font-bold text-zinc-400 block mb-1">Quantity</label>
-                <div className="flex items-center rounded-xl border border-zinc-800 bg-[#16161a] w-28">
+                <label className="text-xs font-bold text-[#8C867A] block mb-1.5">Quantity</label>
+                <div className="flex items-center rounded-full border border-[#E4DEC8] bg-[#FAF8F3] w-32 p-1">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="px-2.5 py-1 text-zinc-400 hover:text-white rounded-l-xl font-bold"
+                    className="h-8 w-8 flex items-center justify-center text-[#171717] hover:bg-white rounded-full font-bold cursor-pointer transition-colors"
+                    aria-label="Decrease quantity"
                   >
                     -
                   </button>
-                  <span className="flex-1 text-center text-xs font-bold text-white">
+                  <span className="flex-1 text-center text-xs font-bold text-[#171717]">
                     {quantity}
                   </span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(product.stock, q + 1))}
-                    className="px-2.5 py-1 text-zinc-400 hover:text-white rounded-r-xl font-bold"
+                    className="h-8 w-8 flex items-center justify-center text-[#171717] hover:bg-white rounded-full font-bold cursor-pointer transition-colors"
+                    aria-label="Increase quantity"
                   >
                     +
                   </button>
@@ -355,24 +379,24 @@ export const ProductDetailPage: React.FC = () => {
               </div>
 
               {/* Actions */}
-              <div className="space-y-2 pt-2">
+              <div className="space-y-2.5 pt-2">
                 <button
                   onClick={handleAddToCart}
                   disabled={isCartLoading || product.stock === 0}
                   className={cn(
-                    'w-full flex items-center justify-center gap-2 rounded-xl py-2.5 px-4 text-xs font-bold transition-all active:scale-95 disabled:opacity-50',
+                    'w-full flex items-center justify-center gap-2 rounded-full py-3.5 px-4 text-xs font-bold transition-all active:scale-95 disabled:opacity-50 cursor-pointer shadow-xs',
                     isAddedSuccess
-                      ? 'bg-emerald-600 text-white'
-                      : 'bg-white hover:bg-zinc-200 text-black'
+                      ? 'bg-emerald-700 text-white'
+                      : 'bg-[#171717] hover:bg-black text-[#D6B875]'
                   )}
                 >
                   {isAddedSuccess ? (
                     <>
-                      <Check className="h-4 w-4" /> Added to Cart
+                      <Check className="h-4 w-4" /> Added to Collector Bag
                     </>
                   ) : (
                     <>
-                      <ShoppingCart className="h-4 w-4" /> Add to Cart
+                      <ShoppingCart className="h-4 w-4" /> Add to Collector Bag
                     </>
                   )}
                 </button>
@@ -380,41 +404,43 @@ export const ProductDetailPage: React.FC = () => {
                 <button
                   onClick={handleBuyNow}
                   disabled={product.stock === 0}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-black py-2.5 px-4 text-xs font-bold shadow-md transition-all active:scale-95 disabled:opacity-50"
+                  className="w-full flex items-center justify-center gap-2 rounded-full border border-[#171717] bg-white hover:bg-[#FAF8F3] text-[#171717] py-3.5 px-4 text-xs font-bold shadow-xs transition-all active:scale-95 disabled:opacity-50 cursor-pointer"
                 >
-                  <Zap className="h-4 w-4" /> Buy Now
+                  <Zap className="h-4 w-4 text-[#D6B875]" /> Instant Acquisition
                 </button>
               </div>
 
-              {/* Contact Seller & Product Support */}
-              <div className="pt-3 border-t border-zinc-800 space-y-2">
+              {/* Contact Maker & Studio Dialogue */}
+              <div className="pt-4 border-t border-[#E4DEC8] space-y-2.5">
                 <button
                   onClick={handleContactSeller}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-[#00a884] hover:bg-[#029676] py-2.5 px-4 text-xs font-extrabold text-[#111b21] transition-colors"
+                  className="w-full flex items-center justify-center gap-2 rounded-full bg-[#FAF8F3] border border-[#E4DEC8] hover:bg-[#F2ECE1] py-3 px-4 text-xs font-bold text-[#171717] transition-colors cursor-pointer"
                 >
-                  <MessageSquare className="h-4 w-4" />
-                  Chat Real-Time with Seller
+                  <MessageSquare className="h-4 w-4 text-[#D6B875]" />
+                  Chat Directly with Maker
                 </button>
+
                 <Link
                   to={`/shop/support?productId=${product.productId}`}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900 hover:bg-zinc-800 py-2 px-4 text-xs font-bold text-zinc-200 transition-colors"
+                  className="w-full flex items-center justify-center gap-2 rounded-full border border-[#E4DEC8] bg-white hover:bg-[#FAF8F3] py-2.5 px-4 text-xs font-semibold text-[#686359] transition-colors"
                 >
-                  Open Product Support Ticket
+                  Open Provenance Inquiry
                 </Link>
-                <p className="text-[10px] text-zinc-500 text-center">
-                  Direct verified seller communication powered by Nexconn
+
+                <p className="text-[10px] text-[#8C867A] text-center leading-relaxed">
+                  Real-time direct studio dialogue with master artisans
                 </p>
               </div>
 
               {vendor && (
-                <div className="pt-3 border-t border-zinc-800 text-xs space-y-1 text-zinc-400">
+                <div className="pt-3 border-t border-[#E4DEC8] text-xs space-y-1.5 text-[#686359]">
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Merchant:</span>
-                    <span className="font-bold text-zinc-200">{vendor.businessName}</span>
+                    <span className="text-[#8C867A]">Studio:</span>
+                    <span className="font-bold text-[#171717]">{vendor.businessName}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-zinc-500">Guarantee:</span>
-                    <span className="text-zinc-300">7 Days Replacement</span>
+                    <span className="text-[#8C867A]">Guarantee:</span>
+                    <span className="text-[#171717]">Signed Provenance &amp; Free Returns</span>
                   </div>
                 </div>
               )}

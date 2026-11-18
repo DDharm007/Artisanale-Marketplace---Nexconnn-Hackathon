@@ -1,451 +1,537 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Search,
-  ShoppingCart,
-  Heart,
-  MessageSquare,
   User,
-  Shield,
   Store,
   Headphones,
+  Shield,
   LogOut,
-  ChevronDown,
-  Globe,
   Package,
+  Heart,
+  MessageSquare,
+  ShoppingBag,
+  Search,
+  ChevronDown,
   X,
-  MapPin,
-  Check,
-  Database,
+  Menu,
+  ArrowRight,
+  Compass,
+  BookOpen,
+  Info,
 } from 'lucide-react';
 import { useAuthStore } from '../../stores/useAuthStore';
 import { useCartStore } from '../../stores/useCartStore';
 import { useWishlistStore } from '../../stores/useWishlistStore';
 import { useChatStore } from '../../stores/useChatStore';
-import { usePreferencesStore, SUPPORTED_CURRENCIES, PRESET_LOCATIONS } from '../../stores/usePreferencesStore';
-import { UserRole, DEFAULT_CATEGORIES } from '@convocart/shared';
-import { cn } from '../../lib/utils';
 
 export const Navbar: React.FC = () => {
   const navigate = useNavigate();
-  const locationPath = useLocation().pathname;
-  const { user, logout, switchDemoRole } = useAuthStore();
+  const location = useLocation();
+  const { user, logout } = useAuthStore();
   const { itemCount } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
   const { toggleDrawer, unreadTotal } = useChatStore();
-  const { currency, setCurrency, location, setLocation } = usePreferencesStore();
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [showRoleMenu, setShowRoleMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
-  const [showCurrencyMenu, setShowCurrencyMenu] = useState(false);
-  const [showLocationModal, setShowLocationModal] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setShowUserMenu(false);
+    setShowSearch(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isMobileMenuOpen]);
+
+  const navLinks = [
+    { label: 'Explore', href: '/shop/products', icon: Compass },
+    { label: 'About Us', href: '/shop/about', icon: Info },
+    { label: 'Blog', href: '/shop/blog', icon: BookOpen },
+  ];
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = searchQuery.trim();
-    if (query) {
-      navigate(`/shop/products?search=${encodeURIComponent(query)}`);
+    const q = searchQuery.trim();
+    setShowSearch(false);
+    setIsMobileMenuOpen(false);
+    if (q) {
+      navigate(`/shop/products?search=${encodeURIComponent(q)}`);
     } else {
       navigate('/shop/products');
     }
   };
 
-  const handleRoleSelect = async (role: UserRole, emailOverride?: string) => {
-    setShowRoleMenu(false);
-    await switchDemoRole(role, emailOverride);
-    if (role === 'vendor') navigate('/vendor');
-    else if (role === 'support_agent') navigate('/support');
-    else if (role === 'admin') navigate('/admin');
-    else navigate('/shop');
-  };
-
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-zinc-800/80 bg-[#09090b]/90 backdrop-blur-md text-zinc-100">
-      {/* Top Main Navigation Bar */}
-      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-        {/* Left: Brand Logo & Location */}
-        <div className="flex items-center gap-6">
-          <Link to="/shop" className="flex items-center gap-2 shrink-0 py-0.5">
-            <img src="/logo.png" alt="ConvoCart" className="h-10 sm:h-12 w-auto object-contain brightness-110 hover:opacity-90 transition-opacity" />
+    <header className="w-full bg-[#ECEAE4] text-[#171717] z-40 relative">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-8 lg:px-12">
+        <div className="flex h-16 sm:h-[68px] items-center justify-between gap-2">
+          {/* Left: "artisanale" serif wordmark */}
+          <Link
+            to="/shop"
+            className="text-[21px] sm:text-[23px] font-normal text-[#171717] tracking-[-0.01em] origin-left scale-x-[1.08] hover:opacity-80 transition-opacity select-none shrink-0"
+            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+          >
+            artisanale
           </Link>
 
-          {/* Quick Location Pill */}
-          <button
-            onClick={() => setShowLocationModal(true)}
-            className="hidden lg:flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1 text-xs text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
-          >
-            <MapPin className="h-3.5 w-3.5 text-zinc-500" />
-            <span>Deliver to <strong className="text-zinc-200 font-medium">{location.city}</strong></span>
-          </button>
-        </div>
-
-        {/* Center: Minimalist Dark Search Bar */}
-        <form onSubmit={handleSearch} className="relative flex-1 max-w-lg hidden sm:block">
-          <input
-            type="text"
-            placeholder="Search audio, mechanical keyboards, global imports..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full rounded-full border border-zinc-800 bg-zinc-900/90 pl-10 pr-9 py-2 text-xs text-zinc-100 placeholder:text-zinc-500 focus:bg-zinc-950 focus:border-zinc-700 focus:outline-none transition-all shadow-inner"
-          />
-          <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-zinc-500" />
-          {searchQuery && (
-            <button
-              type="button"
-              onClick={() => setSearchQuery('')}
-              className="absolute right-3 top-2.5 text-zinc-500 hover:text-zinc-300"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          )}
-        </form>
-
-        {/* Right: Actions, Currency, Roles, Cart & Chat */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Currency Pill */}
-          <div className="relative">
-            <button
-              onClick={() => setShowCurrencyMenu(!showCurrencyMenu)}
-              className="flex items-center gap-1 rounded-full border border-zinc-800 bg-zinc-900/70 px-2.5 py-1 text-xs font-medium text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors"
-            >
-              <span>{currency.flag}</span>
-              <span className="font-semibold">{currency.code}</span>
-              <ChevronDown className="h-3 w-3 text-zinc-500" />
-            </button>
-
-            {showCurrencyMenu && (
-              <div className="absolute right-0 mt-2 w-44 rounded-xl border border-zinc-800 bg-[#121215] p-1.5 shadow-2xl z-50 text-xs">
-                {SUPPORTED_CURRENCIES.map((c) => (
-                  <button
-                    key={c.code}
-                    onClick={() => {
-                      setCurrency(c.code);
-                      setShowCurrencyMenu(false);
-                    }}
-                    className={cn(
-                      'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-zinc-300 hover:bg-zinc-800',
-                      currency.code === c.code && 'bg-zinc-800 font-bold text-white'
-                    )}
-                  >
-                    <span className="flex items-center gap-2">
-                      <span>{c.flag}</span>
-                      <span>{c.label}</span>
-                    </span>
-                    {currency.code === c.code && <Check className="h-3.5 w-3.5 text-white" />}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Account Status / Dynamic Auth Actions */}
-          {user ? (
-            <div className="relative">
-              <button
-                onClick={() => setShowRoleMenu(!showRoleMenu)}
-                className="flex items-center gap-1.5 rounded-full bg-zinc-800 text-zinc-200 border border-zinc-700/80 px-3 py-1 text-xs font-medium hover:bg-zinc-700 hover:text-white transition-colors"
+          {/* Center: Minimalist desktop navigation links */}
+          <nav className="hidden md:flex items-center gap-8 lg:gap-11" aria-label="Main Navigation">
+            {navLinks.map((item) => (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="text-[12.5px] font-normal text-[#222222] hover:text-black transition-colors whitespace-nowrap"
               >
-                <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                <span className="capitalize">{user.role.replace('_', ' ')}</span>
-                <ChevronDown className="h-3 w-3 text-zinc-400" />
-              </button>
+                {item.label}
+              </Link>
+            ))}
+          </nav>
 
-              {showRoleMenu && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-zinc-800 bg-[#121215] p-1.5 shadow-2xl z-50 text-xs">
-                  <div className="px-2.5 py-1.5 text-[10px] font-bold text-zinc-500 uppercase tracking-wider">
-                    Active Account
-                  </div>
-                  <div className="px-2.5 pb-2 mb-1 border-b border-zinc-800">
-                    <p className="font-bold text-white truncate">{user.displayName}</p>
-                    <p className="text-[10px] text-zinc-400 truncate">{user.email}</p>
-                  </div>
-                  <Link
-                    to="/shop/profile"
-                    onClick={() => setShowRoleMenu(false)}
-                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 font-medium text-zinc-200 hover:bg-zinc-800"
+          {/* Right: Actions, Search, Icons, Cart, Account & Mobile Hamburger */}
+          <div className="flex items-center gap-2.5 sm:gap-5 text-[12.5px] font-normal text-[#222222]">
+            {/* Desktop / Tablet Expandable Search */}
+            <div className="hidden sm:block">
+              {showSearch ? (
+                <form onSubmit={handleSearch} className="flex items-center border-b border-[#171717] pb-0.5">
+                  <Search className="h-3.5 w-3.5 text-[#171717] stroke-[1.6] mr-1.5 shrink-0" />
+                  <input
+                    type="text"
+                    autoFocus
+                    placeholder="Search..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-28 sm:w-40 bg-transparent text-[12px] text-[#171717] placeholder:text-[#78756E] focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowSearch(false)}
+                    className="text-[#78756E] hover:text-[#171717] ml-1 cursor-pointer p-1"
+                    aria-label="Close search"
                   >
-                    <User className="h-4 w-4 text-emerald-400" /> My Profile &amp; Addresses
-                  </Link>
-                  {user.role === 'vendor' && (
-                    <Link
-                      to="/vendor"
-                      onClick={() => setShowRoleMenu(false)}
-                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 font-medium text-amber-300 hover:bg-zinc-800"
-                    >
-                      <Store className="h-4 w-4 text-amber-400" /> My Seller Studio
-                    </Link>
-                  )}
-                  {user.role === 'support_agent' && (
-                    <Link
-                      to="/support"
-                      onClick={() => setShowRoleMenu(false)}
-                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 font-medium text-sky-300 hover:bg-zinc-800"
-                    >
-                      <Headphones className="h-4 w-4 text-sky-400" /> Dispatch Center
-                    </Link>
-                  )}
-                  {user.role === 'admin' && (
-                    <Link
-                      to="/admin"
-                      onClick={() => setShowRoleMenu(false)}
-                      className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 font-medium text-purple-300 hover:bg-zinc-800"
-                    >
-                      <Shield className="h-4 w-4 text-purple-400" /> Admin Console
-                    </Link>
-                  )}
-                  <Link
-                    to="/auth"
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      setShowRoleMenu(false);
-                      await logout();
-                      navigate('/auth');
-                    }}
-                    className="flex w-full items-center gap-2 rounded-lg px-2.5 py-2 font-medium text-zinc-300 hover:bg-zinc-800"
-                  >
-                    <Shield className="h-4 w-4 text-zinc-400" /> Switch Account / Portal
-                  </Link>
-                </div>
+                    <X className="h-3.5 w-3.5 stroke-[1.6]" />
+                  </button>
+                </form>
+              ) : (
+                <button
+                  onClick={() => setShowSearch(true)}
+                  className="hover:text-black transition-colors cursor-pointer p-1.5"
+                  title="Search"
+                  aria-label="Search"
+                >
+                  <Search className="h-4 w-4 stroke-[1.6]" />
+                </button>
               )}
             </div>
-          ) : (
+
+            {/* Minimal Wishlist Icon (hidden on tiny mobile <360px, available in mobile menu) */}
             <Link
-              to="/auth"
-              className="flex items-center gap-1.5 rounded-full bg-emerald-500 hover:bg-emerald-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 transition-colors"
+              to="/shop/wishlist"
+              className="relative hover:text-black transition-colors p-1.5 hidden xs:inline-flex items-center justify-center min-h-[36px] min-w-[36px]"
+              title="Wishlist"
+              aria-label="Wishlist"
             >
-              <User className="h-3.5 w-3.5" />
-              <span>Sign In / Join</span>
+              <Heart className="h-4 w-4 stroke-[1.6]" />
+              {wishlistItems.length > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-[#171717] px-1 text-[9px] font-medium text-white">
+                  {wishlistItems.length}
+                </span>
+              )}
             </Link>
-          )}
 
-          {/* Orders Link */}
-          <Link
-            to="/shop/orders"
-            className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-zinc-400 hover:text-white px-2 py-1 transition-colors"
-          >
-            <Package className="h-4 w-4 text-zinc-500" />
-            <span>Orders</span>
-          </Link>
+            {/* Minimal Messages Icon */}
+            <button
+              onClick={() => toggleDrawer()}
+              className="relative hover:text-black transition-colors cursor-pointer p-1.5 inline-flex items-center justify-center min-h-[36px] min-w-[36px]"
+              title="Messages"
+              aria-label="Messages"
+            >
+              <MessageSquare className="h-4 w-4 stroke-[1.6]" />
+              {unreadTotal > 0 && (
+                <span className="absolute -top-0.5 -right-0.5 flex h-3.5 min-w-[14px] items-center justify-center rounded-full bg-[#171717] px-1 text-[9px] font-medium text-white">
+                  {unreadTotal}
+                </span>
+              )}
+            </button>
 
-          {/* Nexconn Support Hub Link */}
-          <Link
-            to="/shop/support"
-            className={cn(
-              'hidden md:flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 px-2.5 py-1 text-xs font-medium transition-colors',
-              locationPath === '/shop/support'
-                ? 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300'
-                : 'text-zinc-300 hover:text-white hover:bg-zinc-800'
-            )}
-          >
-            <Headphones className="h-3.5 w-3.5 text-emerald-400" />
-            <span>Support Hub</span>
-          </Link>
+            {/* Cart with Minimal Bag Icon */}
+            <Link
+              to="/shop/cart"
+              className="inline-flex items-center gap-1.5 hover:text-black transition-colors whitespace-nowrap p-1.5"
+              title="Shopping Cart"
+            >
+              <div className="relative">
+                <ShoppingBag className="h-4 w-4 stroke-[1.6]" />
+                {itemCount > 0 && (
+                  <span className="md:hidden absolute -top-1 -right-1 flex h-3 min-w-[12px] items-center justify-center rounded-full bg-[#171717] px-0.5 text-[8px] font-bold text-white">
+                    {itemCount}
+                  </span>
+                )}
+              </div>
+              <span className="hidden md:inline">Cart ({itemCount})</span>
+            </Link>
 
-          {/* Wishlist */}
-          <Link
-            to="/shop/wishlist"
-            className="relative rounded-full p-2 text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors"
-            title="Saved Items"
-          >
-            <Heart className="h-4 w-4" />
-            {wishlistItems.length > 0 && (
-              <span className="absolute top-1 right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
-                {wishlistItems.length}
-              </span>
-            )}
-          </Link>
+            {/* Desktop User / Login */}
+            <div className="hidden md:block">
+              {user ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowUserMenu((v) => !v)}
+                    className="inline-flex items-center gap-1.5 hover:text-black transition-colors cursor-pointer whitespace-nowrap py-1 px-1.5"
+                    aria-expanded={showUserMenu}
+                  >
+                    <User className="h-4 w-4 stroke-[1.6]" />
+                    <span>{user.displayName ? user.displayName.split(' ')[0] : 'Account'}</span>
+                    <ChevronDown className="h-3 w-3 stroke-[1.6] text-[#686359]" />
+                  </button>
 
-          {/* Messages Drawer Pill */}
-          <button
-            onClick={() => toggleDrawer()}
-            className="relative flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/60 px-3 py-1 text-xs font-semibold text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors"
-            title="Messages"
-          >
-            <MessageSquare className="h-3.5 w-3.5 text-zinc-400" />
-            <span className="hidden md:inline">Messages</span>
-            {unreadTotal > 0 && (
-              <span className="flex h-4 w-4 items-center justify-center rounded-full bg-white text-[10px] font-bold text-black">
-                {unreadTotal}
-              </span>
-            )}
-          </button>
+                  {showUserMenu && (
+                    <div className="absolute right-0 mt-2 w-52 rounded-xl border border-[#D8D4CA] bg-[#FAF8F3] p-1.5 shadow-lg z-50 text-xs text-[#171717]">
+                      <div className="px-3 py-2 border-b border-[#E4DEC8] mb-1">
+                        <p className="font-semibold text-[#171717] truncate">{user.displayName}</p>
+                        <p className="text-[11px] text-[#78756E] truncate">{user.email}</p>
+                      </div>
+                      <Link
+                        to="/shop/profile"
+                        onClick={() => setShowUserMenu(false)}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white"
+                      >
+                        <User className="h-3.5 w-3.5 text-[#D6B875]" /> Profile
+                      </Link>
+                      <Link
+                        to="/shop/orders"
+                        onClick={() => setShowUserMenu(false)}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white"
+                      >
+                        <Package className="h-3.5 w-3.5 text-[#D6B875]" /> Orders
+                      </Link>
+                      <Link
+                        to="/shop/wishlist"
+                        onClick={() => setShowUserMenu(false)}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white"
+                      >
+                        <Heart className="h-3.5 w-3.5 text-[#D6B875]" /> Wishlist ({wishlistItems.length})
+                      </Link>
+                      <button
+                        onClick={() => {
+                          setShowUserMenu(false);
+                          toggleDrawer();
+                        }}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white cursor-pointer"
+                      >
+                        <MessageSquare className="h-3.5 w-3.5 text-[#D6B875]" /> Messages
+                        {unreadTotal > 0 && (
+                          <span className="ml-auto rounded-full bg-[#171717] px-1.5 py-0.5 text-[10px] text-white">
+                            {unreadTotal}
+                          </span>
+                        )}
+                      </button>
+                      {user.role === 'vendor' && (
+                        <Link
+                          to="/vendor"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white font-semibold text-[#171717]"
+                        >
+                          <Store className="h-3.5 w-3.5 text-[#D6B875]" /> Seller Studio
+                        </Link>
+                      )}
+                      {user.role === 'support_agent' && (
+                        <Link
+                          to="/support"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white font-semibold text-[#171717]"
+                        >
+                          <Headphones className="h-3.5 w-3.5 text-[#D6B875]" /> Support Center
+                        </Link>
+                      )}
+                      {user.role === 'admin' && (
+                        <Link
+                          to="/admin"
+                          onClick={() => setShowUserMenu(false)}
+                          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 hover:bg-white font-semibold text-[#171717]"
+                        >
+                          <Shield className="h-3.5 w-3.5 text-[#D6B875]" /> Admin Console
+                        </Link>
+                      )}
+                      <div className="my-1 border-t border-[#E4DEC8]" />
+                      <button
+                        onClick={async () => {
+                          setShowUserMenu(false);
+                          await logout();
+                          navigate('/auth');
+                        }}
+                        className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-rose-600 hover:bg-rose-50 font-medium cursor-pointer"
+                      >
+                        <LogOut className="h-3.5 w-3.5" /> Sign Out
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="inline-flex items-center gap-1.5 hover:text-black transition-colors whitespace-nowrap py-1 px-1.5"
+                >
+                  <User className="h-4 w-4 stroke-[1.6]" />
+                  <span>Login</span>
+                </Link>
+              )}
+            </div>
 
-          {/* Shopping Cart Pill */}
-          <Link
-            to="/shop/cart"
-            className="flex items-center gap-1.5 rounded-full bg-zinc-800 hover:bg-zinc-700 px-3 py-1 text-xs font-semibold text-white transition-colors"
-            title="Cart"
-          >
-            <ShoppingCart className="h-3.5 w-3.5 text-zinc-300" />
-            <span>{itemCount}</span>
-          </Link>
+            {/* Mobile Hamburger Menu Toggle Button (<md) */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden flex h-10 w-10 items-center justify-center rounded-xl text-[#171717] hover:bg-[#DED9CC]/60 transition-colors cursor-pointer"
+              aria-label={isMobileMenuOpen ? 'Close Navigation Menu' : 'Open Navigation Menu'}
+              aria-expanded={isMobileMenuOpen}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5 stroke-[1.8]" />
+              ) : (
+                <Menu className="h-5 w-5 stroke-[1.8]" />
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
 
-          {/* User Profile Avatar */}
-          {user && (
-            <div className="relative">
-              <button
-                onClick={() => setShowUserMenu(!showUserMenu)}
-                className="flex items-center rounded-full p-0.5 hover:ring-2 hover:ring-zinc-600 transition-all"
+      {/* ── MOBILE SLIDE-OUT NAVIGATION DRAWER (<md) ────────────────── */}
+      {isMobileMenuOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs transition-opacity md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+
+          {/* Drawer Pane */}
+          <div className="fixed inset-y-0 right-0 z-50 flex w-full max-w-[320px] xs:max-w-[340px] flex-col bg-[#FAF8F3] text-[#171717] shadow-2xl border-l border-[#E4DEC8] md:hidden animate-in slide-in-from-right duration-250">
+            {/* Drawer Header */}
+            <div className="flex h-16 items-center justify-between px-5 border-b border-[#E4DEC8] bg-[#ECEAE4]">
+              <Link
+                to="/shop"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="text-[22px] font-normal text-[#171717] tracking-tight origin-left scale-x-[1.08]"
+                style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
               >
-                <img
-                  src={
-                    user.photoURL ||
-                    `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.displayName)}`
-                  }
-                  alt={user.displayName}
-                  className="h-7 w-7 rounded-full object-cover ring-1 ring-zinc-700"
-                />
+                artisanale
+              </Link>
+              <button
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex h-10 w-10 items-center justify-center rounded-xl text-[#686359] hover:bg-[#DED9CC]/60 hover:text-[#171717] transition-colors cursor-pointer"
+                aria-label="Close menu"
+              >
+                <X className="h-5 w-5 stroke-[1.8]" />
               </button>
+            </div>
 
-              {showUserMenu && (
-                <div className="absolute right-0 mt-2 w-56 rounded-xl border border-zinc-800 bg-[#121215] p-1.5 shadow-2xl z-50 text-xs">
-                  <div className="px-3 py-2 border-b border-zinc-800 mb-1">
-                    <p className="font-bold text-white truncate">{user.displayName}</p>
-                    <p className="text-[11px] text-zinc-500 truncate">{user.email}</p>
-                  </div>
+            {/* Search in Drawer */}
+            <div className="p-4 border-b border-[#E4DEC8] bg-white">
+              <form onSubmit={handleSearch} className="flex items-center rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] px-3 py-2">
+                <Search className="h-4 w-4 text-[#8C867A] shrink-0 mr-2" />
+                <input
+                  type="text"
+                  placeholder="Search 50 creations, studios..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent text-xs text-[#171717] placeholder:text-[#8C867A] focus:outline-none"
+                />
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setSearchQuery('')}
+                    className="text-[#8C867A] hover:text-[#171717] ml-1 p-0.5"
+                  >
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                )}
+              </form>
+            </div>
+
+            {/* Drawer Body Nav Links */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6">
+              {/* Primary Pages */}
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C867A] px-2 mb-2 block">
+                  Marketplace
+                </span>
+                <nav className="space-y-1">
+                  {navLinks.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <Link
+                        key={item.label}
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#171717] hover:bg-white transition-colors"
+                      >
+                        <Icon className="h-4 w-4 text-[#D6B875] shrink-0" />
+                        <span>{item.label}</span>
+                        <ArrowRight className="h-3.5 w-3.5 text-[#C2BFB8] ml-auto" />
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Collector Quick Links */}
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C867A] px-2 mb-2 block">
+                  Collector Hub
+                </span>
+                <div className="space-y-1">
+                  <Link
+                    to="/shop/cart"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#171717] hover:bg-white transition-colors"
+                  >
+                    <ShoppingBag className="h-4 w-4 text-[#D6B875] shrink-0" />
+                    <span>Shopping Cart</span>
+                    <span className="ml-auto rounded-full bg-[#171717] px-2 py-0.5 text-xs font-bold text-white">
+                      {itemCount}
+                    </span>
+                  </Link>
 
                   <Link
-                    to="/shop/profile"
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                    to="/shop/wishlist"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#171717] hover:bg-white transition-colors"
                   >
-                    <User className="h-4 w-4 text-emerald-400" /> Account Profile
+                    <Heart className="h-4 w-4 text-[#D6B875] shrink-0" />
+                    <span>Saved Wishlist</span>
+                    {wishlistItems.length > 0 && (
+                      <span className="ml-auto rounded-full bg-[#171717] px-2 py-0.5 text-xs font-bold text-white">
+                        {wishlistItems.length}
+                      </span>
+                    )}
                   </Link>
+
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      toggleDrawer(true);
+                    }}
+                    className="w-full flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#171717] hover:bg-white transition-colors cursor-pointer text-left"
+                  >
+                    <MessageSquare className="h-4 w-4 text-[#D6B875] shrink-0" />
+                    <span>Artisan Messages</span>
+                    {unreadTotal > 0 && (
+                      <span className="ml-auto rounded-full bg-[#171717] px-2 py-0.5 text-xs font-bold text-white">
+                        {unreadTotal}
+                      </span>
+                    )}
+                  </button>
+
                   <Link
                     to="/shop/orders"
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-[#171717] hover:bg-white transition-colors"
                   >
-                    <Package className="h-4 w-4 text-amber-400" /> Orders &amp; Tracking
+                    <Package className="h-4 w-4 text-[#D6B875] shrink-0" />
+                    <span>Track Orders</span>
                   </Link>
+                </div>
+              </div>
 
-                  <div className="my-1 border-t border-zinc-800" />
-
-                  <Link
-                    to={user.role === 'vendor' ? '/vendor' : '/shop/support'}
-                    onClick={() => setShowUserMenu(false)}
-                    className="flex items-center gap-2 rounded-lg px-3 py-2 text-zinc-300 hover:bg-zinc-800 hover:text-white"
-                  >
-                    {user.role === 'vendor' ? (
-                      <>
-                        <Store className="h-4 w-4 text-amber-400" /> Seller Dashboard
-                      </>
-                    ) : (
-                      <>
-                        <Headphones className="h-4 w-4 text-blue-400" /> Customer Support
-                      </>
+              {/* Portal Roles (Vendor / Support / Admin) */}
+              {user && (user.role === 'vendor' || user.role === 'support_agent' || user.role === 'admin') && (
+                <div>
+                  <span className="text-[10px] font-bold uppercase tracking-widest text-[#8C867A] px-2 mb-2 block">
+                    Specialist Portals
+                  </span>
+                  <div className="space-y-1">
+                    {user.role === 'vendor' && (
+                      <Link
+                        to="/vendor"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#171717] bg-[#ECEAE4] hover:bg-white transition-colors"
+                      >
+                        <Store className="h-4 w-4 text-[#D6B875] shrink-0" />
+                        <span>Seller Studio</span>
+                      </Link>
                     )}
-                  </Link>
-
-                  <div className="my-1 border-t border-zinc-800" />
-
-                  <button
-                    onClick={async () => {
-                      setShowUserMenu(false);
-                      await logout();
-                      navigate('/auth');
-                    }}
-                    className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-rose-400 hover:bg-rose-950/40 font-medium"
-                  >
-                    <LogOut className="h-4 w-4" /> Sign Out
-                  </button>
+                    {user.role === 'support_agent' && (
+                      <Link
+                        to="/support"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#171717] bg-[#ECEAE4] hover:bg-white transition-colors"
+                      >
+                        <Headphones className="h-4 w-4 text-[#D6B875] shrink-0" />
+                        <span>Support Center</span>
+                      </Link>
+                    )}
+                    {user.role === 'admin' && (
+                      <Link
+                        to="/admin"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#171717] bg-[#ECEAE4] hover:bg-white transition-colors"
+                      >
+                        <Shield className="h-4 w-4 text-[#D6B875] shrink-0" />
+                        <span>Admin Console</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* Category Chips Sub-Navigation (Dark & Minimal) */}
-      <div className="border-t border-zinc-800/80 bg-[#09090b] px-4 py-2 text-xs">
-        <div className="mx-auto max-w-7xl flex items-center gap-6 overflow-x-auto scrollbar-none whitespace-nowrap">
-          <Link
-            to="/shop/products"
-            className={cn(
-              'font-medium transition-colors hover:text-white',
-              locationPath === '/shop/products' ? 'text-white font-bold' : 'text-zinc-400'
-            )}
-          >
-            All Products
-          </Link>
-
-          {DEFAULT_CATEGORIES.map((c) => (
-            <Link
-              key={c.id}
-              to={`/shop/products?categoryId=${c.id}`}
-              className="text-zinc-400 hover:text-white font-medium transition-colors"
-            >
-              {c.name}
-            </Link>
-          ))}
-
-          <Link
-            to="/shop/products?categoryId=cat-global"
-            className="flex items-center gap-1 text-sky-400 hover:text-sky-300 font-semibold transition-colors"
-          >
-            <Globe className="h-3.5 w-3.5" />
-            <span>Ubuy Global Store</span>
-          </Link>
-
-          <Link
-            to="/shop/support"
-            className="flex items-center gap-1 text-emerald-400 hover:text-emerald-300 font-semibold transition-colors"
-          >
-            <Headphones className="h-3.5 w-3.5" />
-            <span>Support & KB</span>
-          </Link>
-
-          <span
-            className="ml-auto hidden lg:inline-flex items-center gap-1.5 rounded-full border border-zinc-800 bg-zinc-900/70 px-2.5 py-0.5 text-[10px] text-amber-300 font-medium"
-            title="Real-time Cloud Sync & Nexconn Chat + Call"
-          >
-            <Database className="h-3 w-3" />
-            <span>Live Cloud Sync · Nexconn Chat &amp; Call</span>
-          </span>
-        </div>
-      </div>
-
-      {/* Minimal Location Selector Modal */}
-      {showLocationModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4">
-          <div className="w-full max-w-sm rounded-2xl border border-zinc-800 bg-[#121215] p-5 shadow-2xl text-zinc-100">
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-800 mb-3">
-              <h3 className="font-bold text-sm">Select Delivery City</h3>
-              <button
-                onClick={() => setShowLocationModal(false)}
-                className="text-zinc-400 hover:text-white"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-            <div className="space-y-1.5">
-              {PRESET_LOCATIONS.map((loc) => (
-                <button
-                  key={loc.postalCode}
-                  onClick={() => {
-                    setLocation(loc);
-                    setShowLocationModal(false);
-                  }}
-                  className={cn(
-                    'flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs transition-colors',
-                    location.postalCode === loc.postalCode
-                      ? 'bg-zinc-800 text-white font-bold'
-                      : 'hover:bg-zinc-800/60 text-zinc-300'
-                  )}
+            {/* Drawer Footer Account Area */}
+            <div className="p-4 border-t border-[#E4DEC8] bg-[#FAF8F3] pb-safe">
+              {user ? (
+                <div className="space-y-3">
+                  <div className="flex items-center gap-3 px-2">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#171717] text-[#D6B875] font-bold text-sm shrink-0">
+                      {user.displayName ? user.displayName[0].toUpperCase() : 'U'}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold text-[#171717] truncate">{user.displayName}</p>
+                      <p className="text-[11px] text-[#78756E] truncate">{user.email}</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <Link
+                      to="/shop/profile"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex-1 rounded-xl border border-[#E4DEC8] bg-white py-2 text-center text-xs font-semibold text-[#171717] hover:bg-[#FAF8F3]"
+                    >
+                      Profile
+                    </Link>
+                    <button
+                      onClick={async () => {
+                        setIsMobileMenuOpen(false);
+                        await logout();
+                        navigate('/auth');
+                      }}
+                      className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-xs font-semibold text-rose-700 hover:bg-rose-100 cursor-pointer"
+                    >
+                      Sign Out
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  to="/auth"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#171717] py-3 text-xs font-bold text-[#D6B875] hover:bg-black transition-colors"
                 >
-                  <span className="flex items-center gap-2">
-                    <span>{loc.flag}</span>
-                    <span>{loc.city}, {loc.country}</span>
-                  </span>
-                  {location.postalCode === loc.postalCode && (
-                    <Check className="h-3.5 w-3.5 text-white" />
-                  )}
-                </button>
-              ))}
+                  <User className="h-4 w-4" />
+                  <span>Sign In / Create Account</span>
+                </Link>
+              )}
             </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

@@ -101,11 +101,11 @@ export const AuthPage: React.FC = () => {
         }
       } else {
         await register({
-          email,
+          email: email.trim(),
           password,
-          displayName,
+          displayName: displayName.trim(),
           role,
-          businessName: role === 'vendor' ? businessName : undefined,
+          businessName: role === 'vendor' ? businessName.trim() : undefined,
           phoneNumber: phoneNumber.trim(),
           preferredLanguage,
           address: {
@@ -120,7 +120,7 @@ export const AuthPage: React.FC = () => {
         });
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Authentication failed. Please check your credentials.');
+      setErrorMsg(err?.message || 'Authentication failed. Please verify credentials.');
     } finally {
       setSubmitting(false);
     }
@@ -129,16 +129,15 @@ export const AuthPage: React.FC = () => {
   const handleGoogleAuth = async () => {
     setErrorMsg('');
     setInfoBanner('');
-    setNotFoundEmail(null);
     setSubmitting(true);
     try {
-      const res = await loginWithGoogle(mode);
+      const res = await loginWithGoogle();
       if (res.status === 'NEEDS_ONBOARDING') {
         applyPrefill(res.prefill);
         setOnboarding({ isNewAccount: res.isNewAccount, prefill: res.prefill });
       }
     } catch (err: any) {
-      setErrorMsg(err?.message || 'Google sign-in could not be completed.');
+      setErrorMsg(err?.message || 'Google authentication was cancelled or failed.');
     } finally {
       setSubmitting(false);
     }
@@ -193,8 +192,8 @@ export const AuthPage: React.FC = () => {
     setErrorMsg('');
     setInfoBanner(
       chosenRole === 'vendor'
-        ? `Creating your Seller Store account for ${email}. Complete your essential store and contact details below.`
-        : `Creating your Customer account for ${email}. Complete your essential contact and delivery details below.`
+        ? `Creating your Maker Studio account for ${email}. Complete your studio and contact details below.`
+        : `Creating your Collector account for ${email}. Complete your delivery and contact details below.`
     );
   };
 
@@ -213,47 +212,58 @@ export const AuthPage: React.FC = () => {
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        {/* Left: Brand & Account Security Overview */}
-        <div className="lg:col-span-5 space-y-5 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 p-7 text-white shadow-xl border border-slate-800">
-          <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-3 py-1 text-[11px] font-bold text-emerald-300">
+        {/* Left: Artisanale Obsidian & Gold Passport Card */}
+        <div className="lg:col-span-5 space-y-6 rounded-3xl bg-[#171717] p-7 sm:p-9 text-white shadow-2xl border border-[#2E2822] relative overflow-hidden">
+          {/* Subtle Ambient Gold Radial Aura */}
+          <div className="absolute -top-24 -right-24 h-56 w-56 rounded-full bg-[#D6B875]/15 blur-3xl pointer-events-none" />
+
+          <div className="inline-flex items-center gap-2 rounded-full bg-[#24201C] border border-[#3D352B] px-3.5 py-1 text-[11px] font-semibold text-[#D6B875]">
             <ShieldCheck className="h-3.5 w-3.5" />
-            Encrypted Cloud Sync &amp; Verified Accounts
+            <span>Encrypted Studio Escrow &amp; Auth</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-black tracking-tight leading-tight">
-            Dynamic Account Identity for Buyers &amp; Sellers
+          <h1
+            className="text-3xl sm:text-4xl font-normal tracking-tight leading-[1.04] text-white"
+            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+          >
+            Artisanale Passport &amp; Studio Identity
           </h1>
-          <p className="text-xs text-slate-300 leading-relaxed">
-            Sign in or create your live ConvoCart account. Your customer contact details, language preferences, and delivery addresses are securely stored and automatically shared with sellers when you chat or place orders.
+
+          <p className="text-xs sm:text-[12.5px] text-[#A8A29E] leading-relaxed font-normal">
+            Sign in or create your live ConvoCart account. Your collector profile, delivery destination, and preferred language are securely synced and seamlessly shared with verified artisans during 1-on-1 chats and acquisitions.
           </p>
 
-          <div className="space-y-3 pt-2 text-xs text-slate-200">
-            <div className="flex items-start gap-2.5">
-              <Sparkles className="h-4 w-4 text-sky-400 shrink-0 mt-0.5" />
-              <span>Verified account ID &amp; real-time profile syncing across Customer Profile, Orders, and Chat</span>
+          <div className="space-y-3.5 pt-2 text-xs text-[#E5E0D5]">
+            <div className="flex items-start gap-3">
+              <Sparkles className="h-4 w-4 text-[#D6B875] shrink-0 mt-0.5" />
+              <span>Verified collector &amp; maker identities with real-time profile synchronization</span>
             </div>
-            <div className="flex items-start gap-2.5">
-              <Store className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
-              <span>Sellers see essential fulfillment info (name, email, phone, delivery city/address, order history &amp; language)</span>
+            <div className="flex items-start gap-3">
+              <Store className="h-4 w-4 text-[#D6B875] shrink-0 mt-0.5" />
+              <span>Direct 1-on-1 dialogue with certified Kyoto, Florence, Oaxaca, and Grasse workshops</span>
             </div>
-            <div className="flex items-start gap-2.5">
-              <Globe className="h-4 w-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span>Multi-language Nexconn Chat SDK &amp; Call SDK personalized to your account language</span>
+            <div className="flex items-start gap-3">
+              <Globe className="h-4 w-4 text-[#D6B875] shrink-0 mt-0.5" />
+              <span>Multi-language Nexconn Chat &amp; WebRTC audio/video call engine personalized to your dialect</span>
+            </div>
+            <div className="flex items-start gap-3">
+              <ShieldCheck className="h-4 w-4 text-[#D6B875] shrink-0 mt-0.5" />
+              <span>Damage-free studio transit guarantee with signed certificates of authenticity</span>
             </div>
           </div>
 
-          <div className="pt-4 border-t border-slate-800">
+          <div className="pt-4 border-t border-[#2E2822]">
             <Link
               to="/shop/products"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-300 hover:text-sky-200"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-[#D6B875] hover:text-white transition-colors"
             >
-              Browse Marketplace as Guest <ArrowRight className="h-3.5 w-3.5" />
+              Browse 50 Creations as Guest <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
         </div>
 
         {/* Right: Dynamic Sign In / Onboarding / Sign Up Card */}
-        <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+        <div className="lg:col-span-7 rounded-3xl border border-[#E4DEC8] bg-[#FAF8F3] p-6 sm:p-9 shadow-xs">
           {onboarding ? (
             /* UNIFIED GOOGLE / PARTIAL PROFILE COMPLETION FLOW */
             <div className="space-y-5">
@@ -261,11 +271,11 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleCancelOnboarding}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#686359] hover:text-[#171717] cursor-pointer"
                 >
                   <ArrowLeft className="h-3.5 w-3.5" /> Use a different account
                 </button>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-bold text-emerald-700">
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800">
                   <CheckCircle2 className="h-3 w-3" />
                   {onboarding.prefill.authProvider === 'google'
                     ? 'Google Profile Autofilled'
@@ -273,25 +283,25 @@ export const AuthPage: React.FC = () => {
                 </span>
               </div>
 
-              <div className="flex items-center gap-3.5 rounded-2xl border border-slate-200 bg-slate-50/80 p-3.5">
+              <div className="flex items-center gap-3.5 rounded-2xl border border-[#E4DEC8] bg-white p-3.5">
                 {onboarding.prefill.photoURL ? (
                   <img
                     src={onboarding.prefill.photoURL}
                     alt={onboarding.prefill.displayName || onboarding.prefill.email}
-                    className="h-11 w-11 rounded-full object-cover border border-slate-200 shrink-0"
+                    className="h-11 w-11 rounded-full object-cover border border-[#E4DEC8] shrink-0"
                   />
                 ) : (
-                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-100 text-brand-700 font-bold shrink-0">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171717] text-[#D6B875] font-bold shrink-0">
                     {(onboarding.prefill.displayName || onboarding.prefill.email)[0]?.toUpperCase()}
                   </div>
                 )}
                 <div className="min-w-0">
-                  <p className="text-sm font-black text-slate-900 truncate">
+                  <p className="text-sm font-bold text-[#171717] truncate">
                     {onboarding.isNewAccount
                       ? 'Complete Your New Account Setup'
                       : 'Complete Essential Profile Details'}
                   </p>
-                  <p className="text-xs text-slate-500 truncate">{onboarding.prefill.email}</p>
+                  <p className="text-xs text-[#686359] truncate">{onboarding.prefill.email}</p>
                 </div>
               </div>
 
@@ -303,7 +313,7 @@ export const AuthPage: React.FC = () => {
 
               <form onSubmit={handleCompleteOnboarding} className="space-y-4 text-xs">
                 <div>
-                  <label className="block font-bold text-slate-700 mb-1.5">
+                  <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1.5">
                     Select Account Type *
                   </label>
                   <div className="grid grid-cols-2 gap-2.5">
@@ -311,10 +321,10 @@ export const AuthPage: React.FC = () => {
                       type="button"
                       onClick={() => setRole('consumer')}
                       className={cn(
-                        'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all',
+                        'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all cursor-pointer',
                         role === 'consumer'
-                          ? 'border-brand-600 bg-brand-50 text-brand-700'
-                          : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                          ? 'border-[#171717] bg-[#171717] text-[#D6B875]'
+                          : 'border-[#E4DEC8] bg-white text-[#686359] hover:bg-[#FAF8F3]'
                       )}
                     >
                       <User className="h-4 w-4" /> Customer (Buyer)
@@ -323,31 +333,31 @@ export const AuthPage: React.FC = () => {
                       type="button"
                       onClick={() => setRole('vendor')}
                       className={cn(
-                        'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all',
+                        'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all cursor-pointer',
                         role === 'vendor'
-                          ? 'border-brand-600 bg-brand-50 text-brand-700'
-                          : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                          ? 'border-[#171717] bg-[#171717] text-[#D6B875]'
+                          : 'border-[#E4DEC8] bg-white text-[#686359] hover:bg-[#FAF8F3]'
                       )}
                     >
-                      <Store className="h-4 w-4" /> Seller Store
+                      <Store className="h-4 w-4" /> Maker Studio
                     </button>
                   </div>
                 </div>
 
                 {role === 'vendor' && (
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">
-                      Store / Business Name *
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Studio / Business Name *
                     </label>
                     <div className="relative">
-                      <Store className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <Store className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                       <input
                         type="text"
                         required
                         value={businessName}
                         onChange={(e) => setBusinessName(e.target.value)}
-                        placeholder="e.g. Nova Tech Store"
-                        className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                        placeholder="e.g. Atelier Terra Kyoto"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -355,30 +365,34 @@ export const AuthPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Full Name *</label>
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Full Name *
+                    </label>
                     <div className="relative">
-                      <User className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <User className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                       <input
                         type="text"
                         required
                         value={displayName}
                         onChange={(e) => setDisplayName(e.target.value)}
                         placeholder="Your full name"
-                        className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Phone Number *</label>
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Phone Number *
+                    </label>
                     <div className="relative">
-                      <Phone className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <Phone className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                       <input
                         type="tel"
                         required
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
-                        placeholder="+91-98765-43210"
-                        className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                        placeholder="+1-555-0199"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -386,13 +400,13 @@ export const AuthPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">
-                      Preferred Chat Language
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Preferred Language
                     </label>
                     <select
                       value={preferredLanguage}
                       onChange={(e) => setPreferredLanguage(e.target.value)}
-                      className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2 font-medium focus:border-brand-500 focus:outline-none"
+                      className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] px-3 py-2.5 font-medium focus:border-[#171717] focus:outline-none"
                     >
                       {SUPPORTED_CHAT_LANGUAGES.map((l) => (
                         <option key={l.code} value={l.code}>
@@ -402,55 +416,57 @@ export const AuthPage: React.FC = () => {
                     </select>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Country *</label>
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Country *
+                    </label>
                     <input
                       type="text"
                       required
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
-                      placeholder="India / United States"
-                      className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-2 focus:border-brand-500 focus:outline-none"
+                      placeholder="United States / Japan / France"
+                      className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] px-3 py-2.5 focus:border-[#171717] focus:outline-none"
                     />
                   </div>
                 </div>
 
-                <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-3.5 space-y-2.5">
-                  <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
-                    <MapPin className="h-3.5 w-3.5 text-brand-600" />
+                <div className="rounded-2xl border border-[#E4DEC8] bg-white p-3.5 space-y-2.5">
+                  <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#8C867A]">
+                    <MapPin className="h-3.5 w-3.5 text-[#D6B875]" />
                     {role === 'vendor'
-                      ? 'Business / Dispatch Address *'
-                      : 'Delivery Address * (Visible to sellers on orders & support)'}
+                      ? 'Studio / Dispatch Address *'
+                      : 'Delivery Address * (Shared with artisans upon order)'}
                   </div>
                   <input
                     type="text"
                     required
                     value={street}
                     onChange={(e) => setStreet(e.target.value)}
-                    placeholder="Street Address (e.g. 42 MG Road) *"
-                    className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                    placeholder="Street Address (e.g. 742 Evergreen Terrace) *"
+                    className="w-full rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                   />
-                  <div className="grid grid-cols-3 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <input
                       type="text"
                       required
                       value={city}
                       onChange={(e) => setCity(e.target.value)}
                       placeholder="City *"
-                      className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                      className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                     />
                     <input
                       type="text"
                       value={stateRegion}
                       onChange={(e) => setStateRegion(e.target.value)}
-                      placeholder="State"
-                      className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                      placeholder="State / Region"
+                      className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                     />
                     <input
                       type="text"
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
-                      placeholder="PIN / ZIP"
-                      className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                      placeholder="Postal Code"
+                      className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                     />
                   </div>
                 </div>
@@ -458,27 +474,27 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-xs font-bold text-white hover:bg-slate-800 transition-colors disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#171717] py-3.5 text-xs font-bold text-[#D6B875] hover:bg-black transition-all disabled:opacity-60 cursor-pointer shadow-md"
                 >
                   {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
                   {role === 'vendor'
-                    ? 'Complete Profile & Launch Seller Store'
-                    : 'Complete Profile & Start Shopping'}
+                    ? 'Complete Profile & Launch Maker Studio'
+                    : 'Complete Profile & Explore Marketplace'}
                 </button>
               </form>
             </div>
           ) : notFoundEmail ? (
             /* ACCOUNT NOT FOUND PROMPT -> CHOOSE SELLER VS CONSUMER FIRST */
             <div className="space-y-5">
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+              <div className="rounded-2xl border border-[#E4DEC8] bg-[#FAF8F3] p-4">
                 <div className="flex items-start gap-3">
-                  <UserPlus className="h-5 w-5 text-amber-700 shrink-0 mt-0.5" />
+                  <UserPlus className="h-5 w-5 text-[#D6B875] shrink-0 mt-0.5" />
                   <div>
-                    <h2 className="text-sm font-black text-slate-900">
+                    <h2 className="text-sm font-bold text-[#171717]">
                       No account found for {notFoundEmail}
                     </h2>
-                    <p className="mt-1 text-xs text-slate-600">
-                      Would you like to create a new account with this email and password? First choose your account type:
+                    <p className="mt-1 text-xs text-[#686359]">
+                      Would you like to create a new authenticated account? Choose your profile role:
                     </p>
                   </div>
                 </div>
@@ -488,38 +504,38 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handleChooseNotFoundRole('consumer')}
-                  className="flex flex-col items-start gap-2 rounded-2xl border-2 border-slate-200 bg-white p-4 text-left hover:border-brand-600 hover:bg-brand-50/40 transition-all"
+                  className="flex flex-col items-start gap-2 rounded-2xl border-2 border-[#E4DEC8] bg-white p-4 text-left hover:border-[#171717] hover:bg-[#FAF8F3] transition-all cursor-pointer"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#FAF8F3] text-[#171717] border border-[#E4DEC8]">
                     <User className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-slate-900">Create Customer Account</p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Buy products, track deliveries, save addresses, and chat with verified sellers.
+                    <p className="text-sm font-bold text-[#171717]">Create Collector Account</p>
+                    <p className="text-[11px] text-[#686359] mt-0.5">
+                      Acquire creations, track deliveries, save addresses, and chat directly with verified artisans.
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-brand-600 mt-1">
-                    Continue as Customer <ArrowRight className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#171717] mt-1">
+                    Continue as Collector <ArrowRight className="h-3 w-3 text-[#D6B875]" />
                   </span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => handleChooseNotFoundRole('vendor')}
-                  className="flex flex-col items-start gap-2 rounded-2xl border-2 border-slate-200 bg-white p-4 text-left hover:border-emerald-600 hover:bg-emerald-50/40 transition-all"
+                  className="flex flex-col items-start gap-2 rounded-2xl border-2 border-[#E4DEC8] bg-white p-4 text-left hover:border-[#171717] hover:bg-[#FAF8F3] transition-all cursor-pointer"
                 >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#171717] text-[#D6B875]">
                     <Store className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-sm font-black text-slate-900">Create Seller Account</p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Launch your store, view customer CRM &amp; orders, and reply in live translated chats.
+                    <p className="text-sm font-bold text-[#171717]">Create Maker Studio Account</p>
+                    <p className="text-[11px] text-[#686359] mt-0.5">
+                      Launch your studio storefront, manage collector orders, and engage in live translated chats.
                     </p>
                   </div>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-600 mt-1">
-                    Continue as Seller <ArrowRight className="h-3 w-3" />
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#171717] mt-1">
+                    Continue as Maker <ArrowRight className="h-3 w-3 text-[#D6B875]" />
                   </span>
                 </button>
               </div>
@@ -530,15 +546,16 @@ export const AuthPage: React.FC = () => {
                   setNotFoundEmail(null);
                   setErrorMsg('');
                 }}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-slate-900"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#686359] hover:text-[#171717] cursor-pointer"
               >
                 <ArrowLeft className="h-3.5 w-3.5" /> Back to Sign In
               </button>
             </div>
           ) : (
-            /* STANDARD SIGN IN / CREATE DYNAMIC ACCOUNT TABS */
+            /* STANDARD SIGN IN / CREATE ACCOUNT TABS */
             <>
-              <div className="flex rounded-2xl bg-slate-100 p-1 mb-6">
+              {/* Luxury Pill Switcher */}
+              <div className="flex rounded-full bg-[#ECEAE4] p-1 mb-6 border border-[#E4DEC8]">
                 <button
                   type="button"
                   onClick={() => {
@@ -547,10 +564,10 @@ export const AuthPage: React.FC = () => {
                     setInfoBanner('');
                   }}
                   className={cn(
-                    'flex-1 rounded-xl py-2 text-xs font-bold transition-all',
+                    'flex-1 rounded-full py-2.5 text-xs font-bold transition-all cursor-pointer text-center',
                     mode === 'signin'
-                      ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-500 hover:text-slate-800'
+                      ? 'bg-[#171717] text-[#D6B875] shadow-xs'
+                      : 'text-[#686359] hover:text-[#171717]'
                   )}
                 >
                   Sign In
@@ -563,13 +580,13 @@ export const AuthPage: React.FC = () => {
                     setInfoBanner('');
                   }}
                   className={cn(
-                    'flex-1 rounded-xl py-2 text-xs font-bold transition-all',
+                    'flex-1 rounded-full py-2.5 text-xs font-bold transition-all cursor-pointer text-center',
                     mode === 'signup'
-                      ? 'bg-white text-slate-900 shadow-xs'
-                      : 'text-slate-500 hover:text-slate-800'
+                      ? 'bg-[#171717] text-[#D6B875] shadow-xs'
+                      : 'text-[#686359] hover:text-[#171717]'
                   )}
                 >
-                  Create Dynamic Account
+                  Create Account
                 </button>
               </div>
 
@@ -589,16 +606,18 @@ export const AuthPage: React.FC = () => {
                 {mode === 'signup' && (
                   <>
                     <div>
-                      <label className="block font-bold text-slate-700 mb-1.5">Account Type *</label>
+                      <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1.5">
+                        Account Type *
+                      </label>
                       <div className="grid grid-cols-2 gap-2.5">
                         <button
                           type="button"
                           onClick={() => setRole('consumer')}
                           className={cn(
-                            'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all',
+                            'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all cursor-pointer',
                             role === 'consumer'
-                              ? 'border-brand-600 bg-brand-50 text-brand-700'
-                              : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                              ? 'border-[#171717] bg-[#171717] text-[#D6B875]'
+                              : 'border-[#E4DEC8] bg-white text-[#686359] hover:bg-[#FAF8F3]'
                           )}
                         >
                           <User className="h-4 w-4" /> Customer (Buyer)
@@ -607,43 +626,47 @@ export const AuthPage: React.FC = () => {
                           type="button"
                           onClick={() => setRole('vendor')}
                           className={cn(
-                            'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all',
+                            'flex items-center justify-center gap-2 rounded-xl border py-2.5 font-bold transition-all cursor-pointer',
                             role === 'vendor'
-                              ? 'border-brand-600 bg-brand-50 text-brand-700'
-                              : 'border-slate-200 text-slate-600 hover:bg-slate-50'
+                              ? 'border-[#171717] bg-[#171717] text-[#D6B875]'
+                              : 'border-[#E4DEC8] bg-white text-[#686359] hover:bg-[#FAF8F3]'
                           )}
                         >
-                          <Store className="h-4 w-4" /> Seller Store
+                          <Store className="h-4 w-4" /> Maker Studio
                         </button>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block font-bold text-slate-700 mb-1">Full Name *</label>
+                        <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                          Full Name *
+                        </label>
                         <div className="relative">
-                          <User className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                          <User className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                           <input
                             type="text"
                             required
                             value={displayName}
                             onChange={(e) => setDisplayName(e.target.value)}
-                            placeholder="e.g. Dharm Patel"
-                            className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                            placeholder="Your full name"
+                            className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                           />
                         </div>
                       </div>
                       <div>
-                        <label className="block font-bold text-slate-700 mb-1">Phone Number *</label>
+                        <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                          Phone Number *
+                        </label>
                         <div className="relative">
-                          <Phone className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                          <Phone className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                           <input
                             type="tel"
                             required
                             value={phoneNumber}
                             onChange={(e) => setPhoneNumber(e.target.value)}
-                            placeholder="+91-98765-43210"
-                            className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                            placeholder="+1-555-0199"
+                            className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                           />
                         </div>
                       </div>
@@ -651,18 +674,18 @@ export const AuthPage: React.FC = () => {
 
                     {role === 'vendor' && (
                       <div>
-                        <label className="block font-bold text-slate-700 mb-1">
-                          Store / Business Name *
+                        <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                          Studio / Business Name *
                         </label>
                         <div className="relative">
-                          <Store className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                          <Store className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                           <input
                             type="text"
                             required
                             value={businessName}
                             onChange={(e) => setBusinessName(e.target.value)}
-                            placeholder="e.g. Nova Tech Store"
-                            className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                            placeholder="e.g. Atelier Terra Kyoto"
+                            className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                           />
                         </div>
                       </div>
@@ -672,23 +695,27 @@ export const AuthPage: React.FC = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Email Address *</label>
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Email Address *
+                    </label>
                     <div className="relative">
-                      <Mail className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <Mail className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                       <input
                         type="email"
                         required
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="you@example.com"
-                        className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="block font-bold text-slate-700 mb-1">Password *</label>
+                    <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                      Password *
+                    </label>
                     <div className="relative">
-                      <Lock className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
+                      <Lock className="absolute left-3 top-2.5 h-3.5 w-3.5 text-[#8C867A]" />
                       <input
                         type="password"
                         required
@@ -696,7 +723,7 @@ export const AuthPage: React.FC = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Minimum 6 characters"
-                        className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 pl-9 pr-3 py-2 focus:border-brand-500 focus:outline-none"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] pl-9 pr-3 py-2.5 focus:border-[#171717] focus:outline-none"
                       />
                     </div>
                   </div>
@@ -706,13 +733,13 @@ export const AuthPage: React.FC = () => {
                   <>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                       <div>
-                        <label className="block font-bold text-slate-700 mb-1">
-                          Preferred Chat Language
+                        <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                          Preferred Language
                         </label>
                         <select
                           value={preferredLanguage}
                           onChange={(e) => setPreferredLanguage(e.target.value)}
-                          className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 px-3 py-2 font-medium focus:border-brand-500 focus:outline-none"
+                          className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] px-3 py-2.5 font-medium focus:border-[#171717] focus:outline-none"
                         >
                           {SUPPORTED_CHAT_LANGUAGES.map((l) => (
                             <option key={l.code} value={l.code}>
@@ -722,55 +749,57 @@ export const AuthPage: React.FC = () => {
                         </select>
                       </div>
                       <div>
-                        <label className="block font-bold text-slate-700 mb-1">Country *</label>
+                        <label className="block font-bold uppercase tracking-wider text-[#8C867A] mb-1">
+                          Country *
+                        </label>
                         <input
                           type="text"
                           required
                           value={country}
                           onChange={(e) => setCountry(e.target.value)}
-                          placeholder="India / United States"
-                          className="w-full rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-2 focus:border-brand-500 focus:outline-none"
+                          placeholder="United States / Japan"
+                          className="w-full rounded-xl border border-[#E4DEC8] bg-white text-[#171717] placeholder:text-[#8C867A] px-3 py-2.5 focus:border-[#171717] focus:outline-none"
                         />
                       </div>
                     </div>
 
-                    <div className="rounded-2xl border border-slate-200 bg-slate-50/70 p-3.5 space-y-2.5">
-                      <div className="flex items-center gap-1.5 text-[11px] font-bold text-slate-700">
-                        <MapPin className="h-3.5 w-3.5 text-brand-600" />
+                    <div className="rounded-2xl border border-[#E4DEC8] bg-white p-3.5 space-y-2.5">
+                      <div className="flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-[#8C867A]">
+                        <MapPin className="h-3.5 w-3.5 text-[#D6B875]" />
                         {role === 'vendor'
-                          ? 'Business / Dispatch Address *'
-                          : 'Delivery / Billing Address * (Visible to sellers on orders & support)'}
+                          ? 'Studio Dispatch Address *'
+                          : 'Delivery Address * (Shared with artisans on acquisitions)'}
                       </div>
                       <input
                         type="text"
                         required
                         value={street}
                         onChange={(e) => setStreet(e.target.value)}
-                        placeholder="Street Address (e.g. 42 MG Road) *"
-                        className="w-full rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                        placeholder="Street Address (e.g. 742 Evergreen Terrace) *"
+                        className="w-full rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                       />
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <input
                           type="text"
                           required
                           value={city}
                           onChange={(e) => setCity(e.target.value)}
                           placeholder="City *"
-                          className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                          className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                         />
                         <input
                           type="text"
                           value={stateRegion}
                           onChange={(e) => setStateRegion(e.target.value)}
-                          placeholder="State"
-                          className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                          placeholder="State / Region"
+                          className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                         />
                         <input
                           type="text"
                           value={postalCode}
                           onChange={(e) => setPostalCode(e.target.value)}
-                          placeholder="PIN / ZIP"
-                          className="rounded-xl border border-slate-200 bg-white text-slate-900 placeholder:text-slate-400 px-3 py-1.5 focus:border-brand-500 focus:outline-none"
+                          placeholder="Postal Code"
+                          className="rounded-xl border border-[#E4DEC8] bg-[#FAF8F3] text-[#171717] placeholder:text-[#8C867A] px-3 py-2 focus:border-[#171717] focus:outline-none"
                         />
                       </div>
                     </div>
@@ -780,48 +809,48 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-slate-900 py-3 text-xs font-bold text-white hover:bg-slate-800 transition-colors disabled:opacity-60"
+                  className="flex w-full items-center justify-center gap-2 rounded-full bg-[#171717] py-3.5 text-xs font-bold text-[#D6B875] hover:bg-black transition-all disabled:opacity-60 cursor-pointer shadow-md uppercase tracking-wider"
                 >
                   {submitting && <Loader2 className="h-4 w-4 animate-spin" />}
-                  {mode === 'signin' ? 'Sign In to Account' : 'Create Dynamic Account'}
+                  {mode === 'signin' ? 'Sign In to Account' : 'Create Collector Account'}
                 </button>
               </form>
 
-              <div className="my-5 flex items-center gap-3 text-[11px] text-slate-400">
-                <div className="h-px flex-1 bg-slate-200" />
-                <span>OR</span>
-                <div className="h-px flex-1 bg-slate-200" />
+              <div className="my-5 flex items-center gap-3 text-[11px] text-[#8C867A]">
+                <div className="h-px flex-1 bg-[#E4DEC8]" />
+                <span className="font-semibold tracking-wider">OR</span>
+                <div className="h-px flex-1 bg-[#E4DEC8]" />
               </div>
 
               <button
                 type="button"
                 disabled={submitting}
                 onClick={handleGoogleAuth}
-                className="flex w-full items-center justify-center gap-2.5 rounded-xl border border-slate-300 bg-white py-2.5 text-xs font-bold text-slate-800 hover:bg-slate-50 transition-colors"
+                className="flex w-full items-center justify-center gap-2.5 rounded-full border border-[#E4DEC8] bg-white py-3 text-xs font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer shadow-2xs"
               >
                 <img
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
                   alt="Google"
                   className="h-4 w-4"
                 />
-                Continue with Google
+                <span>Continue with Google</span>
               </button>
-              <p className="mt-2 text-center text-[11px] text-slate-400">
-                Google details autofill automatically; new or incomplete profiles will be asked to choose Customer vs Seller and complete required details.
+              <p className="mt-2.5 text-center text-[11px] text-[#8C867A] leading-relaxed">
+                Google details autofill automatically; new or incomplete profiles will choose Customer vs Maker and complete required details.
               </p>
             </>
           )}
 
-          {/* Optional Seller / Support / Admin Portal Access for Evaluation */}
-          <div className="mt-6 pt-4 border-t border-slate-100">
+          {/* Optional Maker / Support / Admin Staff Portal Access for Evaluation */}
+          <div className="mt-7 pt-4 border-t border-[#E4DEC8]">
             <button
               type="button"
               onClick={() => setShowPortalTools((v) => !v)}
-              className="flex w-full items-center justify-between text-[11px] font-semibold text-slate-500 hover:text-slate-800"
+              className="flex w-full items-center justify-between text-[11px] font-semibold text-[#686359] hover:text-[#171717] cursor-pointer"
             >
-              <span>Seller, Support &amp; Admin Staff Portal Sign-In</span>
+              <span>Maker Studio, Support &amp; Admin Staff Portal Access</span>
               <ChevronDown
-                className={cn('h-3.5 w-3.5 transition-transform', showPortalTools && 'rotate-180')}
+                className={cn('h-3.5 w-3.5 transition-transform text-[#D6B875]', showPortalTools && 'rotate-180')}
               />
             </button>
 
@@ -830,37 +859,37 @@ export const AuthPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => handlePortalSwitch('vendor', 'vendor@convocart.com')}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#E4DEC8] bg-white px-3 py-2 text-[11px] font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
                 >
-                  <Store className="h-3.5 w-3.5 text-amber-600" /> Nexconn Audio
+                  <Store className="h-3.5 w-3.5 text-[#D6B875]" /> Atelier Terra
                 </button>
                 <button
                   type="button"
                   onClick={() => handlePortalSwitch('vendor', 'studio@convocart.com')}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#E4DEC8] bg-white px-3 py-2 text-[11px] font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
                 >
-                  <Store className="h-3.5 w-3.5 text-emerald-600" /> NexaDigital Studio
+                  <Store className="h-3.5 w-3.5 text-[#D6B875]" /> Lumière Grasse
                 </button>
                 <button
                   type="button"
                   onClick={() => handlePortalSwitch('vendor', 'global@convocart.com')}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#E4DEC8] bg-white px-3 py-2 text-[11px] font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
                 >
-                  <Store className="h-3.5 w-3.5 text-orange-600" /> Ubuy Global
+                  <Store className="h-3.5 w-3.5 text-[#D6B875]" /> Casa Oaxaca
                 </button>
                 <button
                   type="button"
                   onClick={() => handlePortalSwitch('support_agent', 'support@convocart.com')}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#E4DEC8] bg-white px-3 py-2 text-[11px] font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
                 >
-                  <Headphones className="h-3.5 w-3.5 text-blue-600" /> Dispatch Support
+                  <Headphones className="h-3.5 w-3.5 text-[#D6B875]" /> Dispatch Support
                 </button>
                 <button
                   type="button"
                   onClick={() => handlePortalSwitch('admin')}
-                  className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-2 text-[11px] font-bold text-slate-700 hover:bg-slate-100"
+                  className="flex items-center gap-1.5 rounded-xl border border-[#E4DEC8] bg-white px-3 py-2 text-[11px] font-semibold text-[#171717] hover:bg-[#FAF8F3] transition-colors cursor-pointer"
                 >
-                  <Shield className="h-3.5 w-3.5 text-purple-600" /> Admin Console
+                  <Shield className="h-3.5 w-3.5 text-[#D6B875]" /> Admin Console
                 </button>
               </div>
             )}

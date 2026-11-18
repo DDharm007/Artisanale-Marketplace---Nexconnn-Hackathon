@@ -152,24 +152,29 @@ export const ProfilePage: React.FC = () => {
     return (
       <div className="mx-auto max-w-xl px-4 py-20 text-center">
         <div className="rounded-3xl border border-slate-200 bg-white p-10 shadow-sm">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-brand-600">
-            <UserIcon className="h-8 w-8" />
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#ECEAE4] text-[#171717] border border-[#E4DEC8]">
+            <UserIcon className="h-8 w-8 text-[#D6B875]" />
           </div>
-          <h1 className="text-2xl font-black text-slate-900">Sign In to View Your Account</h1>
-          <p className="mt-2 text-sm text-slate-500">
+          <h1
+            className="text-3xl font-normal text-[#171717]"
+            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
+          >
+            Sign In to View Your Account
+          </h1>
+          <p className="mt-2 text-sm text-[#686359]">
             Access your synced profile, saved shipping addresses, order history, and seller chats.
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-3">
             <Link
               to="/auth?redirect=/shop/profile"
-              className="inline-flex items-center gap-2 rounded-2xl bg-brand-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-brand-600/20 hover:bg-brand-700 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full bg-[#171717] px-6 py-3 text-sm font-bold text-[#D6B875] shadow-xs hover:bg-black transition-colors"
             >
               <LogIn className="h-4 w-4" />
               Sign In or Create Account
             </Link>
             <Link
               to="/shop"
-              className="inline-flex items-center gap-2 rounded-2xl border border-slate-200 bg-white px-6 py-3 text-sm font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-[#E4DEC8] bg-[#FAF8F3] px-6 py-3 text-sm font-bold text-[#171717] hover:bg-[#ECEAE4] transition-colors"
             >
               Explore Marketplace
             </Link>
@@ -375,7 +380,7 @@ export const ProfilePage: React.FC = () => {
                 onClick={() => avatarInputRef.current?.click()}
                 disabled={isUploadingAvatar}
                 title="Upload profile photo"
-                className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border border-white bg-brand-600 text-white shadow hover:bg-brand-700 transition-colors disabled:opacity-60"
+                className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full border border-white bg-[#171717] text-[#D6B875] shadow hover:bg-black transition-colors disabled:opacity-60"
               >
                 {isUploadingAvatar ? (
                   <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -551,7 +556,7 @@ export const ProfilePage: React.FC = () => {
           <button
             type="submit"
             disabled={isSavingProfile}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-brand-600 px-5 py-2.5 text-xs font-bold text-white shadow-sm hover:bg-brand-700 transition-colors disabled:opacity-60"
+            className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#171717] px-5 py-2.5 text-xs font-bold text-[#D6B875] shadow-xs hover:bg-black transition-colors disabled:opacity-60"
           >
             {isSavingProfile ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Check className="h-3.5 w-3.5" />}
             Save & Sync Account
@@ -648,7 +653,7 @@ export const ProfilePage: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isSavingAddress}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-brand-600 px-4 py-2 text-xs font-bold text-white hover:bg-brand-700 disabled:opacity-60"
+                  className="inline-flex items-center gap-1.5 rounded-full bg-[#171717] px-4 py-2 text-xs font-bold text-[#D6B875] hover:bg-black disabled:opacity-60 transition-colors"
                 >
                   {isSavingAddress && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
                   Save Address
