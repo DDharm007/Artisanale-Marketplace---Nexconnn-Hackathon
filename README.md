@@ -1,4 +1,4 @@
-# ConvoCart — Full-Stack Conversation-First Marketplace
+# artisanale — Full-Stack Conversation-First Marketplace
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://reactjs.org/)
@@ -8,7 +8,7 @@
 [![Anime.js](https://img.shields.io/badge/Anime.js-v4.0-ff4b4b.svg)](https://animejs.com/)
 [![Vitest](https://img.shields.io/badge/Vitest-Passed%20(9%2F9)-brightgreen.svg)](https://vitest.dev/)
 
-ConvoCart is an enterprise-grade conversation-first commerce platform that seamlessly fuses:
+artisanale is an enterprise-grade conversation-first commerce platform that seamlessly fuses:
 - **Amazon-style product discovery & filtering** with comprehensive category hierarchies and rich specs.
 - **Flipkart-style shopping, cart grouping, and order lifecycle management** with live milestone tracking.
 - **Ubuy-inspired international commerce capabilities**, currency display, and cross-border delivery guarantees.
@@ -21,7 +21,7 @@ ConvoCart is an enterprise-grade conversation-first commerce platform that seaml
 
 ## 1. System Architecture
 
-ConvoCart is structured as a typed monorepo ensuring zero duplication of business logic and authoritative server-side validation.
+artisanale is structured as a typed monorepo ensuring zero duplication of business logic and authoritative server-side validation.
 
 ```
 convocart/
