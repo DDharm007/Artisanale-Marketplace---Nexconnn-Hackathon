@@ -95,9 +95,7 @@ convocart/
 ## 3. Real-Time Communication Architecture (Nexconn SDK)
 
 ConvoCart uses the official **Nexconn Chat SDK v26.2.1** with direct credential signing:
-- **App Key:** `8w7jv4qb8gtvy`
-- **App Secret:** `6bNYoqv739Ng`
-- **Access Key:** `KCPAU3HTYNPRP5WUBGPCCTCHUMIJHUZ7JIDRAI2UTSN5WEMMJ7STQHL4OKMLHYJK2QF4ZEJEFYA57ZFPTGRRRRTDXUUROPL55UVPN5I`
+
 
 ### SDK Initialization & Flow
 1. **User Authentication:** When a user logs in, the backend securely generates an authoritative Nexconn user token signed with the `appSecret` using SHA1/HMAC.
