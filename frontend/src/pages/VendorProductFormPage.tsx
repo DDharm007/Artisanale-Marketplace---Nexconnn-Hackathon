@@ -224,10 +224,11 @@ export const VendorProductFormPage: React.FC = () => {
           body: JSON.stringify(payload),
         });
       } else {
-        await apiRequest('/products', {
+        const createdProduct = await apiRequest('/products', {
           method: 'POST',
           body: JSON.stringify(payload),
         });
+        window.dispatchEvent(new CustomEvent('convocart:product_created', { detail: createdProduct }));
       }
       navigate('/vendor/products');
     } catch (err: any) {

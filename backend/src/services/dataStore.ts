@@ -1128,9 +1128,12 @@ class DataStoreService {
         list.sort((a, b) => b.price - a.price);
       } else if (filters.sort === 'rating') {
         list.sort((a, b) => b.rating - a.rating);
-      } else if (filters.sort === 'newest') {
-        list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+      } else if (filters.sort === 'newest' || filters.sort === 'featured') {
+        list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
       }
+    } else {
+      // By default show newly added items on top
+      list.sort((a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime());
     }
 
     return list;
@@ -1141,7 +1144,8 @@ class DataStoreService {
   }
 
   public addProduct(product: Product): void {
-    this.state.products.push(product);
+    // Show newly added items on top of products catalog
+    this.state.products.unshift(product);
     this.persist();
     void firebaseService.syncDoc('convocart_products', product.productId, product);
   }

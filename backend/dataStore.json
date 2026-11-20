@@ -22,8 +22,8 @@
         }
       ],
       "createdAt": "2026-10-15T07:26:20.076Z",
-      "updatedAt": "2026-11-18T05:51:09.601Z",
-      "rsaKeyFingerprint": "6C25:44BB:64FC:2FAB",
+      "updatedAt": "2026-11-20T15:53:15.471Z",
+      "rsaKeyFingerprint": "D094:E900:E30D:C71D",
       "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0O+tbDXIFRgpmub4DdX73HZeyX0XcYdBrep+i9O8QwTrKr5TtB1mlaR6fuLQCtjgI/TS0r7bUS9bkzY3yzsZG1421RqsbRpoXRurvDcRRJAJ034+Z5W9DBxH3B4jNpJTCaZ9+GesHsXjYbWcBnathfPHgUqmyYtCYY6oWrzIPRA+O+MCh19eb5m9tAT3nA5MMXNZlVNCzaqafgJLsaYCWKQEsgnqWC5dSjTZOCIVxt4Gs2GQTEarsW31uZR+ESDsE9FEV0VGNRfAVqy2Jr2eOD4eOOhp8Gx2EYOp1WApA5UcPHKVEKjYs5Qt0T6j1x63bnU/HTrOEDO675wDLkvZ0wIDAQAB"
     },
     {
@@ -36,8 +36,8 @@
       "photoURL": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&auto=format&fit=crop&q=80",
       "phoneNumber": "+1-555-0182",
       "createdAt": "2026-10-05T07:26:20.076Z",
-      "updatedAt": "2026-11-15T17:10:31.021Z",
-      "rsaKeyFingerprint": "A08D:B00C:5F89:91DF",
+      "updatedAt": "2026-11-20T15:53:15.482Z",
+      "rsaKeyFingerprint": "9DB6:3D8B:360F:B9FC",
       "rsaPublicKey": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9oNs7P1iQROQfS/kOJ2AaV+Oy3EOnXLO0hS4rv7073F2Tb7fVpKNAw6Z3clrxv/lGFUTCqfWCC26eUUx7z9iu7HuBMFG5wJMo8mgoaFD5WP1LevGLv0JvdNI7yWo14q208z99h+7m4lqEVNb1oiSmWpfPhRsjDbsAedm5XCi8ZcPOWa/nwa7F5h4CPfyc7/AoFt0OQvmQxjVlXS+F98A1syCQHP05oq+axqJc8Dxxb6yLGTPgHgQ7zFZIaUFMlctGq1bJqdUjN7+M5P5KrLx1o9wBpb4JmYHVZY1+3WxAT+ESCLDjGyqEg8BTXrolPhnrnZ85ZLkw7eOJlQRosmcQwIDAQAB"
     },
     {
@@ -991,6 +991,33 @@
     }
   ],
   "products": [
+    {
+      "productId": "prod_top_test_1795190726948",
+      "vendorId": "vendor_atelier_terra",
+      "vendorName": "Atelier Terra",
+      "title": "Top Display Studio Product",
+      "description": "Handcrafted piece shown at the top of the marketplace",
+      "categoryId": "ceramics-pottery",
+      "brand": "Atelier Terra",
+      "sku": "TOP-1795190726948",
+      "price": 120,
+      "discount": 0,
+      "stock": 5,
+      "images": [
+        "/assets/3d/vase_granite.glb"
+      ],
+      "specifications": {
+        "Materials": "Clay"
+      },
+      "shippingPolicy": "2 days",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "isFeatured": true,
+      "createdAt": "2026-11-20T16:05:26.948Z",
+      "updatedAt": "2026-11-20T16:05:26.955Z"
+    },
     {
       "productId": "prod_1794657939860_6myp",
       "vendorId": "vendor_1794657939849_05g",
@@ -2798,6 +2825,54 @@
       "status": "active",
       "createdAt": "2026-11-08T05:23:49.344Z",
       "updatedAt": "2026-11-18T05:23:49.344Z"
+    },
+    {
+      "productId": "prod_test_ground_1795189985809",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Test Seller SonicPro Reference Headset",
+      "description": "Seller-uploaded test studio headset",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "SonicTest",
+      "sku": "TST-1795189985809",
+      "price": 299,
+      "discount": 0,
+      "stock": 15,
+      "images": [],
+      "specifications": {
+        "Battery": "40 Hours"
+      },
+      "shippingPolicy": "Express shipping",
+      "returnPolicy": "30-day return",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-20T15:53:05.809Z",
+      "updatedAt": "2026-11-20T15:53:09.502Z"
+    },
+    {
+      "productId": "prod_tkt_test_1795189990015",
+      "vendorId": "vendor_nexconn_audio",
+      "vendorName": "Nexconn Audio & Smart Tech",
+      "title": "Seller Uploaded Acoustic Dac Amp",
+      "description": "Hi-Fi desktop headphone amp uploaded by seller",
+      "categoryId": "cat-electronics",
+      "categoryName": "Electronics & Gadgets",
+      "brand": "AudioLab",
+      "sku": "AUD-1795189990016",
+      "price": 179,
+      "discount": 0,
+      "stock": 10,
+      "images": [],
+      "specifications": {},
+      "shippingPolicy": "Next day air",
+      "returnPolicy": "30 days",
+      "status": "archived",
+      "rating": 5,
+      "reviewCount": 0,
+      "createdAt": "2026-11-20T15:53:10.016Z",
+      "updatedAt": "2026-11-20T15:53:10.033Z"
     }
   ],
   "carts": {
@@ -2973,7 +3048,7 @@
         "user_support_1": 1
       },
       "createdAt": "2026-11-14T10:48:35.640Z",
-      "updatedAt": "2026-11-18T05:51:09.601Z",
+      "updatedAt": "2026-11-20T15:53:15.471Z",
       "lastMessage": {
         "text": "Hi Alex! Sarah Connor here from Human Dispatch (Ticket #tkt_1794653372754_0dq). I see you mentioned earlier that you don't want / wish to return Order #ord_1794653305179_48rt. Would you like me to process a full cancellation & refund right away?",
         "senderId": "user_support_1",
@@ -3128,7 +3203,7 @@
         "n8vNU9HpMCfsBYLGxf3Lg5mOrii2": 1
       },
       "createdAt": "2026-11-15T17:45:49.879Z",
-      "updatedAt": "2026-11-18T05:51:09.601Z",
+      "updatedAt": "2026-11-20T15:53:15.471Z",
       "lastMessage": {
         "text": "🔒 RSA-2048 Encrypted Message",
         "senderId": "user_consumer_1",
@@ -3159,13 +3234,15 @@
         "user_vendor_nordic_timber": 0
       },
       "createdAt": "2026-11-18T05:53:15.086Z",
-      "updatedAt": "2026-11-18T05:53:15.307Z",
+      "updatedAt": "2026-11-20T15:53:15.471Z",
       "lastMessage": {
         "text": "Welcome to Nordic Timber Craft in Copenhagen, Denmark! I'm Freja Lindqvist. Every piece in our studio is handcrafted in small batches. How can I help you with dimensions, custom glazes, or shipping today?",
         "senderId": "agent_vendor_nordic_timber",
         "timestamp": "2026-11-18T05:53:15.089Z",
         "type": "text"
-      }
+      },
+      "consumerEmail": "customer@convocart.com",
+      "consumerPhone": "+1-555-0199"
     },
     {
       "conversationId": "conv_1795014908675_4ozi",
@@ -4352,7 +4429,7 @@
       "question": "How does Multi-Language Translated Chat work between Buyers, Sellers, and Support Agents?",
       "answer": "Every message sent in 1-on-1 or Support Dispatch chat is automatically detected and translated into each participant’s preferred language (English, Hindi, Japanese, Spanish, French, German, Chinese, Arabic) via Nexconn TranslateModule & our backend translation engine.",
       "category": "Translated Chat",
-      "helpful": 156,
+      "helpful": 157,
       "notHelpful": 3
     },
     {

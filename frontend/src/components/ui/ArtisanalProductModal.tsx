@@ -131,36 +131,52 @@ export const ArtisanalProductModal: React.FC<ArtisanalProductModalProps> = ({
             </div>
 
             <div className="w-full h-[280px] sm:h-[330px] relative my-auto">
-              <ModelViewer
-                url={item.modelUrl}
-                textureUrl={item.textureUrl}
-                textureRepeat={item.textureRepeat}
-                bumpScale={item.bumpScale}
-                width="100%"
-                height="100%"
-                environment="studio"
-                environmentIntensity={0.48}
-                exposure={0.86}
-                autoRotate
-                autoRotateSpeed={0.35}
-                dragRotate
-                turntable
-                hoverTilt={0.25}
-                float={0.18}
-                zoom
-                shadow
-                shadowOpacity={0.4}
-                intro="fade"
-                startAngle={item.startAngle}
-                tilt={item.tilt}
-                fit={item.fit}
-                offsetY={item.offsetY ?? 0}
-                className="w-full h-full"
-              />
+              {item.modelUrl &&
+              (item.modelUrl.endsWith('.glb') ||
+                item.modelUrl.endsWith('.gltf') ||
+                item.modelUrl.includes('/assets/3d/')) ? (
+                <ModelViewer
+                  url={item.modelUrl}
+                  textureUrl={item.textureUrl}
+                  textureRepeat={item.textureRepeat}
+                  bumpScale={item.bumpScale}
+                  width="100%"
+                  height="100%"
+                  environment="studio"
+                  environmentIntensity={0.48}
+                  exposure={0.86}
+                  autoRotate
+                  autoRotateSpeed={0.35}
+                  dragRotate
+                  turntable
+                  hoverTilt={0.25}
+                  float={0.18}
+                  zoom
+                  shadow
+                  shadowOpacity={0.4}
+                  intro="fade"
+                  startAngle={item.startAngle}
+                  tilt={item.tilt}
+                  fit={item.fit}
+                  offsetY={item.offsetY ?? 0}
+                  className="w-full h-full"
+                />
+              ) : (
+                <img
+                  src={item.textureUrl || item.modelUrl || '/assets/3d/sculpture_v3.glb'}
+                  alt={item.title}
+                  className="w-full h-full object-contain select-none rounded-xl"
+                />
+              )}
             </div>
 
             <p className="text-[11px] text-center text-[#8C867A] z-10">
-              Drag to rotate 360° · Scroll to inspect surface details
+              {item.modelUrl &&
+              (item.modelUrl.endsWith('.glb') ||
+                item.modelUrl.endsWith('.gltf') ||
+                item.modelUrl.includes('/assets/3d/'))
+                ? 'Drag to rotate 360° · Scroll to inspect surface details'
+                : 'Verified Atelier Creation · Handcrafted in small batches'}
             </p>
           </div>
 

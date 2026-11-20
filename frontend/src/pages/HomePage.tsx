@@ -22,6 +22,7 @@ import { ArtisanalProductModal } from '../components/ui/ArtisanalProductModal';
 import {
   ARTISANAL_50_CATALOG,
   ArtisanalCatalogItem,
+  mapProductToCatalogItem,
 } from '../data/artisanalCatalog';
 
 interface BestSeller3DItem {
@@ -135,25 +136,59 @@ export const HomePage: React.FC = () => {
   const [selectedVendor, setSelectedVendor] = useState<Vendor | null>(null);
   const [selectedProductModal, setSelectedProductModal] = useState<ArtisanalCatalogItem | null>(null);
   const [pageIdx, setPageIdx] = useState(0);
+  const [curatedSellerCatalog, setCuratedSellerCatalog] = useState<ArtisanalCatalogItem[]>(() => {
+    const list = ARTISANAL_50_CATALOG.slice();
+    list.sort(
+      (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+    );
+    return list.slice(0, 4);
+  });
 
   useEffect(() => {
-    Promise.all([
-      apiRequest<{ products: Product[] }>('/products?limit=24'),
-      apiRequest<Vendor[]>('/vendors').catch(() => [] as Vendor[]),
-    ])
-      .then(([prodData, vendorList]) => {
-        const liveProducts = (prodData.products || []).filter(
-          (p) => !p.title.toLowerCase().includes('headphone')
-        );
-        const activeVendorIds = new Set(liveProducts.map((p) => p.vendorId));
-        const activeVendors = (vendorList || []).filter(
-          (v) =>
-            activeVendorIds.has(v.vendorId) &&
-            !v.businessName.toLowerCase().includes('aura sound')
-        );
-        setVendorsList(activeVendors);
-      })
-      .catch((err) => console.error(err));
+    const loadMarketplaceData = () => {
+      Promise.all([
+        apiRequest<{ products: Product[] }>('/products?limit=50&sort=newest'),
+        apiRequest<Vendor[]>('/vendors').catch(() => [] as Vendor[]),
+      ])
+        .then(([prodData, vendorList]) => {
+          const liveProducts = (prodData.products || []).filter(
+            (p) => !p.title.toLowerCase().includes('headphone')
+          );
+          const activeVendorIds = new Set(liveProducts.map((p) => p.vendorId));
+          const activeVendors = (vendorList || []).filter(
+            (v) =>
+              activeVendorIds.has(v.vendorId) &&
+              !v.businessName.toLowerCase().includes('aura sound')
+          );
+          setVendorsList(activeVendors);
+
+          const vendorsMap: Record<string, Vendor> = {};
+          (vendorList || []).forEach((v) => {
+            vendorsMap[v.vendorId] = v;
+          });
+
+          if (prodData.products && prodData.products.length > 0) {
+            const mapped = prodData.products.map((p) => mapProductToCatalogItem(p, vendorsMap));
+            mapped.sort(
+              (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+            );
+            setCuratedSellerCatalog(mapped.slice(0, 4));
+          }
+        })
+        .catch((err) => console.error(err));
+    };
+
+    loadMarketplaceData();
+    window.addEventListener('convocart:product_created', loadMarketplaceData);
+    window.addEventListener('focus', loadMarketplaceData);
+
+    const interval = window.setInterval(loadMarketplaceData, 8000);
+
+    return () => {
+      window.removeEventListener('convocart:product_created', loadMarketplaceData);
+      window.removeEventListener('focus', loadMarketplaceData);
+      window.clearInterval(interval);
+    };
   }, []);
 
   const activeSet = BEST_SELLER_PAGES[pageIdx % BEST_SELLER_PAGES.length];
@@ -570,40 +605,60 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {ARTISANAL_50_CATALOG.slice(10, 14).map((item) => (
+          {curatedSellerCatalog.map((item) => (
             <div
               key={item.id}
               onClick={() => setSelectedProductModal(item)}
               className="flex flex-col w-full cursor-pointer group"
             >
               <div className="w-full h-[252px] xl:h-[268px] bg-white overflow-hidden relative transition-shadow duration-300 group-hover:shadow-md">
+                {Boolean(
+                  item.isNew ||
+                    (item.createdAt &&
+                      Date.now() - new Date(item.createdAt).getTime() < 3 * 86400000)
+                ) && (
+                  <span className="absolute top-2.5 left-2.5 z-20 rounded-full bg-[#171717] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#D6B875] shadow-xs">
+                    New
+                  </span>
+                )}
                 <div className="w-full h-full pointer-events-none">
-                  <ModelViewer
-                    url={item.modelUrl}
-                    textureUrl={item.textureUrl}
-                    textureRepeat={item.textureRepeat}
-                    bumpScale={item.bumpScale}
-                    width="100%"
-                    height="100%"
-                    environment="studio"
-                    environmentIntensity={0.45}
-                    exposure={0.85}
-                    autoRotate
-                    autoRotateSpeed={0.28}
-                    dragRotate={false}
-                    turntable={false}
-                    hoverTilt={0}
-                    float={0.16}
-                    zoom={false}
-                    shadow
-                    shadowOpacity={0.38}
-                    intro="fade"
-                    startAngle={item.startAngle}
-                    tilt={item.tilt}
-                    fit={item.fit}
-                    offsetY={item.offsetY ?? 0}
-                    className="w-full h-full"
-                  />
+                  {item.modelUrl &&
+                  (item.modelUrl.endsWith('.glb') ||
+                    item.modelUrl.endsWith('.gltf') ||
+                    item.modelUrl.includes('/assets/3d/')) ? (
+                    <ModelViewer
+                      url={item.modelUrl}
+                      textureUrl={item.textureUrl}
+                      textureRepeat={item.textureRepeat}
+                      bumpScale={item.bumpScale}
+                      width="100%"
+                      height="100%"
+                      environment="studio"
+                      environmentIntensity={0.45}
+                      exposure={0.85}
+                      autoRotate
+                      autoRotateSpeed={0.28}
+                      dragRotate={false}
+                      turntable={false}
+                      hoverTilt={0}
+                      float={0.16}
+                      zoom={false}
+                      shadow
+                      shadowOpacity={0.38}
+                      intro="fade"
+                      startAngle={item.startAngle}
+                      tilt={item.tilt}
+                      fit={item.fit}
+                      offsetY={item.offsetY ?? 0}
+                      className="w-full h-full"
+                    />
+                  ) : (
+                    <img
+                      src={item.textureUrl || item.modelUrl || '/assets/3d/sculpture_v3.glb'}
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  )}
                 </div>
               </div>
               <div className="mt-2.5 flex items-center justify-between text-[13px]">

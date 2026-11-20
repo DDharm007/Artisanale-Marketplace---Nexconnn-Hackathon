@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { usePreferencesStore } from '../stores/usePreferencesStore';
 import { useCartStore } from '../stores/useCartStore';
@@ -7,10 +7,13 @@ import ModelViewer from '../components/ui/ModelViewer';
 import { ArtisanalProductModal } from '../components/ui/ArtisanalProductModal';
 import { StarRatingDisplay } from '../components/ui/StarRating';
 import { useReviewStore } from '../stores/useReviewStore';
+import { apiRequest } from '../lib/api';
+import { Product, Vendor } from '@convocart/shared';
 import {
   ARTISANAL_50_CATALOG,
   ARTISANAL_CATEGORIES,
   ArtisanalCatalogItem,
+  mapProductToCatalogItem,
 } from '../data/artisanalCatalog';
 import {
   SlidersHorizontal,
@@ -18,6 +21,7 @@ import {
   List,
   Search,
   MessageSquare,
+  Sparkles,
 } from 'lucide-react';
 import { cn } from '../lib/utils';
 
@@ -41,18 +45,83 @@ export const ProductListingPage: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<ArtisanalCatalogItem | null>(null);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
+  // Dynamic marketplace items: start with initial catalogue, then hydrate with live backend products
+  const [catalogItems, setCatalogItems] = useState<ArtisanalCatalogItem[]>(() => {
+    const list = ARTISANAL_50_CATALOG.slice();
+    list.sort(
+      (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+    );
+    return list;
+  });
+
+  const fetchMarketplaceProducts = useCallback(async () => {
+    try {
+      const [prodRes, vendorsRes] = await Promise.all([
+        apiRequest<{ products: Product[] }>('/products?limit=250&sort=newest').catch(() => null),
+        apiRequest<Vendor[]>('/vendors').catch(() => null),
+      ]);
+
+      if (prodRes && Array.isArray(prodRes.products) && prodRes.products.length > 0) {
+        const vendorsMap: Record<string, Vendor> = {};
+        if (vendorsRes && Array.isArray(vendorsRes)) {
+          vendorsRes.forEach((v) => {
+            vendorsMap[v.vendorId] = v;
+          });
+        }
+
+        const mappedBackendItems = prodRes.products.map((p) =>
+          mapProductToCatalogItem(p, vendorsMap)
+        );
+
+        const backendIds = new Set(mappedBackendItems.map((item) => item.id));
+        const remainingCatalog = ARTISANAL_50_CATALOG.filter((item) => !backendIds.has(item.id));
+
+        const combined = [...mappedBackendItems, ...remainingCatalog];
+        // Strictly sort by creation date so any new vendor items are on top
+        combined.sort(
+          (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+        );
+
+        setCatalogItems(combined);
+      }
+    } catch (err) {
+      console.warn('Could not sync marketplace products:', err);
+    }
+  }, []);
+
+  useEffect(() => {
+    void fetchMarketplaceProducts();
+
+    const handleRefresh = () => {
+      void fetchMarketplaceProducts();
+    };
+
+    window.addEventListener('convocart:product_created', handleRefresh);
+    window.addEventListener('focus', handleRefresh);
+
+    const interval = window.setInterval(() => {
+      void fetchMarketplaceProducts();
+    }, 6000);
+
+    return () => {
+      window.removeEventListener('convocart:product_created', handleRefresh);
+      window.removeEventListener('focus', handleRefresh);
+      window.clearInterval(interval);
+    };
+  }, [fetchMarketplaceProducts]);
+
   useEffect(() => {
     setSelectedCategory(searchParams.get('categoryId') || '');
     setSearchQuery(searchParams.get('search') || '');
   }, [searchParams]);
 
   const availableStudios = useMemo(
-    () => Array.from(new Set(ARTISANAL_50_CATALOG.map((p) => p.studio))),
-    []
+    () => Array.from(new Set(catalogItems.map((p) => p.studio).filter(Boolean))),
+    [catalogItems]
   );
 
   const filteredItems = useMemo(() => {
-    let list = ARTISANAL_50_CATALOG.slice();
+    let list = catalogItems.slice();
     if (selectedCategory) {
       list = list.filter((p) => p.category === selectedCategory);
     }
@@ -84,9 +153,14 @@ export const ProductListingPage: React.FC = () => {
         (a, b) =>
           getProductRatingStats(b.id).rating - getProductRatingStats(a.id).rating
       );
+    } else {
+      // 'featured', 'newest', or default: ALWAYS show newly added items on top!
+      list.sort(
+        (a, b) => new Date(b.createdAt || 0).getTime() - new Date(a.createdAt || 0).getTime()
+      );
     }
     return list;
-  }, [selectedCategory, searchQuery, selectedStudio, maxPrice, minRating, sortBy, reviews]);
+  }, [catalogItems, selectedCategory, searchQuery, selectedStudio, maxPrice, minRating, sortBy, reviews]);
 
   const handleClearFilters = () => {
     setSelectedCategory('');
@@ -111,7 +185,7 @@ export const ProductListingPage: React.FC = () => {
               {searchQuery ? `Results for "${searchQuery}"` : 'Curated Marketplace'}
             </h1>
             <p className="text-xs text-[#686359] mt-1">
-              Showing {filteredItems.length} of {ARTISANAL_50_CATALOG.length} handcrafted creations · Click any piece to inspect details, chat with the artisan, or purchase
+              Showing {filteredItems.length} of {catalogItems.length} handcrafted creations · Click any piece to inspect details, chat with the artisan, or purchase
             </p>
           </div>
 
@@ -181,9 +255,10 @@ export const ProductListingPage: React.FC = () => {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
-              className="rounded-full border border-[#E4DEC8] bg-white px-3.5 py-1.5 text-xs font-medium text-[#171717] focus:border-[#171717] focus:outline-none"
+              className="rounded-full border border-[#E4DEC8] bg-white px-3.5 py-1.5 text-xs font-medium text-[#171717] focus:border-[#171717] focus:outline-none cursor-pointer"
             >
-              <option value="featured">Featured Collection</option>
+              <option value="featured">Featured (Newest First)</option>
+              <option value="newest">Newest Arrivals</option>
               <option value="price_asc">Price: Low to High</option>
               <option value="price_desc">Price: High to Low</option>
               <option value="rating">Top Rated</option>
@@ -225,7 +300,7 @@ export const ProductListingPage: React.FC = () => {
                         : 'text-[#686359] hover:bg-[#FAF8F3]'
                     )}
                   >
-                    All 50 Creations
+                    All {catalogItems.length} Creations
                   </button>
                   {ARTISANAL_CATEGORIES.map((cat) => (
                     <button
@@ -343,35 +418,55 @@ export const ProductListingPage: React.FC = () => {
                     onClick={() => setSelectedItem(item)}
                     className="flex flex-col w-full cursor-pointer group"
                   >
-                    {/* 3D Model Box — pointer-events-none so cursor is always a click pointer, never a grabber */}
+                    {/* 3D Model Box / Media Preview */}
                     <div className="w-full h-[248px] xl:h-[264px] bg-white overflow-hidden relative transition-shadow duration-300 group-hover:shadow-md">
+                      {Boolean(
+                        item.isNew ||
+                          (item.createdAt &&
+                            Date.now() - new Date(item.createdAt).getTime() < 3 * 86400000)
+                      ) && (
+                        <span className="absolute top-2.5 left-2.5 z-20 rounded-full bg-[#171717] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#D6B875] shadow-xs">
+                          New
+                        </span>
+                      )}
                       <div className="w-full h-full pointer-events-none">
-                        <ModelViewer
-                          url={item.modelUrl}
-                          textureUrl={item.textureUrl}
-                          textureRepeat={item.textureRepeat}
-                          bumpScale={item.bumpScale}
-                          width="100%"
-                          height="100%"
-                          environment="studio"
-                          environmentIntensity={0.45}
-                          exposure={0.85}
-                          autoRotate
-                          autoRotateSpeed={0.28}
-                          dragRotate={false}
-                          turntable={false}
-                          hoverTilt={0}
-                          float={0.16}
-                          zoom={false}
-                          shadow
-                          shadowOpacity={0.38}
-                          intro="fade"
-                          startAngle={item.startAngle}
-                          tilt={item.tilt}
-                          fit={item.fit}
-                          offsetY={item.offsetY ?? 0}
-                          className="w-full h-full"
-                        />
+                        {item.modelUrl &&
+                        (item.modelUrl.endsWith('.glb') ||
+                          item.modelUrl.endsWith('.gltf') ||
+                          item.modelUrl.includes('/assets/3d/')) ? (
+                          <ModelViewer
+                            url={item.modelUrl}
+                            textureUrl={item.textureUrl}
+                            textureRepeat={item.textureRepeat}
+                            bumpScale={item.bumpScale}
+                            width="100%"
+                            height="100%"
+                            environment="studio"
+                            environmentIntensity={0.45}
+                            exposure={0.85}
+                            autoRotate
+                            autoRotateSpeed={0.28}
+                            dragRotate={false}
+                            turntable={false}
+                            hoverTilt={0}
+                            float={0.16}
+                            zoom={false}
+                            shadow
+                            shadowOpacity={0.38}
+                            intro="fade"
+                            startAngle={item.startAngle}
+                            tilt={item.tilt}
+                            fit={item.fit}
+                            offsetY={item.offsetY ?? 0}
+                            className="w-full h-full"
+                          />
+                        ) : (
+                          <img
+                            src={item.textureUrl || item.modelUrl || '/assets/3d/sculpture_v3.glb'}
+                            alt={item.title}
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                          />
+                        )}
                       </div>
                     </div>
 
@@ -424,29 +519,49 @@ export const ProductListingPage: React.FC = () => {
                   >
                     <div className="flex flex-col xs:flex-row items-start xs:items-center gap-4 min-w-0 flex-1">
                       <div className="w-28 h-28 xs:w-32 xs:h-32 bg-white overflow-hidden shrink-0 relative pointer-events-none rounded-xl">
-                        <ModelViewer
-                          url={item.modelUrl}
-                          textureUrl={item.textureUrl}
-                          textureRepeat={item.textureRepeat}
-                          bumpScale={item.bumpScale}
-                          width="100%"
-                          height="100%"
-                          environment="studio"
-                          environmentIntensity={0.45}
-                          exposure={0.85}
-                          autoRotate
-                          autoRotateSpeed={0.28}
-                          dragRotate={false}
-                          zoom={false}
-                          shadow
-                          shadowOpacity={0.35}
-                          intro="fade"
-                          startAngle={item.startAngle}
-                          tilt={item.tilt}
-                          fit={item.fit}
-                          offsetY={item.offsetY ?? 0}
-                          className="w-full h-full"
-                        />
+                        {Boolean(
+                          item.isNew ||
+                            (item.createdAt &&
+                              Date.now() - new Date(item.createdAt).getTime() < 3 * 86400000)
+                        ) && (
+                          <span className="absolute top-1.5 left-1.5 z-20 rounded-full bg-[#171717] px-2 py-0.5 text-[9px] font-bold uppercase tracking-wider text-[#D6B875]">
+                            New
+                          </span>
+                        )}
+                        {item.modelUrl &&
+                        (item.modelUrl.endsWith('.glb') ||
+                          item.modelUrl.endsWith('.gltf') ||
+                          item.modelUrl.includes('/assets/3d/')) ? (
+                          <ModelViewer
+                            url={item.modelUrl}
+                            textureUrl={item.textureUrl}
+                            textureRepeat={item.textureRepeat}
+                            bumpScale={item.bumpScale}
+                            width="100%"
+                            height="100%"
+                            environment="studio"
+                            environmentIntensity={0.45}
+                            exposure={0.85}
+                            autoRotate
+                            autoRotateSpeed={0.28}
+                            dragRotate={false}
+                            zoom={false}
+                            shadow
+                            shadowOpacity={0.35}
+                            intro="fade"
+                            startAngle={item.startAngle}
+                            tilt={item.tilt}
+                            fit={item.fit}
+                            offsetY={item.offsetY ?? 0}
+                            className="w-full h-full"
+                          />
+                        ) : (
+                          <img
+                            src={item.textureUrl || item.modelUrl || '/assets/3d/sculpture_v3.glb'}
+                            alt={item.title}
+                            className="w-full h-full object-cover"
+                          />
+                        )}
                       </div>
                       <div>
                         <div className="flex items-center gap-2">

@@ -37,6 +37,8 @@ export interface ArtisanalCatalogItem {
   tilt: number;
   startAngle: number;
   offsetY?: number;
+  createdAt?: string;
+  isNew?: boolean;
 }
 
 export const ARTISANAL_CATEGORIES = [
@@ -188,6 +190,8 @@ interface RawCatalogSeed {
   tilt: number;
   startAngle: number;
   offsetY?: number;
+  createdAt?: string;
+  isNew?: boolean;
 }
 
 const RAW_SEEDS: RawCatalogSeed[] = [
@@ -943,9 +947,79 @@ export const ARTISANAL_50_CATALOG: ArtisanalCatalogItem[] = RAW_SEEDS.map((seed,
     tilt: seed.tilt,
     startAngle: seed.startAngle,
     offsetY: seed.offsetY,
+    createdAt: new Date(Date.now() - 10 * 86400000).toISOString(),
+    isNew: false,
   };
 });
 
 export const ARTISANAL_CATALOG_BY_ID: Record<string, ArtisanalCatalogItem> = Object.fromEntries(
   ARTISANAL_50_CATALOG.map((item) => [item.id, item])
 );
+
+/**
+ * Maps a Product from the database/API to an ArtisanalCatalogItem for the marketplace.
+ * Ensures dynamically added vendor products are rendered with full rich attributes and can be sorted to the top.
+ */
+export function mapProductToCatalogItem(
+  prod: any,
+  vendorsMap?: Record<string, any>
+): ArtisanalCatalogItem {
+  const existing = ARTISANAL_CATALOG_BY_ID[prod.productId];
+  if (existing) {
+    return {
+      ...existing,
+      title: prod.title || existing.title,
+      price: prod.price !== undefined ? Number(prod.price) : existing.price,
+      priceFormatted: prod.price !== undefined ? `$${Number(prod.price).toFixed(2)}` : existing.priceFormatted,
+      description: prod.description || existing.description,
+      stock: prod.stock !== undefined ? Number(prod.stock) : existing.stock,
+      createdAt: prod.createdAt || existing.createdAt,
+    };
+  }
+
+  const vendor = vendorsMap?.[prod.vendorId];
+  const model3d =
+    prod.specifications?.Interactive3D ||
+    (Array.isArray(prod.images) ? prod.images.find((img: string) => img.endsWith('.glb') || img.endsWith('.gltf')) : '') ||
+    '/assets/3d/sculpture_v3.glb';
+
+  const imageUrl =
+    Array.isArray(prod.images) ? prod.images.find((img: string) => !img.endsWith('.glb') && !img.endsWith('.gltf')) : undefined;
+
+  const categoryObj = ARTISANAL_CATEGORIES.find((c) => c.id === prod.categoryId);
+  const categoryLabel = prod.categoryName || categoryObj?.name || 'Artisan Craft';
+
+  const price = Number(prod.price) || 0;
+  const originalPrice = prod.discount
+    ? Number((price / (1 - prod.discount / 100)).toFixed(2))
+    : Number((price * 1.15).toFixed(2));
+
+  return {
+    id: prod.productId,
+    title: prod.title || 'Artisanal Piece',
+    price,
+    originalPrice,
+    priceFormatted: `$${price.toFixed(2)}`,
+    category: prod.categoryId || 'sculptures-candles',
+    categoryLabel,
+    vendorId: prod.vendorId || 'vendor_atelier_terra',
+    studio: prod.brand || prod.vendorName || vendor?.businessName || 'Independent Artisan Studio',
+    artisanName: prod.vendorName || vendor?.ownerName || prod.brand || 'Master Artisan',
+    location: vendor?.location?.city ? `${vendor.location.city}, ${vendor.location.country}` : 'Handcrafted Studio',
+    vendorAvatar: vendor?.logo || 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&auto=format&fit=crop&q=80',
+    rating: typeof prod.rating === 'number' ? prod.rating : 5.0,
+    reviewCount: typeof prod.reviewCount === 'number' ? prod.reviewCount : 0,
+    description: prod.description || 'Handmade artisanal creation crafted with precision and care.',
+    materials: prod.specifications?.Materials || prod.specifications?.Craftsmanship || 'Studio Raw Materials',
+    dimensions: prod.specifications?.Dimensions || 'Custom Studio Size',
+    careInstructions: prod.returnPolicy || 'Handle with care. Hand wash or wipe gently with dry cloth.',
+    stock: typeof prod.stock === 'number' ? prod.stock : 12,
+    modelUrl: model3d,
+    textureUrl: imageUrl,
+    fit: 0.85,
+    tilt: 15,
+    startAngle: 0,
+    createdAt: prod.createdAt || new Date().toISOString(),
+    isNew: true,
+  };
+}

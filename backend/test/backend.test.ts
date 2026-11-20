@@ -161,6 +161,48 @@ describe('5. Database Store Integrity (Zero Static Products)', () => {
     expect(vendorAlias).toBeDefined();
     expect(vendorAlias?.vendorId).toBe('vendor_nexconn_audio');
   });
+
+  it('places newly added vendor products at the top of marketplace listing', () => {
+    const testNewProductId = `prod_top_test_${Date.now()}`;
+    const newProduct: any = {
+      productId: testNewProductId,
+      vendorId: 'vendor_atelier_terra',
+      vendorName: 'Atelier Terra',
+      title: 'Top Display Studio Product',
+      description: 'Handcrafted piece shown at the top of the marketplace',
+      categoryId: 'ceramics-pottery',
+      brand: 'Atelier Terra',
+      sku: `TOP-${Date.now()}`,
+      price: 120,
+      discount: 0,
+      stock: 5,
+      images: ['/assets/3d/vase_granite.glb'],
+      specifications: { Materials: 'Clay' },
+      shippingPolicy: '2 days',
+      returnPolicy: '30 days',
+      status: 'active',
+      rating: 5.0,
+      reviewCount: 0,
+      isFeatured: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    db.addProduct(newProduct);
+
+    const products = db.getProducts();
+    expect(products.length).toBeGreaterThan(0);
+    expect(products[0].productId).toBe(testNewProductId);
+
+    const featuredProducts = db.getProducts({ sort: 'featured' });
+    expect(featuredProducts[0].productId).toBe(testNewProductId);
+
+    const newestProducts = db.getProducts({ sort: 'newest' });
+    expect(newestProducts[0].productId).toBe(testNewProductId);
+
+    // Clean up
+    db.deleteProduct(testNewProductId);
+  });
 });
 
 describe('6. Multi-Language Translation & Dispatch Escalation', () => {
