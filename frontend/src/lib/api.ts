@@ -1,4 +1,4 @@
-const BASE_URL = (import.meta.env.VITE_API_URL as string) || '/api';
+const BASE_URL = ((import.meta as any).env?.VITE_API_URL as string) || '/api';
 
 export class ApiError extends Error {
   public statusCode: number;
