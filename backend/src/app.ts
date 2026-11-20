@@ -46,3 +46,6 @@ app.use('/api/payments', paymentRoutes);
 
 // Centralized error handling
 app.use(errorHandler);
+
+export default app;
+
