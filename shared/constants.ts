@@ -24,9 +24,9 @@ export const DEFAULT_CATEGORIES = [
 ];
 
 export const NEXCONN_APP_CONFIG = {
-  appKey: '8w7jv4qb8gtvy',
-  appSecret: '6bNYoqv739Ng',
-  accessKey: 'ASPGNSOBMWBGVB4KVVHIWB2XNMTJDHOA5MGCDG63NGY6LJZDZAS3AOPDJA4BIXHG3VUHQRCUROZBLF2RTYXS3EUTILRQLIYJCEHPNLQ',
+  appKey: typeof process !== 'undefined' && process.env?.NEXCONN_APP_KEY ? process.env.NEXCONN_APP_KEY : '',
+  appSecret: typeof process !== 'undefined' && process.env?.NEXCONN_APP_SECRET ? process.env.NEXCONN_APP_SECRET : '',
+  accessKey: typeof process !== 'undefined' && process.env?.NEXCONN_ACCESS_KEY ? process.env.NEXCONN_ACCESS_KEY : '',
 };
 
 export const DEFAULT_COMMISSION_RATE = 0.05; // 5% marketplace commission

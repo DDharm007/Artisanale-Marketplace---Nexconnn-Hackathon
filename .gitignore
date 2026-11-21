@@ -33,3 +33,4 @@ yarn-error.log*
 
 # Antigravity temporary artifacts
 .gemini/
+.git - Copy/

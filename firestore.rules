@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // ConvoCart / Nexconn Hackathon collections on society-adc76
+    // ConvoCart / Nexconn Hackathon collections
     match /convocart_vendors/{docId} {
       allow read, write: if true;
     }

@@ -170,7 +170,7 @@ export class AIAgentService {
     if (isDirectGreeting) {
       const featuredItem = vendorProducts[0];
       return finalize({
-        replyText: `Hello! Welcome to ${vendor.businessName}${featuredItem ? ` (featuring our handcrafted ${featuredItem.title})` : ''}. How can I assist you with product specs, dimensions, materials, or shipping today?`,
+        replyText: `Hello! Welcome to ${vendor.businessName}. I'm online and ready to assist you with product specs, dimensions, materials, or shipping today!${featuredItem ? ` (Featuring our handcrafted ${featuredItem.title})` : ''}`,
         isAiGenerated: true,
         escalateToHuman: false,
         matchedProductId: featuredItem?.productId,

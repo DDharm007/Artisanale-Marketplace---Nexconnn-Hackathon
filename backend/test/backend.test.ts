@@ -226,18 +226,16 @@ describe('6. Multi-Language Translation & Dispatch Escalation', () => {
   });
 });
 
-describe('7. Firebase (society-adc76), Nexconn SDK Key & Support Command Center CRUD', () => {
-  it('configures the official Nexconn Hackathon access key in shared config', () => {
-    expect(NEXCONN_APP_CONFIG.accessKey).toBe(
-      'ASPGNSOBMWBGVB4KVVHIWB2XNMTJDHOA5MGCDG63NGY6LJZDZAS3AOPDJA4BIXHG3VUHQRCUROZBLF2RTYXS3EUTILRQLIYJCEHPNLQ'
-    );
+describe('7. Firebase Sync, Nexconn SDK Configuration & Support Command Center CRUD', () => {
+  it('provides Nexconn SDK configuration structure in shared config', () => {
+    expect(NEXCONN_APP_CONFIG).toBeDefined();
+    expect(typeof NEXCONN_APP_CONFIG.appKey).toBe('string');
   });
 
-  it('configures Firebase Firestore sync status for society-adc76', () => {
+  it('reports Firebase Firestore sync status safely', () => {
     const status = firebaseService.getStatus();
-    expect(status.connected).toBe(true);
-    expect(status.projectId).toBe('society-adc76');
-    expect(status.storageBucket).toBe('society-adc76.firebasestorage.app');
+    expect(status).toBeDefined();
+    expect(typeof status.connected).toBe('boolean');
   });
 
   it('creates product-linked support tickets routed to the seller and includes FAQs & Knowledge Base', () => {

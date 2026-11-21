@@ -1,224 +1,232 @@
-# artisanale — Full-Stack Conversation-First Marketplace
+# Artisanale — Conversation-First Artisanal Marketplace
+
+> **Important Notice:** This **Artisanale** app is made for the **Nexconn Hackathon** and created on the **Nexconn AI Chat and Call SDK** (`@nexconn/chat`, `@nexconn/engine`, `@nexconn/call`).
+> All sensitive, crucial APIs and private app keys have been securely sanitized and decoupled into environment variables for safe open sharing and review.
 
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18.3-61dafb.svg)](https://reactjs.org/)
 [![Vite](https://img.shields.io/badge/Vite-5.4-646cff.svg)](https://vitejs.dev/)
 [![Express](https://img.shields.io/badge/Express-4.19-lightgrey.svg)](https://expressjs.com/)
-[![Nexconn SDK](https://img.shields.io/badge/Nexconn%20Chat%20SDK-v26.2.1-success.svg)](https://nexconn.com/)
-[![Anime.js](https://img.shields.io/badge/Anime.js-v4.0-ff4b4b.svg)](https://animejs.com/)
-[![Vitest](https://img.shields.io/badge/Vitest-Passed%20(9%2F9)-brightgreen.svg)](https://vitest.dev/)
-
-artisanale is an enterprise-grade conversation-first commerce platform that seamlessly fuses:
-- **Amazon-style product discovery & filtering** with comprehensive category hierarchies and rich specs.
-- **Flipkart-style shopping, cart grouping, and order lifecycle management** with live milestone tracking.
-- **Ubuy-inspired international commerce capabilities**, currency display, and cross-border delivery guarantees.
-- **WhatsApp-inspired real-time communication** powered by the official **Nexconn Chat SDK v26.2.1** and WebRTC calling workflows.
-- **Autonomous AI Vendor Assistants (Aria & Kai)** providing grounded product Q&A, FAQ resolution, and automatic human escalation.
-- **Razorpay test payment processing** with server-side HMAC-SHA256 signature verification.
-- **Fluid UI micro-interactions** leveraging **React-Bits** design paradigms animated with **Anime.js v4**.
+[![Nexconn AI Chat SDK](https://img.shields.io/badge/Nexconn%20Chat%20SDK-v26.2.1-success.svg)](https://nexconn.com/)
+[![Nexconn Call SDK](https://img.shields.io/badge/Nexconn%20Call%20SDK-v26.2.1-orange.svg)](https://nexconn.com/)
+[![Vitest](https://img.shields.io/badge/Vitest-Passed%20(26%2F26)-brightgreen.svg)](https://vitest.dev/)
 
 ---
 
-## 1. System Architecture
+## 🌟 Overview
 
-artisanale is structured as a typed monorepo ensuring zero duplication of business logic and authoritative server-side validation.
+**Artisanale** is a full-stack, conversation-first artisanal e-commerce marketplace built specifically for the **Nexconn Hackathon**. It is created on the **Nexconn AI Chat and Call SDK** to bridge the emotional and consultative gap between bespoke artisans and conscious consumers through seamless real-time interactions:
+
+- **Nexconn AI Chat SDK Integration:** Real-time 1-on-1 direct channels between buyers and makers, supporting instant rich messaging, voice notes, webcam photo sharing, live typing indicators, and read receipts.
+- **Nexconn Call SDK Voice & Video Calling:** Live crystal-clear WebRTC audio and video calling directly embedded in the buyer-seller chat pane, enabling live craft walkthroughs, custom bespoke order consultations, and maker verifications.
+- **Autonomous AI Vendor Assistants (Artis AI, Aria & Kai):** Powered by LLM and grounded retrieval with automatic natural escalation to human artisan teams on cancellation, dispute, or custom commission requests.
+- **Amazon & Etsy-Grade Artisanal Catalog:** Rich product discovery, category hierarchies (Ceramics, Pottery, Handcrafted Jewellery, Textiles, Leather, Woodcraft), multi-currency calculation, and live stock tracking.
+- **Secure End-to-End Commerce:** Cart calculations with taxes & shipping thresholds, Razorpay payment verification, and encrypted chat state.
+- **Elegantly Animated UI:** Built with React 18, Tailwind CSS, Lucide icons, and fluid micro-interactions with Anime.js.
+
+---
+
+## 🏗 System Architecture
+
+Artisanale is designed as a typed monorepo ensuring shared data models, schema validation, and strict boundary separation between client and server:
 
 ```
-convocart/
+Nexconn-Hackathon/
 ├── shared/                     # Universal Single Source of Truth
-│   ├── types.ts                # Domain models (Users, Products, Orders, Carts, Messages, AI configs)
-│   ├── schemas.ts              # Zod validation schemas for all mutations
-│   ├── constants.ts            # Order status lifecycles, categories, and Nexconn config
+│   ├── types.ts                # TypeScript domain models (Users, Products, Orders, Carts, Messages, Call tokens)
+│   ├── schemas.ts              # Shared Zod validation schemas
+│   ├── constants.ts            # Order status transitions, categories, and Nexconn SDK configs
 │   └── index.ts
 │
 ├── backend/                    # Authoritative Node.js + Express + TypeScript Engine
 │   ├── src/
-│   │   ├── config/             # Environment, Nexconn credentials, and Firebase Admin
-│   │   ├── middleware/         # JWT authentication, role guards, Zod validators, error handling
+│   │   ├── config/             # Environment loader and SDK initialization
+│   │   ├── middleware/         # JWT authentication, role guards, and Zod validators
 │   │   ├── modules/            # Controllers and routing by domain
 │   │   │   ├── auth/           # Login, registration, token issuance
-│   │   │   ├── products/       # Search, filter, CRUD, stock management
-│   │   │   ├── vendors/        # Vendor profiles, stats, and catalog
-│   │   │   ├── carts/          # Server-recalculated pricing, discounts, and taxes
-│   │   │   ├── orders/         # State machine transitions, cancellation, refunds
+│   │   │   ├── products/       # Search, filter, CRUD, inventory
+│   │   │   ├── vendors/        # Artisan profiles, stats, catalog
+│   │   │   ├── carts/          # Server-recalculated pricing, discounts, taxes
+│   │   │   ├── orders/         # Order state machine transitions, cancellation, refunds
 │   │   │   ├── payments/       # Razorpay order generation & signature verification
 │   │   │   ├── conversations/  # Conversation threads, message persistence, unread counters
 │   │   │   ├── ai-agent/       # Grounded knowledge extraction & automated response
 │   │   │   ├── support/        # Ticket dispatch and resolution
-│   │   │   └── admin/          # Governance, platform metrics, and user management
+│   │   │   └── admin/          # Governance, platform metrics, user management
 │   │   ├── services/
-│   │   │   ├── dataStore.ts    # Authoritative disk database with Firebase Firestore sync
-│   │   │   ├── nexconnService.ts # SHA1/HMAC user token generator and call session signer
-│   │   │   ├── aiAgentService.ts # Multi-vendor grounded AI reasoning with escalation rules
-│   │   │   └── razorpayService.ts# Test order creation & cryptographic signature validator
+│   │   │   ├── dataStore.ts    # Authoritative disk database (dataStore.json)
+│   │   │   ├── nexconnService.ts # SHA1/HMAC user token generator and Nexconn Call session signer
+│   │   │   ├── aiAgentService.ts # Grounded AI reasoning with automated human escalation
+│   │   │   ├── translationService.ts # Multilingual real-time translation for global commerce
+│   │   │   └── razorpayService.ts# Payment order creation & cryptographic signature validator
 │   │   ├── app.ts              # Express application configuration & middleware stack
 │   │   └── server.ts           # HTTP server listener (port 5000)
-│   ├── test/                   # Vitest automated test suite (Calculations, AI, State Machines)
+│   ├── test/                   # Vitest automated test suite (26 comprehensive tests)
 │   └── dataStore.json          # Persistent state (survives restarts)
 │
 └── frontend/                   # Modern React 18 + Vite + Tailwind CSS Client
     ├── src/
     │   ├── components/
-    │   │   ├── ui/             # React-Bits design library (SpotlightCard, ShinyText, SplitText, BlurFade, MagnetButton, AnimatedTabs)
+    │   │   ├── ui/             # Modern UI library & animated components
     │   │   ├── layout/         # ConsumerLayout, VendorLayout (3 columns), SupportLayout, AdminLayout
     │   │   ├── chat/           # MessageBubble, MessageComposer (voice notes, attachments, emojis)
-    │   │   └── calling/        # CallModal (Nexconn voice/video call signaling & active session)
+    │   │   └── calling/        # CallModal (Nexconn Call SDK voice/video signaling & active session)
     │   ├── pages/              # 18 fully implemented application pages
-    │   │   ├── consumer/       # HomePage, ProductListing, ProductDetail, Cart, Checkout, Orders, Wishlist, Profile
-    │   │   ├── vendor/         # 12-item dashboard (Overview, Statistics, Products, New/Edit, Orders, Customers, Conversations, AI Agent, Profile, Settings, Support)
+    │   │   ├── consumer/       # HomePage, ProductListing, ProductDetail, Cart, Checkout, Orders, Profile
+    │   │   ├── vendor/         # Vendor dashboard (Overview, Catalog, Orders, Conversations, AI Setup)
     │   │   └── support-admin/  # SupportDashboardPage, AdminDashboardPage
-    │   ├── stores/             # Zustand stores (useAuthStore, useCartStore, useWishlistStore, useChatStore)
+    │   ├── stores/             # Zustand stores (useAuthStore, useCartStore, useChatStore)
     │   ├── lib/
     │   │   ├── api.ts          # Axios client with automatic Bearer token injection
-    │   │   └── nexconnClient.ts# Official Nexconn NCEngine singleton & DirectChannel wrapper
+    │   │   └── nexconnClient.ts# Official Nexconn NCEngine & NCCallEngine singleton wrapper
     │   ├── App.tsx             # React Router v6 setup with guarded routes
     │   └── main.tsx
 ```
 
 ---
 
-## 2. Integrated Technologies
+## ⚡ Powered by Nexconn AI Chat and Call SDK
 
-| Subsystem | Technologies & Libraries |
-| :--- | :--- |
-| **Frontend Framework** | React 18, TypeScript 5.5, Vite 5.4, Tailwind CSS 3.4 |
-| **UI Components & Motion**| [React-Bits](https://github.com/DavidHDev/react-bits) component paradigms, Anime.js v4, Lucide React, Canvas Confetti |
-| **State & Data Fetching** | Zustand 4.5, TanStack React Query 5.51 |
-| **Backend Framework** | Node.js, Express.js 4.19, TypeScript 5.5, tsx runtime |
-| **Validation & Schema** | Zod 3.23 (strictly shared between client & server) |
-| **Real-Time Communication**| **Nexconn Chat SDK v26.2.1** (`@nexconn/chat`, `@nexconn/engine`) |
-| **Payments Integration** | Razorpay Node.js SDK & Checkout JS (Test Mode with HMAC validation) |
-| **Testing** | Vitest 1.6 (Unit, calculation, cryptographic, and AI grounding tests) |
+Artisanale utilizes the official **Nexconn AI Chat and Call SDK** suite:
 
----
+1. **Nexconn NCEngine Initialization:**
+   The frontend connects to Nexconn using your configured `appKey`:
+   ```ts
+   import { NCEngine, ConnectionStatusHandler, MessageHandler } from '@nexconn/chat';
 
-## 3. Real-Time Communication Architecture (Nexconn SDK)
+   NCEngine.initialize({ appKey });
+   ```
 
-ConvoCart uses the official **Nexconn Chat SDK v26.2.1** with direct credential signing:
+2. **Secure Token Issuance via Backend:**
+   When a user authenticates, the backend signs an authoritative user session token using `appSecret` and `accessKey`:
+   ```ts
+   const token = nexconnService.generateUserToken(userId, userName);
+   ```
 
+3. **Direct Peer Channels & Real-Time Messaging:**
+   One-on-one direct channels between buyer and artisan:
+   ```ts
+   const channel = new DirectChannel(artisanId);
+   channel.sendTextMessage({ text, pushContent });
+   ```
 
-### SDK Initialization & Flow
-1. **User Authentication:** When a user logs in, the backend securely generates an authoritative Nexconn user token signed with the `appSecret` using SHA1/HMAC.
-2. **Engine Connection:** The frontend initializes `NCEngine.initialize({ appKey })` and establishes a persistent socket connection via `NCEngine.connect({ token })`.
-3. **Direct Channels:** Conversations create real-time peer channels using `new DirectChannel(participantId)`.
-4. **Message Dispatch:** Rich text messages, audio voice notes, and file attachments are sent with `new SendTextMessageParams({ text, pushContent })` and received via listener events.
-5. **Persistent Chat Panel:** Every consumer screen features a collapsible right-hand drawer providing instant buyer-seller chat, order cards, and call buttons.
-6. **Voice & Video Calling:** Audio and video calls are initiated via `CallModal` with real-time session duration tracking, mute, camera toggle, and ring states.
+4. **Nexconn Call SDK WebRTC Voice & Video:**
+   Artisans and customers can initiate audio or video calls directly within the chat modal using `NCCallEngine`:
+   ```ts
+   import { NCCallEngine } from '@nexconn/call';
 
----
-
-## 4. Vendor AI Assistant Engine (Aria & Kai)
-
-Each vendor is equipped with an AI Assistant:
-- **Nexconn Audio:** Assisted by **Aria**, an expert in acoustics, Bluetooth pairing, active noise cancellation, and high-fidelity sound.
-- **Ubuy Global Express:** Assisted by **Kai**, an expert in international logistics, customs clearance, and global express shipping.
-
-### Grounding & Safety Rules
-1. **Grounded Fact Extraction:** The assistant searches the vendor's actual catalog and configured FAQs.
-2. **Zero Hallucination Policy:** If a customer asks a question outside the product's verified specifications (e.g. asking if ANC headphones are suitable for scuba diving), the agent politely clarifies limitations.
-3. **Automatic Human Escalation:** Inquiries regarding disputed refunds, damaged deliveries, or urgent order cancellations trigger an immediate escalation flag (`escalateToHuman: true`), alerting the human vendor manager in their real-time dashboard.
+   const callEngine = NCCallEngine.initialize({ logOutputLevel: 2 });
+   // Session signaling, mute, camera toggle, and duration metrics
+   ```
 
 ---
 
-## 5. Demo Accounts
+## 🔒 Security & Environment Variables
 
-The database comes pre-seeded with authoritative credentials:
+All crucial APIs, secret keys, and credentials have been decoupled from the codebase into `.env` files. To run with your own services, supply your keys in `backend/.env` and `frontend/.env`:
+
+### Backend Configuration (`backend/.env`)
+
+```env
+PORT=5000
+NODE_ENV=development
+JWT_SECRET=your_jwt_secret_key_here
+
+# Nexconn SDK Credentials (Obtained from Nexconn Developer Portal)
+NEXCONN_APP_KEY=your_nexconn_app_key_here
+NEXCONN_APP_SECRET=your_nexconn_app_secret_here
+NEXCONN_ACCESS_KEY=your_nexconn_access_key_here
+
+# Razorpay Configuration (Test Mode)
+RAZORPAY_KEY_ID=rzp_test_your_key_id_here
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret_here
+RAZORPAY_WEBHOOK_SECRET=your_razorpay_webhook_secret_here
+
+# Groq Cloud API Configuration (Optional for fast LLM inference)
+GROQ_API_KEY=your_groq_api_key_here
+GROQ_MODEL=openai/gpt-oss-120b
+
+# Google Gemini API Key (Optional)
+GEMINI_API_KEY=your_gemini_api_key_here
+
+# Firebase Configuration (Optional)
+FIREBASE_API_KEY=your_firebase_api_key_here
+FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+FIREBASE_PROJECT_ID=your_project_id
+FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+FIREBASE_APP_ID=your_firebase_app_id
+FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+### Frontend Configuration (`frontend/.env`)
+
+```env
+VITE_API_URL=http://localhost:5000/api
+
+# Nexconn Public Client App Key
+VITE_NEXCONN_APP_KEY=your_nexconn_app_key_here
+
+# Firebase Web Configuration (Optional)
+VITE_FIREBASE_API_KEY=your_firebase_api_key_here
+VITE_FIREBASE_AUTH_DOMAIN=your_project_id.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project_id.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
+```
+
+*(Note: The application includes full mock and fallback support, so it can run and pass all automated tests even before external keys are configured.)*
+
+---
+
+## 👥 Demo Personas & Test Credentials
+
+The database comes pre-seeded with sample accounts for testing all user flows:
 
 | Role | Email | Password | Persona & Privileges |
 | :--- | :--- | :--- | :--- |
-| **Consumer** | `consumer@convocart.com` | `password123` | John Consumer — Full marketplace shopping, cart, wishlist, orders, persistent chat |
-| **Vendor 1** | `vendor@nexconnaudio.com` | `password123` | Nexconn Audio Store Manager — 3-column dashboard, catalog management, Aria AI setup |
-| **Vendor 2** | `vendor@ubuyglobal.com` | `password123` | Ubuy Global Express Manager — International catalog, Kai AI assistant, shipping config |
-| **Support Agent** | `support@convocart.com` | `password123` | Sarah Jenkins — Ticket queue, priority resolution, buyer-seller escalation triage |
-| **Super Admin** | `admin@convocart.com` | `password123` | Platform Administrator — System health, user status, revenue metrics, vendor approvals |
+| **Consumer** | `consumer@convocart.com` | `password123` | John Consumer — Full artisanal shopping, cart, orders, 1-on-1 chat & calls |
+| **Artisan Vendor 1** | `vendor@nexconnaudio.com` | `password123` | Audio & Tech Artisan — 3-column dashboard, catalog management, Aria AI |
+| **Artisan Vendor 2** | `vendor@ubuyglobal.com` | `password123` | Ubuy Global Express — International goods, Kai AI assistant, custom shipping |
+| **Support Agent** | `support@convocart.com` | `password123` | Sarah Jenkins — Ticket queue, priority resolution, buyer-seller triage |
+| **Super Admin** | `admin@convocart.com` | `password123` | Platform Administrator — System health, revenue metrics, vendor approvals |
 
 ---
 
-## 6. API Reference Catalog
-
-### Authentication (`/api/auth`)
-- `POST /api/auth/register` — Register consumer or vendor account.
-- `POST /api/auth/login` — Authenticate and receive JWT + signed Nexconn user token.
-- `GET /api/auth/me` — Inspect current session profile.
-
-### Marketplace & Products (`/api/products`)
-- `GET /api/products` — Search, paginate, and filter by category, price, rating, and vendor.
-- `GET /api/products/:productId` — Retrieve full product details, specs, and vendor identity.
-- `POST /api/products` — Create new product (Vendor only).
-- `PUT /api/products/:productId` — Update product details and inventory.
-- `DELETE /api/products/:productId` — Delete product.
-
-### Cart & Pricing Authority (`/api/cart`)
-- `GET /api/cart` — Fetch user's cart with recalculation of subtotals, shipping, and taxes.
-- `POST /api/cart/items` — Add product variant to cart.
-- `PUT /api/cart/items/:productId` — Modify quantity with real-time stock check.
-- `DELETE /api/cart/items/:productId` — Remove item from cart.
-- `DELETE /api/cart` — Clear entire cart.
-
-### Orders & Payment Verification (`/api/orders`, `/api/payments`)
-- `POST /api/orders` — Create pending order from cart items.
-- `GET /api/orders` — List consumer orders or vendor-scoped orders.
-- `GET /api/orders/:orderId` — Inspect order details and tracking timeline.
-- `PUT /api/orders/:orderId/status` — Advance order state machine (Shipped, Delivered, Cancelled).
-- `POST /api/payments/razorpay/order` — Create Razorpay test transaction order.
-- `POST /api/payments/razorpay/verify` — Authoritative HMAC-SHA256 signature verification.
-
-### Real-Time Conversations & AI (`/api/conversations`)
-- `GET /api/conversations` — List conversation threads for current user.
-- `POST /api/conversations` — Start or retrieve direct thread between buyer and seller.
-- `GET /api/conversations/:id/messages` — Load message history.
-- `POST /api/conversations/:id/messages` — Send message with automated AI response triggering.
-- `POST /api/conversations/:id/call-token` — Generate signed WebRTC voice/video call session token.
-
----
-
-## 7. Setup & Execution Instructions
+## 🚀 Setup & Execution
 
 ### Prerequisites
 - Node.js 18.0.0 or higher
 - npm 9.0.0 or higher
 
-### Step 1: Install Dependencies
-From the repository root, install all monorepo dependencies:
+### 1. Install Dependencies
 ```bash
 npm install
 ```
 
-### Step 2: Start the Backend Server
-In a terminal, start the authoritative Express backend:
-```bash
-npm run dev:backend
-```
-*The server will start on `http://localhost:5000` and automatically load or initialize `backend/dataStore.json`.*
-
-### Step 3: Start the Frontend Client
-In a second terminal, start the Vite development server:
-```bash
-npm run dev:frontend
-```
-*The client will start on `http://localhost:5173`. Open your browser to explore the ConvoCart marketplace.*
-
-### Step 4: Run the Test Suite
-Execute the automated test suite in the backend:
+### 2. Run the Automated Test Suite
+Run the 26 backend unit, cryptographic, and AI tests:
 ```bash
 npm run test:backend
 ```
-Expected output:
+
+### 3. Start the Development Servers
+Run both backend and frontend concurrently:
+```bash
+npm run dev
 ```
-✓ test/backend.test.ts (9 tests)
-  ✓ calculates order subtotal, shipping, and discount correctly
-  ✓ enforces order state machine transitions
-  ✓ rejects illegal order transitions
-  ✓ generates valid HMAC SHA-256 Razorpay signatures
-  ✓ verifies valid Razorpay payment signature
-  ✓ rejects invalid Razorpay payment signature
-  ✓ answers grounded product questions without inventing facts
-  ✓ escalates refund and dispute inquiries to human
-  ✓ creates and retrieves records in data store
+Or start them individually:
+```bash
+# Terminal 1: Authoritative Backend (http://localhost:5000)
+npm run dev:backend
+
+# Terminal 2: Frontend Client (http://localhost:5173)
+npm run dev:frontend
 ```
 
-### Step 5: Verify Production Builds
-Build both backend and frontend to verify zero TypeScript errors:
+### 4. Build for Production
 ```bash
 npm run build:backend
 npm run build:frontend
@@ -226,5 +234,8 @@ npm run build:frontend
 
 ---
 
-## 8. License
-Built for the Nexconn Hackathon Project. All rights reserved.
+## 📜 License & Credits
+
+- **Event:** Built for the **Nexconn Hackathon**.
+- **Platform:** Created on **Nexconn AI Chat and Call SDK**.
+- **Author:** Artisanale Engineering Team.

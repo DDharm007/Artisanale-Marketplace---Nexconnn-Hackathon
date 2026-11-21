@@ -171,9 +171,9 @@ export class NexconnClient {
       this.isInitialized = true;
       console.log(
         '[Nexconn SDK] Initialized with AppKey:',
-        appKey,
+        appKey || '(not configured)',
         '| AccessKey prefix:',
-        NEXCONN_APP_CONFIG.accessKey.slice(0, 10)
+        NEXCONN_APP_CONFIG.accessKey ? NEXCONN_APP_CONFIG.accessKey.slice(0, 10) : '(not configured)'
       );
     } catch (err) {
       console.warn('[Nexconn SDK] Initialization notice:', err);

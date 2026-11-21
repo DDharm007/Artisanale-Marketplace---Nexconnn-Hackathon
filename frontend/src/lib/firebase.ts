@@ -31,13 +31,13 @@ import { getStorage, ref, uploadBytes, getDownloadURL, FirebaseStorage } from 'f
 const viteEnv = (import.meta as any).env || {};
 
 const firebaseConfig = {
-  apiKey: viteEnv.VITE_FIREBASE_API_KEY || 'AIzaSyDln1f-95w7Fm5KGy03QTKcZZW1ET1v85I',
-  authDomain: viteEnv.VITE_FIREBASE_AUTH_DOMAIN || 'society-adc76.firebaseapp.com',
-  projectId: viteEnv.VITE_FIREBASE_PROJECT_ID || 'society-adc76',
-  storageBucket: viteEnv.VITE_FIREBASE_STORAGE_BUCKET || 'society-adc76.firebasestorage.app',
-  messagingSenderId: viteEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || '642891526455',
-  appId: viteEnv.VITE_FIREBASE_APP_ID || '1:642891526455:web:10ca2be8102f2c532d6ab2',
-  measurementId: viteEnv.VITE_FIREBASE_MEASUREMENT_ID || 'G-T2V7VNY89X',
+  apiKey: viteEnv.VITE_FIREBASE_API_KEY || 'AIzaSy_YOUR_FIREBASE_API_KEY_HERE',
+  authDomain: viteEnv.VITE_FIREBASE_AUTH_DOMAIN || 'your-project-id.firebaseapp.com',
+  projectId: viteEnv.VITE_FIREBASE_PROJECT_ID || 'your-project-id',
+  storageBucket: viteEnv.VITE_FIREBASE_STORAGE_BUCKET || 'your-project-id.firebasestorage.app',
+  messagingSenderId: viteEnv.VITE_FIREBASE_MESSAGING_SENDER_ID || '000000000000',
+  appId: viteEnv.VITE_FIREBASE_APP_ID || '1:000000000000:web:0000000000000000000000',
+  measurementId: viteEnv.VITE_FIREBASE_MEASUREMENT_ID || '',
 };
 
 export const FIREBASE_PROJECT_INFO = {
@@ -98,7 +98,7 @@ function readFileAsDataUrl(file: File): Promise<string> {
 }
 
 /**
- * Uploads voice notes, webcam photos, or chat attachments to Firebase Storage (society-adc76.firebasestorage.app),
+ * Uploads voice notes, webcam photos, or chat attachments to Firebase Storage,
  * falling back seamlessly to an embedded Data URL if offline or if Storage rules deny unauthenticated writes.
  */
 export async function uploadChatFile(
